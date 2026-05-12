@@ -360,6 +360,17 @@
       "balance": 0,
       "createdAt": "2026-05-12T06:03:27.178Z",
       "modifiedAt": "2026-05-12T06:03:27.178Z"
+    },
+    {
+      "id": "5fQWiX-Yd",
+      "uuid": "b9c57147-0e20-49e5-b90c-f9a94795f247",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778566181969",
+      "password": "$2a$10$M88e6LqFNhdY7tQ39CdJj.bZdhSjaUSlpHqix61HuiX9dvX6.769C",
+      "balance": 0,
+      "createdAt": "2026-05-12T06:09:43.355Z",
+      "modifiedAt": "2026-05-12T06:09:43.355Z"
     }
   ],
   "contacts": [
@@ -649,6 +660,17 @@
       "isDeleted": false,
       "createdAt": "2026-05-12T06:03:27.438Z",
       "modifiedAt": "2026-05-12T06:03:27.438Z"
+    },
+    {
+      "id": "MmHAJX2s7q",
+      "uuid": "163e5fe5-8317-4603-9e56-1e7660f41405",
+      "userId": "5fQWiX-Yd",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T06:09:43.593Z",
+      "modifiedAt": "2026-05-12T06:09:43.593Z"
     }
   ],
   "transactions": [
