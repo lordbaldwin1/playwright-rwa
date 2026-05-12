@@ -3,9 +3,6 @@ import { expect, test } from "../fixtures";
 import { SignUpFormData } from "../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {
-  // test.beforeEach(async () => {
-  //   seedDatabase();
-  // })
   test("should land on home page with valid credentials", async ({
     page,
     signInPage,
