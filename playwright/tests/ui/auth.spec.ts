@@ -1,6 +1,5 @@
-import { seedDatabase } from "../../backend/database";
-import { expect, test } from "../fixtures";
-import { SignUpFormData } from "../pages/SignUpPage";
+import { expect, test } from "../../fixtures";
+import { SignUpFormData } from "../../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {
   test("should land on home page with valid credentials", async ({
