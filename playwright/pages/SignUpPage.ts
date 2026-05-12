@@ -23,8 +23,8 @@ export class SignUpPage {
     this.firstNameInput = this.page.getByLabel("First Name");
     this.lastNameInput = this.page.getByLabel("Last Name");
     this.usernameInput = this.page.getByLabel("Username");
-    this.passwordInput = this.page.getByLabel("Password");
-    this.confirmPasswordInput = this.page.getByLabel("Confirm Password", { exact: true });
+    this.passwordInput = this.page.getByRole("textbox", { name: "Password", exact: true });
+    this.confirmPasswordInput = this.page.getByLabel("Confirm Password");
     this.submitButton = this.page.getByTestId("signup-submit");
   }
 

@@ -4,6 +4,7 @@ import { HomePage } from "./HomePage";
 
 export class SignInPage {
   private readonly page: Page;
+  readonly header: Locator;
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly signInButton: Locator;
@@ -12,6 +13,7 @@ export class SignInPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.header = this.page.getByRole("heading", { name: "Sign in" });
     this.usernameInput = this.page.getByLabel("Username");
     this.passwordInput = this.page.getByLabel("Password");
     this.signInButton = this.page.getByTestId("signin-submit");

@@ -74,6 +74,226 @@
       "balance": 49474,
       "createdAt": "2023-12-07T04:39:38.383Z",
       "modifiedAt": "2024-03-07T00:07:36.510Z"
+    },
+    {
+      "id": "uUImLWRuK",
+      "uuid": "9b1b304e-e2b8-47f9-a3d3-4bf577770042",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$4D9tWLjri3NL.petQaucru8xET/1ToEkoaxGL4X0fOJANyvDM28P.",
+      "balance": 0,
+      "createdAt": "2026-05-12T04:53:17.351Z",
+      "modifiedAt": "2026-05-12T04:53:17.351Z"
+    },
+    {
+      "id": "Qb8gLXSIT",
+      "uuid": "455bd5dc-9037-4619-aeac-0601b9392f42",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$OfP8UUHtgxcy5wHTZnIo2uaMjZPqlDYxAQJ/r8VyCGBz30anQGuAm",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:00:10.597Z",
+      "modifiedAt": "2026-05-12T05:00:10.597Z"
+    },
+    {
+      "id": "f0ZufHZ70",
+      "uuid": "267f0703-c806-4b66-8d31-6d7af940982a",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$.n.RkKlJzbYxV6pPcNNwTO15wzhHI7ROyW...HwcvWW4JK3EwtHJ.",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:03:09.141Z",
+      "modifiedAt": "2026-05-12T05:03:09.141Z"
+    },
+    {
+      "id": "sNT4wRytt",
+      "uuid": "1803c47a-6b59-4538-b40d-090b59154271",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$GxlCCPOQKwvONSY4LkMDOuz3qrGD4iiNYpgLJ9jsCu88XFwMSfvEy",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:04:30.733Z",
+      "modifiedAt": "2026-05-12T05:04:30.733Z"
+    },
+    {
+      "id": "0W0RSeu3O",
+      "uuid": "06a9c986-7ade-4834-99cc-a4f1a154db3a",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$7VGbF.kdQj73ZGeXrAKbDejhbQwQ3ZUrgIJT8oh6UNzeW36JhKCV.",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:05:13.999Z",
+      "modifiedAt": "2026-05-12T05:05:13.999Z"
+    },
+    {
+      "id": "5O6jVVyX6",
+      "uuid": "6c6e9418-4945-460f-b9ac-8083e3ce6e6c",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$mNv4z08yxzcyLzDwyivi8.asutqU5VtQKe7afq0YyfTwx705jKVcW",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:07:28.414Z",
+      "modifiedAt": "2026-05-12T05:07:28.414Z"
+    },
+    {
+      "id": "sDa8gBvcV",
+      "uuid": "04058aaa-0400-4c2f-a12c-c8de21a82fdf",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$tYaQ2CYzhtl0UB1I6AOVceg/a3SnVYN6CjhmMrdc/qY/iC91WORCG",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:07:50.269Z",
+      "modifiedAt": "2026-05-12T05:07:50.269Z"
+    },
+    {
+      "id": "IXAjhlob6",
+      "uuid": "d2d97006-6f5b-4206-91b2-ae29702f2c9e",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$6p24j/y5WG1DQE5OejBgo.GzvpngSp9ph/rWG4kqGbtuwBV6n941O",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:09:09.581Z",
+      "modifiedAt": "2026-05-12T05:09:09.581Z"
+    },
+    {
+      "id": "-XOjRPw1B",
+      "uuid": "5f94569c-b67c-4444-bd46-1e06798159ca",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$Wpe9VfLQaZgEXu/eutcZ0OfpG0SUJRgE2.mN1EDEaDQMvUWwwwP8a",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:10:44.423Z",
+      "modifiedAt": "2026-05-12T05:10:44.423Z"
+    },
+    {
+      "id": "8qphr4vcu",
+      "uuid": "323b876a-4a73-4856-b626-ceb1ba52dc2b",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$Bz.xRWHYRiNyN0v0t1D6OOA5vWwV/6LMPflTMp4du5CZSqPOI1zXS",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:11:16.738Z",
+      "modifiedAt": "2026-05-12T05:11:16.738Z"
+    },
+    {
+      "id": "6rnXtxbEd",
+      "uuid": "b707c1a4-7be5-45a0-b3f1-3e1b105473d5",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$Bd70n1S/fnD9yzRji6L/VOtijS1D8O3i95Ji4/Q.OPB1hpqSHeCVm",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:14:52.177Z",
+      "modifiedAt": "2026-05-12T05:14:52.177Z"
+    },
+    {
+      "id": "Jp5btH_JE",
+      "uuid": "14bc2167-8e4f-4c00-9bba-702e4f86cfac",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$QBe9peG/h4tEuIoHxGTKtuJO3AnUcZlNuQVaT.EOVzXZW.cqUIYAG",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:15:13.630Z",
+      "modifiedAt": "2026-05-12T05:15:13.630Z"
+    },
+    {
+      "id": "FHgXJ-k_d",
+      "uuid": "6951d66c-aca7-4e7f-abcf-fdda3f2cf962",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$nWCfkEIbJ8f/0Jaz9IK49uqTX96t8nJSjl7n3QzreyC2bxUsgJAZy",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:15:50.398Z",
+      "modifiedAt": "2026-05-12T05:15:50.398Z"
+    },
+    {
+      "id": "NCPkMDRnv",
+      "uuid": "ec7ef006-6c2e-4765-beef-4563bfaa7d97",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$5vIURRLcLfDoqq/h8kj6Mep80y3Arsj3sNdPS6kirnD7jiQnpX6bO",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:16:37.342Z",
+      "modifiedAt": "2026-05-12T05:16:37.342Z"
+    },
+    {
+      "id": "b_zwz59pq",
+      "uuid": "aa1a7f2f-1959-4c26-880e-b338da8d4c54",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$E/WYeZIAG50C/WivE5Pm/.ve5N6rIn3LsjgmMPig5mA9lfJEkIeLe",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:17:38.872Z",
+      "modifiedAt": "2026-05-12T05:17:38.872Z"
+    },
+    {
+      "id": "NGnkMaUtm",
+      "uuid": "6057f90b-dbc6-4d9f-8858-649636bbafe8",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23",
+      "password": "$2a$10$DBxllBbkEqqKVEHyVUWcuufJ4j0b4TmPnJJ7zeWDFUTzmxYd0mMoe",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:18:52.251Z",
+      "modifiedAt": "2026-05-12T05:18:52.251Z"
+    },
+    {
+      "id": "WmhxWUFc9",
+      "uuid": "f305d5a8-b0e0-4e58-a1d1-c29fc241da2d",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23345",
+      "password": "$2a$10$jc2lXA7fpmE8zXj0u39QYOfHQOYSvJHWfuMSamJEOu8dsluPYBbjC",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:19:24.530Z",
+      "modifiedAt": "2026-05-12T05:19:24.530Z"
+    },
+    {
+      "id": "4Vjs8gWgi",
+      "uuid": "95682b09-8212-4202-b7b5-76aa6b229257",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith23345",
+      "password": "$2a$10$xzrI8Y8gfUQEnsswHy0bOer9EfxIOb.mKFT.9mVebRpYHwFOaadHy",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:19:35.886Z",
+      "modifiedAt": "2026-05-12T05:19:35.886Z"
+    },
+    {
+      "id": "LWfCsJn7h",
+      "uuid": "3b8496d5-8b34-4450-86eb-11eb71d87194",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778563216382",
+      "password": "$2a$10$wSjgvX9jrx60NnTAXPkW4.wFaSCNn4rjNZF0nb9wK48JrAvpozrla",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:20:17.848Z",
+      "modifiedAt": "2026-05-12T05:20:17.848Z"
+    },
+    {
+      "id": "dtK7TDVfQ",
+      "uuid": "1bb1bb5f-8af2-49be-af80-4ea6e07b36e4",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778564032288",
+      "password": "$2a$10$9nfCjffjAg9ukET/BokxxOnx9zLaHZGGZPKF4oq7erUlMGN3pEIkm",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:33:53.442Z",
+      "modifiedAt": "2026-05-12T05:33:53.442Z"
     }
   ],
   "contacts": [
@@ -253,6 +473,50 @@
       "isDeleted": false,
       "createdAt": "2024-01-26T14:01:01.815Z",
       "modifiedAt": "2024-03-07T08:44:31.174Z"
+    },
+    {
+      "id": "aKY_Pu2T8E",
+      "uuid": "1309882d-a5c5-4055-8b3a-3e048b0ef4a5",
+      "userId": "uUImLWRuK",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:11:17.012Z",
+      "modifiedAt": "2026-05-12T05:11:17.012Z"
+    },
+    {
+      "id": "uk0DEdxI9B",
+      "uuid": "157ef6fe-c8b0-4823-96e9-80c26d96800a",
+      "userId": "WmhxWUFc9",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:19:24.804Z",
+      "modifiedAt": "2026-05-12T05:19:24.804Z"
+    },
+    {
+      "id": "onjalxOi8",
+      "uuid": "fa1f81db-54b0-4910-91c6-bf8a726b38e8",
+      "userId": "LWfCsJn7h",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:20:18.177Z",
+      "modifiedAt": "2026-05-12T05:20:18.177Z"
+    },
+    {
+      "id": "ITdQa8rBBM",
+      "uuid": "294514aa-97fe-4c08-aba9-472a676290c4",
+      "userId": "dtK7TDVfQ",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:33:53.738Z",
+      "modifiedAt": "2026-05-12T05:33:53.738Z"
     }
   ],
   "transactions": [
@@ -10986,4 +11250,3 @@
     }
   ]
 }
-

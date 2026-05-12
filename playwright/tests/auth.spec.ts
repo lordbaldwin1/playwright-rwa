@@ -1,7 +1,11 @@
+import { seedDatabase } from "../../backend/database";
 import { expect, test } from "../fixtures";
 import { SignUpFormData } from "../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {
+  // test.beforeEach(async () => {
+  //   seedDatabase();
+  // })
   test("should land on home page with valid credentials", async ({
     page,
     signInPage,
@@ -41,7 +45,7 @@ test.describe("user auth e2e tests", () => {
     const newUser: SignUpFormData = {
       firstName: "Alice",
       lastname: "Smith",
-      username: "alice_smith23",
+      username: `alice_smith${Date.now()}`,
       password: "s3cret",
       confirmPassword: "s3cret",
     };
@@ -54,5 +58,29 @@ test.describe("user auth e2e tests", () => {
     await signInPage.fillForm(newUser.username, newUser.password);
     const homePage = await signInPage.submitForm();
     await expect(homePage.userOnboardingDialog).toBeVisible();
+    await expect(homePage.listSkeleton).toBeHidden();
+    await expect(homePage.navTopNotificationsCounnt).toBeVisible();
+    await homePage.goNextOnboardingScreen();
+
+    await expect(homePage.userOnboardingDialogTitle).toContainText("Create Bank Account");
+
+    await homePage.fillBankDetails({
+      bankName: "The Best Bank",
+      accountNumber: "123456789",
+      routingNumber: "987654321",
+    });
+    await homePage.submitBankDetails();
+
+    await expect(homePage.userOnboardingDialogTitle).toContainText("Finished");
+    await expect(homePage.userOnboardingDialogContent).toContainText("You're all set!");
+    await homePage.goNextOnboardingScreen();
+
+    await expect(homePage.transactionList).toBeVisible();
+
+    if (homePage.isMobile()) {
+      await homePage.openSideNav();
+    }
+    await homePage.signOut();
+    await expect(signInPage.header).toBeVisible();
   });
 });
