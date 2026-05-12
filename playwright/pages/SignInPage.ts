@@ -10,6 +10,9 @@ export class SignInPage {
   readonly signInButton: Locator;
   readonly rememberMeBox: Locator;
   readonly signUpLink: Locator;
+  readonly usernameError: Locator;
+  readonly passwordError: Locator;
+
 
   constructor(page: Page) {
     this.page = page;
@@ -19,6 +22,8 @@ export class SignInPage {
     this.signInButton = this.page.getByTestId("signin-submit");
     this.rememberMeBox = this.page.getByRole("checkbox", { name: "remember" });
     this.signUpLink = this.page.getByTestId("signup");
+    this.usernameError = this.page.locator("#username-helper-text");
+    this.passwordError = this.page.locator("#password-helper-text");
   }
 
   async goto() {

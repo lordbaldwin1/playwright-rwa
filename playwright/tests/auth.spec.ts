@@ -83,4 +83,51 @@ test.describe("user auth e2e tests", () => {
     await homePage.signOut();
     await expect(signInPage.header).toBeVisible();
   });
+
+  test("should display login errors", async ({ signInPage }) => {
+    await signInPage.goto();
+    await signInPage.fillForm("user", "tester123");
+    await signInPage.fillForm("", "123");
+
+    await expect(signInPage.usernameError).toBeVisible();
+    await expect(signInPage.usernameError).toHaveText("Username is required");
+
+    await expect(signInPage.passwordError).toBeVisible();
+    await expect(signInPage.passwordError).toHaveText("Password must contain at least 4 characters");
+    
+    await expect(signInPage.signInButton).toBeDisabled();
+  });
+
+  test("should display signup errors", async ({ signUpPage }) => {
+    await signUpPage.goto();
+    await signUpPage.fillForm({
+      firstName: "john",
+      lastname: "deadlock",
+      username: "thebrahms",
+      password: "s3cret",
+      confirmPassword: "s3cret",
+    });
+    await signUpPage.fillForm({
+      firstName: "",
+      lastname: "",
+      username: "",
+      password: "",
+      confirmPassword: "paige",
+    });
+
+    await expect(signUpPage.firstNameError).toBeVisible();
+    await expect(signUpPage.firstNameError).toHaveText("First Name is required");
+
+    await expect(signUpPage.lastNameError).toBeVisible();
+    await expect(signUpPage.lastNameError).toHaveText("Last Name is required");
+
+    await expect(signUpPage.usernameError).toBeVisible();
+    await expect(signUpPage.usernameError).toHaveText("Username is required");
+
+    await expect(signUpPage.passwordError).toBeVisible();
+    await expect(signUpPage.passwordError).toHaveText("Enter your password");
+
+    await expect(signUpPage.confirmPasswordError).toBeVisible();
+    await expect(signUpPage.confirmPasswordError).toHaveText("Password does not match");
+  })
 });

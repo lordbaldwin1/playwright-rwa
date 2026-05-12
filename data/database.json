@@ -294,6 +294,61 @@
       "balance": 0,
       "createdAt": "2026-05-12T05:33:53.442Z",
       "modifiedAt": "2026-05-12T05:33:53.442Z"
+    },
+    {
+      "id": "5LBChG6Bb",
+      "uuid": "1c0f2168-f75f-457a-8b8b-ed0d8de99038",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778564689401",
+      "password": "$2a$10$JZgu01BFvkofhwim.7Xy4elJA4p1FAKx.Gu2d.fE7DjlAq3RUh8Xa",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:44:50.702Z",
+      "modifiedAt": "2026-05-12T05:44:50.702Z"
+    },
+    {
+      "id": "-PuVfrmdk",
+      "uuid": "60236cbf-910c-4ba1-b9cd-45bd33a74642",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778564752234",
+      "password": "$2a$10$YhDwA4cBPP62Tq9w7mRgk.dpR5qjBVqGx7tEWqwn5Ahj4ud//4xPe",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:45:53.584Z",
+      "modifiedAt": "2026-05-12T05:45:53.584Z"
+    },
+    {
+      "id": "BPUdBW-0_",
+      "uuid": "1dbdd1f1-fdc1-464c-8770-94c8ff4d2a40",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778564800590",
+      "password": "$2a$10$tv0kvvjpijdTfIAxw1i8ju9q7pjFxgB8ZgW6tbke3s4o0j4waZllG",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:46:41.788Z",
+      "modifiedAt": "2026-05-12T05:46:41.788Z"
+    },
+    {
+      "id": "YwSgs_-y8",
+      "uuid": "3bfa838d-c4c3-449d-891c-131231617932",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778564822400",
+      "password": "$2a$10$rEQFNMGkbp6abVN933IaLexAh3hCNmhaMK8zMmEOCwHoK9BRTf5DS",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:47:03.674Z",
+      "modifiedAt": "2026-05-12T05:47:03.674Z"
+    },
+    {
+      "id": "3Cp0MEz-F",
+      "uuid": "61d6890d-acdf-42b0-b21a-37a3aa7a4c55",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "username": "alice_smith1778565353629",
+      "password": "$2a$10$SAkcmXizQE1VfGXSY40g6uokKv0nGxvFgsRFpBm4IrxZIVeBH6MSO",
+      "balance": 0,
+      "createdAt": "2026-05-12T05:55:54.996Z",
+      "modifiedAt": "2026-05-12T05:55:54.996Z"
     }
   ],
   "contacts": [
@@ -517,6 +572,61 @@
       "isDeleted": false,
       "createdAt": "2026-05-12T05:33:53.738Z",
       "modifiedAt": "2026-05-12T05:33:53.738Z"
+    },
+    {
+      "id": "EsR2G7LV6r",
+      "uuid": "11526403-24a1-496f-bff0-9027f60713dd",
+      "userId": "5LBChG6Bb",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:44:50.973Z",
+      "modifiedAt": "2026-05-12T05:44:50.973Z"
+    },
+    {
+      "id": "oqE7k42uJx",
+      "uuid": "5a9bd54d-8f5f-4076-8c5f-b3901af1ffae",
+      "userId": "-PuVfrmdk",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:45:53.825Z",
+      "modifiedAt": "2026-05-12T05:45:53.825Z"
+    },
+    {
+      "id": "xLzDdOyibg",
+      "uuid": "cb9ae979-9b6a-48de-b624-7791f3b5ed84",
+      "userId": "BPUdBW-0_",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:46:42.031Z",
+      "modifiedAt": "2026-05-12T05:46:42.031Z"
+    },
+    {
+      "id": "x0BRWczDwq",
+      "uuid": "e485f8a8-4b1d-4764-b339-7f4a36abbae4",
+      "userId": "YwSgs_-y8",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:47:03.924Z",
+      "modifiedAt": "2026-05-12T05:47:03.924Z"
+    },
+    {
+      "id": "UxsKb5MgZ",
+      "uuid": "059a971e-f9e8-4dd6-8af5-bbbfe5afcce8",
+      "userId": "3Cp0MEz-F",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-12T05:55:55.263Z",
+      "modifiedAt": "2026-05-12T05:55:55.263Z"
     }
   ],
   "transactions": [

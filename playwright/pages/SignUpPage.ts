@@ -16,6 +16,11 @@ export class SignUpPage {
   readonly passwordInput: Locator;
   readonly confirmPasswordInput: Locator;
   readonly submitButton: Locator;
+  readonly firstNameError: Locator;
+  readonly lastNameError: Locator;
+  readonly usernameError: Locator;
+  readonly passwordError: Locator;
+  readonly confirmPasswordError: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,6 +31,15 @@ export class SignUpPage {
     this.passwordInput = this.page.getByRole("textbox", { name: "Password", exact: true });
     this.confirmPasswordInput = this.page.getByLabel("Confirm Password");
     this.submitButton = this.page.getByTestId("signup-submit");
+    this.firstNameError = this.page.locator("#firstName-helper-text");
+    this.lastNameError = this.page.locator("#lastName-helper-text");
+    this.usernameError = this.page.locator("#username-helper-text");
+    this.passwordError = this.page.locator("#password-helper-text");
+    this.confirmPasswordError = this.page.locator("#confirmPassword-helper-text");
+  }
+
+  async goto() {
+    await this.page.goto("/signup");
   }
 
   async fillForm(formData: SignUpFormData) {
