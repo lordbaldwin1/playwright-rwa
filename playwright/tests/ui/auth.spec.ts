@@ -1,7 +1,15 @@
 import { expect, test } from "../../fixtures";
+import { getTestUser, loginWithXState } from "../../helpers/auth";
+import { reseedDatabase } from "../../helpers/database";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {
+  test("should land on home after API login and XState sync", async ({ page, request }) => {
+    const user = await getTestUser(request);
+    await loginWithXState(page, user.username);
+    await expect(page).toHaveURL("/");
+  });
+
   test("should land on home page with valid credentials", async ({
     page,
     signInPage,
@@ -55,7 +63,7 @@ test.describe("user auth e2e tests", () => {
     const homePage = await signInPage.submitForm();
     await expect(homePage.userOnboardingDialog).toBeVisible();
     await expect(homePage.listSkeleton).toBeHidden();
-    await expect(homePage.navTopNotificationsCounnt).toBeVisible();
+    await expect(homePage.nav.notificationsCount).toBeVisible();
     await homePage.goNextOnboardingScreen();
 
     await expect(homePage.userOnboardingDialogTitle).toContainText("Create Bank Account");
@@ -74,9 +82,9 @@ test.describe("user auth e2e tests", () => {
     await expect(homePage.transactionList).toBeVisible();
 
     if (homePage.isMobile()) {
-      await homePage.openSideNav();
+      await homePage.nav.openSideNav();
     }
-    await homePage.signOut();
+    await homePage.nav.signOut();
     await expect(signInPage.header).toBeVisible();
   });
 
@@ -89,8 +97,10 @@ test.describe("user auth e2e tests", () => {
     await expect(signInPage.usernameError).toHaveText("Username is required");
 
     await expect(signInPage.passwordError).toBeVisible();
-    await expect(signInPage.passwordError).toHaveText("Password must contain at least 4 characters");
-    
+    await expect(signInPage.passwordError).toHaveText(
+      "Password must contain at least 4 characters"
+    );
+
     await expect(signInPage.signInButton).toBeDisabled();
   });
 
@@ -125,5 +135,5 @@ test.describe("user auth e2e tests", () => {
 
     await expect(signUpPage.confirmPasswordError).toBeVisible();
     await expect(signUpPage.confirmPasswordError).toHaveText("Password does not match");
-  })
+  });
 });

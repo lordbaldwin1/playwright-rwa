@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { Navigation } from "../components/Navigation";
 import { isMobile } from "../helpers/is-mobile";
 
 export type OnboardingBankDetails = {
@@ -8,9 +9,9 @@ export type OnboardingBankDetails = {
 }
 export class HomePage {
   private readonly page: Page;
+  readonly nav: Navigation;
   readonly userOnboardingDialog: Locator;
   readonly listSkeleton: Locator;
-  readonly navTopNotificationsCounnt: Locator;
   readonly userOnboardingNext: Locator;
   readonly userOnboardingDialogTitle: Locator;
   readonly userOnboardingDialogContent: Locator;
@@ -19,14 +20,12 @@ export class HomePage {
   readonly routingNumberInput: Locator;
   readonly bankAccountSubmitButton: Locator;
   readonly transactionList: Locator;
-  readonly sideNavToggle: Locator;
-  readonly sideNavSignOut: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.nav = new Navigation(page);
     this.userOnboardingDialog = this.page.getByTestId("user-onboarding-dialog");
     this.listSkeleton = this.page.getByTestId("list-skeleton");
-    this.navTopNotificationsCounnt = this.page.getByTestId("nav-top-notifications-count");
     this.userOnboardingNext = this.page.getByTestId("user-onboarding-next");
     this.userOnboardingDialogTitle = this.page.getByTestId("user-onboarding-dialog-title");
     this.userOnboardingDialogContent = this.page.getByTestId("user-onboarding-dialog-content");
@@ -35,8 +34,6 @@ export class HomePage {
     this.accountNumberInput = this.page.getByTestId("bankaccount-accountNumber-input").locator("input");
     this.bankAccountSubmitButton = this.page.getByTestId("bankaccount-submit");
     this.transactionList = this.page.getByTestId("transaction-list");
-    this.sideNavToggle = this.page.getByTestId("sidenav-toggle");
-    this.sideNavSignOut = this.page.getByTestId("sidenav-signout");
   }
 
   async goNextOnboardingScreen() {
@@ -51,14 +48,6 @@ export class HomePage {
 
   async submitBankDetails() {
     await this.bankAccountSubmitButton.click();
-  }
-
-  async openSideNav() {
-    await this.sideNavToggle.click();
-  }
-
-  async signOut() {
-    await this.sideNavSignOut.click();
   }
 
   isMobile() {
