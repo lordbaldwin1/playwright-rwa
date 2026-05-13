@@ -76,15 +76,15 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "9bapGVUb3",
-      "uuid": "c5a56eba-1b61-4291-bab6-18b94aa99688",
+      "id": "roDqihOKS",
+      "uuid": "2a020d0b-2aa6-4d72-b0a9-3bcd5b51e7a2",
       "firstName": "Alice",
       "lastName": "Smith",
-      "username": "alice_smith1778649601638",
-      "password": "$2a$10$MFZvNFOaOAHEG8F5itlZOurUMuU/Yvkm8HBy1D4E6v5K878bTtOm6",
+      "username": "alice_smith1778650162176",
+      "password": "$2a$10$N0FNFEbRu9Bh1wVDLhItBOhAIqUtOnjYC3XtQ29yOBzNMVhWgrH.6",
       "balance": 0,
-      "createdAt": "2026-05-13T05:20:02.959Z",
-      "modifiedAt": "2026-05-13T05:20:02.959Z"
+      "createdAt": "2026-05-13T05:29:23.664Z",
+      "modifiedAt": "2026-05-13T05:29:23.664Z"
     }
   ],
   "contacts": [
@@ -266,26 +266,26 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "KjgFMHoBV",
-      "uuid": "380ea120-4ffc-45a5-8843-1e7c2dbbd8fb",
-      "userId": "9bapGVUb3",
-      "bankName": "The Best Bank",
-      "accountNumber": "123456789",
-      "routingNumber": "987654321",
-      "isDeleted": false,
-      "createdAt": "2026-05-13T05:20:03.273Z",
-      "modifiedAt": "2026-05-13T05:20:03.273Z"
-    },
-    {
-      "id": "ALS8gn6q4P",
-      "uuid": "eb48ced4-1c34-4347-a77f-f5af3fde1e83",
+      "id": "64LLZHWPd",
+      "uuid": "fbe32cba-bdcf-4a60-9bf2-bc5f6fe00095",
       "userId": "uBmeaz5pX",
       "bankName": "The Best Bank",
       "accountNumber": "987654321",
       "routingNumber": "123456789",
       "isDeleted": false,
-      "createdAt": "2026-05-13T05:20:03.512Z",
-      "modifiedAt": "2026-05-13T05:20:03.512Z"
+      "createdAt": "2026-05-13T05:29:24.245Z",
+      "modifiedAt": "2026-05-13T05:29:24.245Z"
+    },
+    {
+      "id": "aPr8LNQAgk",
+      "uuid": "11986075-f830-4d70-ac1c-7552eefd68a1",
+      "userId": "roDqihOKS",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-13T05:29:24.449Z",
+      "modifiedAt": "2026-05-13T05:29:24.449Z"
     }
   ],
   "transactions": [
