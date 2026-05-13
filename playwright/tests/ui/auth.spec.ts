@@ -4,6 +4,10 @@ import { reseedDatabase } from "../../helpers/database";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {
+  test.beforeEach(async ({ request }) => {
+    await reseedDatabase(request);
+  });
+  
   test("should land on home after API login and XState sync", async ({ page, request }) => {
     const user = await getTestUser(request);
     await loginWithXState(page, user.username);
