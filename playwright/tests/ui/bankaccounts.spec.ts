@@ -38,8 +38,8 @@ test.describe("bank accounts e2e tests", () => {
       accountNumber: "123",
     });
 
-    await expect(bankAccountsPage.bankNameError).toBeVisible();
-    await expect(bankAccountsPage.routingNumberError).toBeVisible();
-    await expect(bankAccountsPage.accountNumberError).toBeVisible();
+    await expect(bankAccountsPage.bankNameError).toHaveText("Must contain at least 5 characters");
+    await expect(bankAccountsPage.routingNumberError).toHaveText("Must contain a valid routing number");
+    await expect(bankAccountsPage.accountNumberError).toHaveText("Must contain at least 9 digits");
   });
 });

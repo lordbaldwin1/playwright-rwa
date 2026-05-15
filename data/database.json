@@ -76,15 +76,15 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "bnImyulpi",
-      "uuid": "bb2258d7-ee2e-413a-a28e-cde6cbec5106",
+      "id": "JkQhAxIcc",
+      "uuid": "8c5cff21-8a78-48ee-95b5-3b4f1e75baaa",
       "firstName": "Alice",
       "lastName": "Smith",
       "username": "ansel5",
-      "password": "$2a$10$wKwUkfL.aZWvcC1AzbJdWupBnEILwS7jHmFxJfnCbXkOAIRUJu9RG",
+      "password": "$2a$10$8.wBivqIv.pjU4HL9CxRMOoiLOi0aFpHe8v/lMDKNmaanI3UOecjW",
       "balance": 0,
-      "createdAt": "2026-05-15T23:48:00.159Z",
-      "modifiedAt": "2026-05-15T23:48:00.159Z"
+      "createdAt": "2026-05-15T23:53:50.082Z",
+      "modifiedAt": "2026-05-15T23:53:50.082Z"
     }
   ],
   "contacts": [
@@ -266,26 +266,26 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "DIHO2R3lJ4",
-      "uuid": "5db90188-d942-4652-8a64-161c8b45a25a",
+      "id": "PM5DbehJ6U",
+      "uuid": "e971edb0-154f-49fa-8565-90ac7ea3d5d5",
+      "userId": "JkQhAxIcc",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-15T23:53:50.520Z",
+      "modifiedAt": "2026-05-15T23:53:50.520Z"
+    },
+    {
+      "id": "8iehz4xgaX",
+      "uuid": "642c0a1d-e302-4b31-9786-64f7a0789245",
       "userId": "uBmeaz5pX",
       "bankName": "The Best Bank W2",
       "accountNumber": "987654321",
       "routingNumber": "123456789",
       "isDeleted": false,
-      "createdAt": "2026-05-15T23:48:00.658Z",
-      "modifiedAt": "2026-05-15T23:48:00.658Z"
-    },
-    {
-      "id": "QZMvYbjr0v",
-      "uuid": "fb8fbd3d-8532-4b6d-b7b4-f07775a95d89",
-      "userId": "bnImyulpi",
-      "bankName": "The Best Bank",
-      "accountNumber": "123456789",
-      "routingNumber": "987654321",
-      "isDeleted": false,
-      "createdAt": "2026-05-15T23:48:00.955Z",
-      "modifiedAt": "2026-05-15T23:48:00.955Z"
+      "createdAt": "2026-05-15T23:53:50.706Z",
+      "modifiedAt": "2026-05-15T23:53:50.706Z"
     }
   ],
   "transactions": [
