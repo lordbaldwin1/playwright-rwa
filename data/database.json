@@ -76,15 +76,15 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "roDqihOKS",
-      "uuid": "2a020d0b-2aa6-4d72-b0a9-3bcd5b51e7a2",
+      "id": "bnImyulpi",
+      "uuid": "bb2258d7-ee2e-413a-a28e-cde6cbec5106",
       "firstName": "Alice",
       "lastName": "Smith",
-      "username": "alice_smith1778650162176",
-      "password": "$2a$10$N0FNFEbRu9Bh1wVDLhItBOhAIqUtOnjYC3XtQ29yOBzNMVhWgrH.6",
+      "username": "ansel5",
+      "password": "$2a$10$wKwUkfL.aZWvcC1AzbJdWupBnEILwS7jHmFxJfnCbXkOAIRUJu9RG",
       "balance": 0,
-      "createdAt": "2026-05-13T05:29:23.664Z",
-      "modifiedAt": "2026-05-13T05:29:23.664Z"
+      "createdAt": "2026-05-15T23:48:00.159Z",
+      "modifiedAt": "2026-05-15T23:48:00.159Z"
     }
   ],
   "contacts": [
@@ -266,26 +266,26 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "64LLZHWPd",
-      "uuid": "fbe32cba-bdcf-4a60-9bf2-bc5f6fe00095",
+      "id": "DIHO2R3lJ4",
+      "uuid": "5db90188-d942-4652-8a64-161c8b45a25a",
       "userId": "uBmeaz5pX",
-      "bankName": "The Best Bank",
+      "bankName": "The Best Bank W2",
       "accountNumber": "987654321",
       "routingNumber": "123456789",
       "isDeleted": false,
-      "createdAt": "2026-05-13T05:29:24.245Z",
-      "modifiedAt": "2026-05-13T05:29:24.245Z"
+      "createdAt": "2026-05-15T23:48:00.658Z",
+      "modifiedAt": "2026-05-15T23:48:00.658Z"
     },
     {
-      "id": "aPr8LNQAgk",
-      "uuid": "11986075-f830-4d70-ac1c-7552eefd68a1",
-      "userId": "roDqihOKS",
+      "id": "QZMvYbjr0v",
+      "uuid": "fb8fbd3d-8532-4b6d-b7b4-f07775a95d89",
+      "userId": "bnImyulpi",
       "bankName": "The Best Bank",
       "accountNumber": "123456789",
       "routingNumber": "987654321",
       "isDeleted": false,
-      "createdAt": "2026-05-13T05:29:24.449Z",
-      "modifiedAt": "2026-05-13T05:29:24.449Z"
+      "createdAt": "2026-05-15T23:48:00.955Z",
+      "modifiedAt": "2026-05-15T23:48:00.955Z"
     }
   ],
   "transactions": [

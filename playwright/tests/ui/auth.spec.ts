@@ -3,11 +3,7 @@ import { getTestUser, loginWithXState } from "../../helpers/auth";
 import { reseedDatabase } from "../../helpers/database";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
-test.describe("user auth e2e tests", () => {
-  test.beforeEach(async ({ request }) => {
-    await reseedDatabase(request);
-  });
-  
+test.describe("user auth e2e tests", () => {  
   test("should land on home after API login and XState sync", async ({ page, request }) => {
     const user = await getTestUser(request);
     await loginWithXState(page, user.username);
@@ -50,10 +46,11 @@ test.describe("user auth e2e tests", () => {
   });
 
   test("should allow visitor to sign up, login, and logout", async ({ signInPage }) => {
+    const workerIdx = test.info().workerIndex;
     const newUser: SignUpFormData = {
       firstName: "Alice",
       lastname: "Smith",
-      username: `alice_smith${Date.now()}`,
+      username: `ansel${workerIdx}`,
       password: "s3cret",
       confirmPassword: "s3cret",
     };

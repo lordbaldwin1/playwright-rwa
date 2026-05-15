@@ -7,18 +7,26 @@ export class BankAccountsPage {
   readonly nav: Navigation;
   readonly createNewBankAccountButton: Locator;
   readonly bankNameInput: Locator;
+  readonly bankNameError: Locator;
   readonly routingNumberInput: Locator;
+  readonly routingNumberError: Locator;
   readonly accountNumberInput: Locator;
+  readonly accountNumberError: Locator;
   readonly bankAccountSaveButton: Locator;
   readonly bankAccountListItems: Locator;
+  readonly header: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.nav = new Navigation(page);
+    this.header = this.page.getByRole("heading", { level: 2, name: "Bank Accounts" });
     this.createNewBankAccountButton = this.page.getByTestId("bankaccount-new");
     this.bankNameInput = this.page.locator("#bankaccount-bankName-input");
+    this.bankNameError = this.page.locator("#bankaccount-bankName-input-helper-text");
     this.routingNumberInput = this.page.locator("#bankaccount-routingNumber-input");
+    this.routingNumberError = this.page.locator("#bankaccount-routingNumber-input-helper-text");
     this.accountNumberInput = this.page.locator("#bankaccount-accountNumber-input");
+    this.accountNumberError = this.page.locator("#bankaccount-accountNumber-input-helper-text");
     this.bankAccountSaveButton = this.page.getByTestId("bankaccount-submit");
     this.bankAccountListItems = this.page.getByTestId(/bankaccount-list-item/);
   }
