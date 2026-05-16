@@ -76,15 +76,26 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "5HXKiBnGx",
-      "uuid": "624c0461-e8a2-4b22-bd65-cad247fe56fd",
+      "id": "-UfEmdzsS",
+      "uuid": "38cd2277-f28c-41f3-89df-cb49cbf172af",
       "firstName": "Alice",
       "lastName": "Smith",
       "username": "ansel5",
-      "password": "$2a$10$AcWGn1P.1zW6bABXZgHyy.s6ZqLZ9MjlfDcEFl644Ey.Rtf7CTTVe",
+      "password": "$2a$10$uY02VlMMlI/HiTSNULHseeIhQBjR2OYvpyX3sBtr4vW8ugfLeE6H6",
       "balance": 0,
-      "createdAt": "2026-05-16T05:30:00.363Z",
-      "modifiedAt": "2026-05-16T05:30:00.363Z"
+      "createdAt": "2026-05-16T06:02:42.985Z",
+      "modifiedAt": "2026-05-16T06:02:42.985Z"
+    },
+    {
+      "id": "x588sPnnS",
+      "uuid": "f92adbf4-9725-4071-94c8-4a3a1b02ea28",
+      "firstName": "zargin",
+      "lastName": "testing",
+      "username": "zargintester12",
+      "password": "$2a$10$l9c7ikGzjE1kNN8XqUZRbOF0DWWniwBPc32LfUwlPfKP/XI9FNdU.",
+      "balance": 0,
+      "createdAt": "2026-05-16T06:02:44.116Z",
+      "modifiedAt": "2026-05-16T06:02:44.116Z"
     }
   ],
   "contacts": [
@@ -266,37 +277,37 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "6nHbD8VFl",
-      "uuid": "37bb4c11-e81f-422a-9e65-94c7a292abee",
-      "userId": "uBmeaz5pX",
-      "bankName": "The Best Bank W2",
-      "accountNumber": "987654321",
-      "routingNumber": "123456789",
-      "isDeleted": false,
-      "createdAt": "2026-05-16T05:30:01.126Z",
-      "modifiedAt": "2026-05-16T05:30:01.126Z"
-    },
-    {
-      "id": "PGf-a-GyZR",
-      "uuid": "c5b0bb06-6e81-4841-b172-4168ce4611fc",
-      "userId": "5HXKiBnGx",
+      "id": "o8piptyVz",
+      "uuid": "241b30ee-8df0-4c76-a626-374c55ce9d98",
+      "userId": "-UfEmdzsS",
       "bankName": "The Best Bank",
       "accountNumber": "123456789",
       "routingNumber": "987654321",
       "isDeleted": false,
-      "createdAt": "2026-05-16T05:30:01.253Z",
-      "modifiedAt": "2026-05-16T05:30:01.253Z"
+      "createdAt": "2026-05-16T06:02:43.769Z",
+      "modifiedAt": "2026-05-16T06:02:43.769Z"
     },
     {
-      "id": "ouGJHzV7_l",
-      "uuid": "b11b12d0-a88b-4800-be4a-b81f5f5bf0bc",
+      "id": "Bh_UJeYJoe",
+      "uuid": "3055fd9e-f333-4fa3-9840-ffa9af1a3069",
       "userId": "uBmeaz5pX",
       "bankName": "Epic Bank Slay",
       "accountNumber": "123456789",
       "routingNumber": "123456789",
       "isDeleted": true,
-      "createdAt": "2026-05-16T05:30:01.312Z",
-      "modifiedAt": "2026-05-16T05:30:01.312Z"
+      "createdAt": "2026-05-16T06:02:44.118Z",
+      "modifiedAt": "2026-05-16T06:02:44.118Z"
+    },
+    {
+      "id": "RxSJwJOUpv",
+      "uuid": "83447b6a-61fe-4e2f-b497-a44053fc4b3c",
+      "userId": "uBmeaz5pX",
+      "bankName": "The Best Bank W2",
+      "accountNumber": "987654321",
+      "routingNumber": "123456789",
+      "isDeleted": false,
+      "createdAt": "2026-05-16T06:02:44.120Z",
+      "modifiedAt": "2026-05-16T06:02:44.120Z"
     }
   ],
   "transactions": [

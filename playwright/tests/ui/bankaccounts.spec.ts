@@ -1,5 +1,6 @@
 import { expect, test } from "../../fixtures";
 import { getTestUser, loginWithXState } from "../../helpers/auth";
+import { BankAccountsPage } from "../../pages/BankAccountsPage";
 
 test.describe("bank accounts e2e tests", () => {
   test.beforeEach(async ({ request, page }) => {
@@ -22,10 +23,8 @@ test.describe("bank accounts e2e tests", () => {
       routingNumber: "123456789",
       accountNumber: "987654321",
     });
-
     await bankAccountsPage.saveBankAccount();
     await expect(bankAccountsPage.bankAccountListItems).not.toHaveCount(0);
-
     const bankAccount = await bankAccountsPage.findBankAccount(bankName);
     await expect(bankAccount).toBeVisible();
   });
@@ -84,25 +83,29 @@ test.describe("bank accounts e2e tests", () => {
     await expect(deleted).toContainText("Deleted");
   });
 
-  test("NUX renders an empty bank account list state with onboarding modal", async ({ signUpPage, context }) => {
-    // // sign user out
-    // await context.clearCookies();
+  test("NUX renders an empty bank account list state with onboarding modal", async ({ homePage, page, signUpPage }) => {
+    // sign user out
+    await homePage.nav.signOut();
 
-    // // create new user
-    // await signUpPage.goto();
-    // await signUpPage.fillForm({
-    //   firstName: "zargin",
-    //   lastname: "testing",
-    //   username: "zargintester12",
-    //   password: "s3cret",
-    //   confirmPassword: "s3cret",
-    // });
-    // const signInPage = await signUpPage.submitForm();
+    // create new user and sign in
+    await signUpPage.goto();
+    await expect(signUpPage.header).toBeVisible();
+    await signUpPage.fillForm({
+      firstName: "zargin",
+      lastname: "testing",
+      username: "zargintester12",
+      password: "s3cret",
+      confirmPassword: "s3cret",
+    });
+    const signInPage = await signUpPage.submitForm();
+    await expect(signInPage.header).toBeVisible();
+    await signInPage.fillForm("zargintester12", "s3cret");
+    await signInPage.submitForm();
+    await expect(homePage.userOnboardingDialog).toBeVisible();
 
-    // await signInPage.fillForm("zargin", "s3cret");
-    // const homePage = await signInPage.submitForm();
-
-    // const bankAccountsPage = await homePage.nav.goToBankAccounts();
-    // await expect(bankAccountsPage.header).toHaveText("Bank Accounts");
+    await page.goto("/bankaccounts");
+    await expect(page.getByTestId(/bankaccount-list-item/)).toHaveCount(0);
+    await expect(page.getByTestId("user-onboarding-dialog")).toBeVisible();
+    await expect(page.getByTestId("empty-list-header")).toContainText("No Bank Accounts");
   })
 });

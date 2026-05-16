@@ -53,4 +53,15 @@ export class HomePage {
   isMobile() {
     return isMobile(this.page);
   }
+
+  async fastOnboardUser() {
+    await this.goNextOnboardingScreen();
+    await this.fillBankDetails({
+      bankName: `bank${Date.now()}`,
+      routingNumber: "123456789",
+      accountNumber: "123456789",
+    });
+    await this.submitBankDetails();
+    await this.goNextOnboardingScreen();
+  }
 }
