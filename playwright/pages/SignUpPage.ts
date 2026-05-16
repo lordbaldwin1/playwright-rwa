@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { SignInPage } from "./SignInPage";
 
 export type SignUpFormData = {
   firstName?: string;
@@ -53,5 +54,6 @@ export class SignUpPage {
   async submitForm() {
     await this.submitButton.click();
     await expect(this.page).toHaveURL("/signin");
+    return new SignInPage(this.page);
   }
 }

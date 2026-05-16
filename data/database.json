@@ -76,15 +76,15 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "JkQhAxIcc",
-      "uuid": "8c5cff21-8a78-48ee-95b5-3b4f1e75baaa",
+      "id": "5HXKiBnGx",
+      "uuid": "624c0461-e8a2-4b22-bd65-cad247fe56fd",
       "firstName": "Alice",
       "lastName": "Smith",
       "username": "ansel5",
-      "password": "$2a$10$8.wBivqIv.pjU4HL9CxRMOoiLOi0aFpHe8v/lMDKNmaanI3UOecjW",
+      "password": "$2a$10$AcWGn1P.1zW6bABXZgHyy.s6ZqLZ9MjlfDcEFl644Ey.Rtf7CTTVe",
       "balance": 0,
-      "createdAt": "2026-05-15T23:53:50.082Z",
-      "modifiedAt": "2026-05-15T23:53:50.082Z"
+      "createdAt": "2026-05-16T05:30:00.363Z",
+      "modifiedAt": "2026-05-16T05:30:00.363Z"
     }
   ],
   "contacts": [
@@ -266,26 +266,37 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "PM5DbehJ6U",
-      "uuid": "e971edb0-154f-49fa-8565-90ac7ea3d5d5",
-      "userId": "JkQhAxIcc",
-      "bankName": "The Best Bank",
-      "accountNumber": "123456789",
-      "routingNumber": "987654321",
-      "isDeleted": false,
-      "createdAt": "2026-05-15T23:53:50.520Z",
-      "modifiedAt": "2026-05-15T23:53:50.520Z"
-    },
-    {
-      "id": "8iehz4xgaX",
-      "uuid": "642c0a1d-e302-4b31-9786-64f7a0789245",
+      "id": "6nHbD8VFl",
+      "uuid": "37bb4c11-e81f-422a-9e65-94c7a292abee",
       "userId": "uBmeaz5pX",
       "bankName": "The Best Bank W2",
       "accountNumber": "987654321",
       "routingNumber": "123456789",
       "isDeleted": false,
-      "createdAt": "2026-05-15T23:53:50.706Z",
-      "modifiedAt": "2026-05-15T23:53:50.706Z"
+      "createdAt": "2026-05-16T05:30:01.126Z",
+      "modifiedAt": "2026-05-16T05:30:01.126Z"
+    },
+    {
+      "id": "PGf-a-GyZR",
+      "uuid": "c5b0bb06-6e81-4841-b172-4168ce4611fc",
+      "userId": "5HXKiBnGx",
+      "bankName": "The Best Bank",
+      "accountNumber": "123456789",
+      "routingNumber": "987654321",
+      "isDeleted": false,
+      "createdAt": "2026-05-16T05:30:01.253Z",
+      "modifiedAt": "2026-05-16T05:30:01.253Z"
+    },
+    {
+      "id": "ouGJHzV7_l",
+      "uuid": "b11b12d0-a88b-4800-be4a-b81f5f5bf0bc",
+      "userId": "uBmeaz5pX",
+      "bankName": "Epic Bank Slay",
+      "accountNumber": "123456789",
+      "routingNumber": "123456789",
+      "isDeleted": true,
+      "createdAt": "2026-05-16T05:30:01.312Z",
+      "modifiedAt": "2026-05-16T05:30:01.312Z"
     }
   ],
   "transactions": [

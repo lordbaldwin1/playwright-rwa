@@ -12,7 +12,7 @@ test.describe("bank accounts e2e tests", () => {
     const bankName = `The Best Bank W${workerIdx}`;
 
     const bankAccountsPage = await homePage.nav.goToBankAccounts();
-    await expect(page).toHaveURL("/bankaccounts");
+    await expect(bankAccountsPage.bankAccountListItems.first()).toBeVisible();
 
     await bankAccountsPage.createNewBankAccount();
     await expect(page).toHaveURL("/bankaccounts/new");
@@ -22,9 +22,12 @@ test.describe("bank accounts e2e tests", () => {
       routingNumber: "123456789",
       accountNumber: "987654321",
     });
+
     await bankAccountsPage.saveBankAccount();
     await expect(bankAccountsPage.bankAccountListItems).not.toHaveCount(0);
-    await expect(bankAccountsPage.bankAccountListItems.last()).toContainText(bankName);
+
+    const bankAccount = await bankAccountsPage.findBankAccount(bankName);
+    await expect(bankAccount).toBeVisible();
   });
 
   test("should display bank account form errors", async ({ homePage }) => {
@@ -32,14 +35,74 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccountsPage.header).toBeVisible();
     await bankAccountsPage.createNewBankAccount();
 
+    // min 5 bankName, min 9 routing/account number
     await bankAccountsPage.fillBankAccountForm({
       bankName: "the",
       routingNumber: "123",
       accountNumber: "123",
     });
-
     await expect(bankAccountsPage.bankNameError).toHaveText("Must contain at least 5 characters");
     await expect(bankAccountsPage.routingNumberError).toHaveText("Must contain a valid routing number");
     await expect(bankAccountsPage.accountNumberError).toHaveText("Must contain at least 9 digits");
+
+    // valid inputs
+    await bankAccountsPage.fillBankAccountForm({
+      bankName: "The Super Best",
+      routingNumber: "123456789",
+      accountNumber: "123456789",
+    });
+    await expect(bankAccountsPage.bankNameError).not.toBeVisible();
+    await expect(bankAccountsPage.routingNumberError).not.toBeVisible();
+    await expect(bankAccountsPage.accountNumberError).not.toBeVisible();
+
+    // valid name, max 12 routing/account numbers
+    await bankAccountsPage.fillBankAccountForm({
+      bankName: "The Super Duper Best",
+      routingNumber: "1234567890123",
+      accountNumber: "1234567890123",
+    });
+    await expect(bankAccountsPage.bankNameError).not.toBeVisible();
+    await expect(bankAccountsPage.routingNumberError).toHaveText("Must contain a valid routing number");
+    await expect(bankAccountsPage.accountNumberError).toHaveText("Must contain no more than 12 digits");
+
+    await expect(bankAccountsPage.bankAccountSaveButton).toBeDisabled();
   });
+
+  test("soft deletes a bank account", async ({ homePage }) => {
+    const bankAccountPage = await homePage.nav.goToBankAccounts();
+    await expect(bankAccountPage.bankAccountListItems.first()).toBeVisible();
+    await bankAccountPage.createNewBankAccount();
+    await bankAccountPage.fillBankAccountForm({
+      bankName: "Epic Bank Slay",
+      accountNumber: "123456789",
+      routingNumber: "123456789",
+    });
+    await bankAccountPage.saveBankAccount();
+    await expect(bankAccountPage.bankAccountListItems).not.toHaveCount(0);
+
+    const deleted = await bankAccountPage.deleteBankAccount("Epic Bank Slay");
+    await expect(deleted).toContainText("Deleted");
+  });
+
+  test("NUX renders an empty bank account list state with onboarding modal", async ({ signUpPage, context }) => {
+    // // sign user out
+    // await context.clearCookies();
+
+    // // create new user
+    // await signUpPage.goto();
+    // await signUpPage.fillForm({
+    //   firstName: "zargin",
+    //   lastname: "testing",
+    //   username: "zargintester12",
+    //   password: "s3cret",
+    //   confirmPassword: "s3cret",
+    // });
+    // const signInPage = await signUpPage.submitForm();
+
+    // await signInPage.fillForm("zargin", "s3cret");
+    // const homePage = await signInPage.submitForm();
+
+    // const bankAccountsPage = await homePage.nav.goToBankAccounts();
+    // await expect(bankAccountsPage.header).toHaveText("Bank Accounts");
+  })
 });

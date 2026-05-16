@@ -14,6 +14,13 @@ export async function getTestUser(request: APIRequestContext) {
   return users[0];
 }
 
+export async function getTestUser2(request: APIRequestContext) {
+  const res = await request.get(`${BACKEND_URL}/testData/users`);
+  expect(res.status()).toBeTruthy();
+  const users = (await res.json()).results as User[];
+  return users[1];
+}
+
 /**
  * POST /login on the API host and store `connect.sid` on the browser context.
  *

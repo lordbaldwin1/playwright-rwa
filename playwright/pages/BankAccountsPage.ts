@@ -14,12 +14,13 @@ export class BankAccountsPage {
   readonly accountNumberError: Locator;
   readonly bankAccountSaveButton: Locator;
   readonly bankAccountListItems: Locator;
+  readonly deleteButtons: Locator;
   readonly header: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.nav = new Navigation(page);
-    this.header = this.page.getByRole("heading", { level: 2, name: "Bank Accounts" });
+    this.header = this.page.getByRole("heading", { level: 2, name: "Bank Accounts", exact: true });
     this.createNewBankAccountButton = this.page.getByTestId("bankaccount-new");
     this.bankNameInput = this.page.locator("#bankaccount-bankName-input");
     this.bankNameError = this.page.locator("#bankaccount-bankName-input-helper-text");
@@ -29,6 +30,7 @@ export class BankAccountsPage {
     this.accountNumberError = this.page.locator("#bankaccount-accountNumber-input-helper-text");
     this.bankAccountSaveButton = this.page.getByTestId("bankaccount-submit");
     this.bankAccountListItems = this.page.getByTestId(/bankaccount-list-item/);
+    this.deleteButtons = this.page.getByTestId("bankaccount-delete");
   }
 
   async goto() {
@@ -47,5 +49,22 @@ export class BankAccountsPage {
 
   async saveBankAccount() {
     await this.bankAccountSaveButton.click();
+  }
+
+  async findBankAccount(bankName: string) {
+    return this.bankAccountListItems.filter({
+      hasText: bankName,
+    });
+  }
+
+  async refresh() {
+    await this.page.reload();
+  }
+
+  async deleteBankAccount(bankName: string) {
+    const bankAccount = this.bankAccountListItems.filter ({ hasText: bankName });
+    const deleteButton = bankAccount.getByTestId("bankaccount-delete");
+    await deleteButton.click();
+    return bankAccount;
   }
 }
