@@ -10,6 +10,9 @@ export class NewTransactionPage {
   readonly requestButton: Locator;
   readonly paymentButton: Locator;
   readonly successToast: Locator;
+  readonly returnToTransactionButton: Locator;
+  readonly amountError: Locator;
+  readonly descriptionError: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -21,6 +24,9 @@ export class NewTransactionPage {
     this.requestButton = this.page.getByTestId("transaction-create-submit-request");
     this.paymentButton = this.page.getByTestId("transaction-create-submit-payment");
     this.successToast = this.page.getByTestId("alert-bar-success");
+    this.returnToTransactionButton = this.page.getByTestId("new-transaction-return-to-transactions");
+    this.amountError = this.page.locator("#transaction-create-amount-input-helper-text");
+    this.descriptionError = this.page.locator("#transaction-create-description-input-helper-text")
   }
 
   async goto() {
@@ -40,9 +46,18 @@ export class NewTransactionPage {
   async fillForm(payment: { amount: string; description: string }) {
     await this.amountInput.fill(payment.amount);
     await this.descriptionInput.fill(payment.description);
+    await this.descriptionInput.blur();
   }
 
   async submitPayment() {
     await this.paymentButton.click();
+  }
+
+  async submitRequest() {
+    await this.requestButton.click();
+  }
+
+  async returnToTransaction() {
+    await this.returnToTransactionButton.click();
   }
 }

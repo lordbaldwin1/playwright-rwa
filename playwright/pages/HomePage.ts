@@ -21,6 +21,7 @@ export class HomePage {
   readonly bankAccountSubmitButton: Locator;
   readonly transactionList: Locator;
   readonly transactions: Locator;
+  readonly personalTab: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -36,6 +37,7 @@ export class HomePage {
     this.bankAccountSubmitButton = this.page.getByTestId("bankaccount-submit");
     this.transactionList = this.page.getByTestId("transaction-list");
     this.transactions = this.transactionList.getByTestId(/transaction-item/);
+    this.personalTab = page.getByTestId("nav-personal-tab");
   }
 
   async goNextOnboardingScreen() {
@@ -69,5 +71,9 @@ export class HomePage {
 
   findTransactionByDescription(description: string) {
     return this.transactions.filter({ hasText: description });
+  }
+
+  async goToPersonalTab() {
+    await this.personalTab.click();
   }
 }

@@ -13,7 +13,6 @@ export class Navigation {
   readonly sideNavHome: Locator;
   readonly newTransactionButton: Locator;
   readonly userBalance: Locator;
-  readonly personalTab: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -24,7 +23,6 @@ export class Navigation {
     this.sideNavHome = page.getByTestId("sidenav-home");
     this.newTransactionButton = page.getByTestId("nav-top-new-transaction");
     this.userBalance = page.getByTestId("sidenav-user-balance");
-    this.personalTab = page.getByTestId("nav-personal-tab");
   }
 
   async openSideNav() {
@@ -41,14 +39,6 @@ export class Navigation {
     }
     await this.sideNavBankAccounts.click();
     return new BankAccountsPage(this.page);
-  }
-
-  async goToPersonalTab() {
-    if (isMobile(this.page)) {
-      await this.sideNavToggle.click();
-    }
-    await this.personalTab.click();
-    return new HomePage(this.page);
   }
 
   async goToHome() {

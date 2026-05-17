@@ -11,7 +11,7 @@
       "phoneNumber": "398-225-9900",
       "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Ted",
       "defaultPrivacyLevel": "public",
-      "balance": 147453,
+      "balance": 150953,
       "createdAt": "2023-03-09T22:26:40.101Z",
       "modifiedAt": "2024-03-07T10:07:57.580Z"
     },
@@ -26,7 +26,7 @@
       "phoneNumber": "410-786-2112",
       "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Kristian",
       "defaultPrivacyLevel": "private",
-      "balance": 93026,
+      "balance": 89526,
       "createdAt": "2023-04-23T13:52:10.979Z",
       "modifiedAt": "2024-03-07T09:07:46.709Z"
     },
@@ -76,26 +76,26 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "cn1jBVRWP",
-      "uuid": "dafc5fc0-501c-4bb6-9ac5-bb1235eb6784",
+      "id": "EBCmLj2RQ",
+      "uuid": "672a5e74-7f2a-4d73-899c-d054147e7550",
       "firstName": "Alice",
       "lastName": "Smith",
       "username": "ansel5",
-      "password": "$2a$10$.bXDGWCXOo5ZTLkWGoWvc.rMKowUwe1IDZMB5DJN6NqGgRoyHrkDi",
+      "password": "$2a$10$UnMNVoDfpjBm2GhyNBAZNu.3NoU6ay7hYeOStF5moOR1MEunnasJK",
       "balance": 3500,
-      "createdAt": "2026-05-17T05:43:42.963Z",
-      "modifiedAt": "2026-05-17T05:43:42.963Z"
+      "createdAt": "2026-05-17T06:13:55.465Z",
+      "modifiedAt": "2026-05-17T06:13:55.465Z"
     },
     {
-      "id": "oaIeVom4b9",
-      "uuid": "3bc411e0-f7c6-4bff-86a9-a5d613d7b245",
+      "id": "dhGS2Kefa",
+      "uuid": "1ff84aec-ece2-4e84-98d0-928ff63f7a81",
       "firstName": "zargin",
       "lastName": "testing",
       "username": "zargintester12",
-      "password": "$2a$10$g0Mdxg.fZVF278kKcswIu.R/fCsKDO5RId99lOuaA5kp0Lnz8a7R2",
+      "password": "$2a$10$nzMOH9T3jVkAfv0pmuviW.1NTzaU0ERvLHIEWCjyp0jQlA1QUMk7a",
       "balance": 0,
-      "createdAt": "2026-05-17T05:43:44.654Z",
-      "modifiedAt": "2026-05-17T05:43:44.654Z"
+      "createdAt": "2026-05-17T06:13:57.279Z",
+      "modifiedAt": "2026-05-17T06:13:57.279Z"
     }
   ],
   "contacts": [
@@ -277,37 +277,37 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "cFvYvKlvQ",
-      "uuid": "c316d0a8-93d0-4a6f-885c-c0e4385df5cf",
-      "userId": "cn1jBVRWP",
+      "id": "Wh2rsHint",
+      "uuid": "d0ed8391-2656-4cd4-97f0-546977d451a3",
+      "userId": "EBCmLj2RQ",
       "bankName": "The Best Bank",
       "accountNumber": "123456789",
       "routingNumber": "987654321",
       "isDeleted": false,
-      "createdAt": "2026-05-17T05:43:44.059Z",
-      "modifiedAt": "2026-05-17T05:43:44.059Z"
+      "createdAt": "2026-05-17T06:13:56.498Z",
+      "modifiedAt": "2026-05-17T06:13:56.498Z"
     },
     {
-      "id": "LxP5IQDPg",
-      "uuid": "e6d5883d-76c0-4a6f-8238-cc4cafa131f4",
+      "id": "rH3rkn4P-Y",
+      "uuid": "1b10496c-be2b-4fbf-8e4d-7ca732858d95",
+      "userId": "WHjJ4qR2R2",
+      "bankName": "Epic Bank Slay",
+      "accountNumber": "123456789",
+      "routingNumber": "123456789",
+      "isDeleted": true,
+      "createdAt": "2026-05-17T06:13:56.712Z",
+      "modifiedAt": "2026-05-17T06:13:56.712Z"
+    },
+    {
+      "id": "IXDcf7-WtT",
+      "uuid": "fcfbff20-1c7a-4fc5-b5c5-716b77fe678b",
       "userId": "M1ty1gR8B3",
       "bankName": "The Best Bank W3",
       "accountNumber": "987654321",
       "routingNumber": "123456789",
       "isDeleted": false,
-      "createdAt": "2026-05-17T05:43:44.263Z",
-      "modifiedAt": "2026-05-17T05:43:44.263Z"
-    },
-    {
-      "id": "vy0R4RC--l",
-      "uuid": "fcd62c31-b921-4ba7-b442-b4862a0a3e51",
-      "userId": "_XblMqbuoP",
-      "bankName": "Epic Bank Slay",
-      "accountNumber": "123456789",
-      "routingNumber": "123456789",
-      "isDeleted": true,
-      "createdAt": "2026-05-17T05:43:44.875Z",
-      "modifiedAt": "2026-05-17T05:43:44.875Z"
+      "createdAt": "2026-05-17T06:13:56.922Z",
+      "modifiedAt": "2026-05-17T06:13:56.922Z"
     }
   ],
   "transactions": [
@@ -9912,16 +9912,29 @@
       "modifiedAt": "2024-03-07T21:58:09.668Z"
     },
     {
-      "id": "o1EdTjDEe",
-      "uuid": "3fd549d0-d088-4bec-a125-828f91fb9f42",
+      "id": "HpuPOTFqI1",
+      "uuid": "4ca93eea-60f7-4665-9b50-6eb8bcc2ff31",
       "amount": 3500,
       "description": "Sushi dinner 🍣 1bae640d9f35757c3adb-5feda599dde218f1768b",
-      "receiverId": "cn1jBVRWP",
+      "receiverId": "EBCmLj2RQ",
+      "senderId": "GjWovtg2hr",
+      "privacyLevel": "private",
+      "status": "complete",
+      "createdAt": "2026-05-17T06:13:57.733Z",
+      "modifiedAt": "2026-05-17T06:13:57.733Z"
+    },
+    {
+      "id": "SDe2GNI7XY",
+      "uuid": "214a067f-e86c-4736-aa45-d7c93f3616f7",
+      "amount": 9500,
+      "description": "Fancy Hotel 🏨",
+      "receiverId": "EBCmLj2RQ",
       "senderId": "uBmeaz5pX",
       "privacyLevel": "public",
-      "status": "complete",
-      "createdAt": "2026-05-17T05:43:45.107Z",
-      "modifiedAt": "2026-05-17T05:43:45.107Z"
+      "status": "pending",
+      "requestStatus": "pending",
+      "createdAt": "2026-05-17T06:13:57.822Z",
+      "modifiedAt": "2026-05-17T06:13:57.822Z"
     }
   ],
   "likes": [
@@ -10500,14 +10513,24 @@
       "modifiedAt": "2024-03-07T17:13:52.110Z"
     },
     {
-      "id": "s4L15Nj4Hz",
-      "uuid": "d90b73b4-facb-4b30-8021-76e74144dd36",
-      "userId": "cn1jBVRWP",
-      "transactionId": "o1EdTjDEe",
+      "id": "hf-s_XnRBP",
+      "uuid": "2d2f5d94-782d-4cc2-8acb-aacc41f7400d",
+      "userId": "EBCmLj2RQ",
+      "transactionId": "HpuPOTFqI1",
       "status": "received",
       "isRead": false,
-      "createdAt": "2026-05-17T05:43:45.111Z",
-      "modifiedAt": "2026-05-17T05:43:45.111Z"
+      "createdAt": "2026-05-17T06:13:57.736Z",
+      "modifiedAt": "2026-05-17T06:13:57.736Z"
+    },
+    {
+      "id": "ki52GD1tm0",
+      "uuid": "b0fcb00c-48ba-49a8-a93e-961831b56bd1",
+      "userId": "EBCmLj2RQ",
+      "transactionId": "SDe2GNI7XY",
+      "status": "requested",
+      "isRead": false,
+      "createdAt": "2026-05-17T06:13:57.824Z",
+      "modifiedAt": "2026-05-17T06:13:57.824Z"
     }
   ],
   "banktransfers": [
