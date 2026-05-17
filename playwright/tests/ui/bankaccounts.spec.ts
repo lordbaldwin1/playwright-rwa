@@ -1,14 +1,7 @@
 import { expect, test } from "../../fixtures";
-import { getTestUser, loginWithXState } from "../../helpers/auth";
-import { BankAccountsPage } from "../../pages/BankAccountsPage";
 
 test.describe("bank accounts e2e tests", () => {
-  test.beforeEach(async ({ request, page }) => {
-    const user = await getTestUser(request);
-    await loginWithXState(page, user.username, process.env.TEST_PASSWORD);
-  });
-
-  test("creates a new bank account", async ({ homePage, page }) => {
+  test("creates a new bank account", async ({ loggedInTestUser: _user, homePage, page }) => {
     const workerIdx = test.info().workerIndex;
     const bankName = `The Best Bank W${workerIdx}`;
 
@@ -29,7 +22,7 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccount).toBeVisible();
   });
 
-  test("should display bank account form errors", async ({ homePage }) => {
+  test("should display bank account form errors", async ({ loggedInTestUser: _user, homePage }) => {
     const bankAccountsPage = await homePage.nav.goToBankAccounts();
     await expect(bankAccountsPage.header).toBeVisible();
     await bankAccountsPage.createNewBankAccount();
@@ -67,7 +60,7 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccountsPage.bankAccountSaveButton).toBeDisabled();
   });
 
-  test("soft deletes a bank account", async ({ homePage }) => {
+  test("soft deletes a bank account", async ({ loggedInTestUser: _user, homePage }) => {
     const bankAccountPage = await homePage.nav.goToBankAccounts();
     await expect(bankAccountPage.bankAccountListItems.first()).toBeVisible();
     await bankAccountPage.createNewBankAccount();
@@ -83,7 +76,12 @@ test.describe("bank accounts e2e tests", () => {
     await expect(deleted).toContainText("Deleted");
   });
 
-  test("NUX renders an empty bank account list state with onboarding modal", async ({ homePage, page, signUpPage }) => {
+  test("NUX renders an empty bank account list state with onboarding modal", async ({
+    loggedInTestUser: _user,
+    homePage,
+    page,
+    signUpPage,
+  }) => {
     // sign user out
     await homePage.nav.signOut();
 

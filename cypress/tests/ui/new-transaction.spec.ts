@@ -45,6 +45,7 @@ describe("New Transaction", function () {
 
     cy.getBySel("user-list-search-input").type(ctx.contact!.firstName, { force: true });
     cy.wait("@usersSearch");
+  
     cy.visualSnapshot("User Search First Name Input");
 
     cy.getBySelLike("user-list-item").contains(ctx.contact!.firstName).click({ force: true });

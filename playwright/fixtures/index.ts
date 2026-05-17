@@ -1,17 +1,25 @@
 import { test as base } from "@playwright/test";
 import { SignInPage } from "../pages/SignInPage";
-import { getTestUser } from "../helpers/auth";
+import { getWorkerScopedUsers, loginWithXState } from "../helpers/auth";
 import { User } from "models";
 import { SignUpPage } from "../pages/SignUpPage";
 import { BankAccountsPage } from "../pages/BankAccountsPage";
 import { HomePage } from "../pages/HomePage";
+import { NewTransactionPage } from "../pages/NewTransactionPage";
+import { Navigation } from "../components/Navigation";
+import type { WorkerScopedUsers } from "../helpers/auth";
 
 type Fixtures = {
   signInPage: SignInPage;
   signUpPage: SignUpPage;
   homePage: HomePage;
   bankAccountsPage: BankAccountsPage;
+  newTransactionPage: NewTransactionPage;
+  navigation: Navigation;
+  workerUsers: WorkerScopedUsers;
   testUser: User;
+  testContact: User;
+  loggedInTestUser: User;
 };
 
 export const test = base.extend<Fixtures>({
@@ -31,9 +39,27 @@ export const test = base.extend<Fixtures>({
     const bankAccountsPage = new BankAccountsPage(page);
     await use(bankAccountsPage);
   },
-  testUser: async ({ request }, use) => {
-    const user = await getTestUser(request);
-    await use(user);
+  newTransactionPage: async ({ page }, use) => {
+    const newTransactionPage = new NewTransactionPage(page);
+    await use(newTransactionPage);
+  },
+  navigation: async ({ page }, use) => {
+    const navigation = new Navigation(page);
+    await use(navigation);
+  },
+  workerUsers: async ({ request }, use, testInfo) => {
+    const pair = await getWorkerScopedUsers(request, testInfo.workerIndex);
+    await use(pair);
+  },
+  testUser: async ({ workerUsers }, use) => {
+    await use(workerUsers.testUser);
+  },
+  testContact: async ({ workerUsers }, use) => {
+    await use(workerUsers.testContact);
+  },
+  loggedInTestUser: async ({ page, testUser }, use) => {
+    await loginWithXState(page, testUser.username, process.env.TEST_PASSWORD);
+    await use(testUser);
   },
 });
 

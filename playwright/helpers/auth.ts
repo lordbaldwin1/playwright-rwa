@@ -2,6 +2,11 @@ import { APIRequestContext, expect, Page } from "@playwright/test";
 import { BACKEND_URL } from "../config";
 import { User } from "models";
 
+export type WorkerScopedUsers = {
+  testUser: User;
+  testContact: User;
+};
+
 type WindowWithAuthTestHooks = Window & {
   Cypress?: object;
   authService?: { send: (type: string, payload?: Record<string, string>) => void };
@@ -11,7 +16,31 @@ export async function getTestUser(request: APIRequestContext) {
   const res = await request.get(`${BACKEND_URL}/testData/users`);
   expect(res.status()).toBeTruthy();
   const users = (await res.json()).results as User[];
-  return users[0];
+  const testUser = users.find((u) => u.username === "Heath93");
+  if (!testUser) {
+    throw new Error("Heath93 username not present in database, failed to seed");
+  }
+  return testUser;
+}
+
+export async function getWorkerScopedUsers(
+  request: APIRequestContext,
+  workerIndex: number,
+): Promise<WorkerScopedUsers> {
+  const res = await request.get(`${BACKEND_URL}/testData/users`);
+  expect(res.ok()).toBeTruthy();
+
+  const users = (await res.json()).results as User[];
+
+  if (users.length < 2) {
+    throw new Error("Need at least 2 seeded users — did global setup seed run?");
+  }
+
+  const payerCount = users.length - 1;
+  const testUser = users[workerIndex % payerCount];
+  const testContact = users[users.length - 1];
+
+  return { testUser, testContact };
 }
 
 /**
@@ -21,11 +50,7 @@ export async function getTestUser(request: APIRequestContext) {
  * `authorized` (see App.tsx). Use {@link loginAsUserWithClientState} for UI tests,
  * or trigger a real sign-in flow after this call.
  */
-export async function apiLoginUser(
-  username: string,
-  password: string = "s3cret",
-  page: Page,
-) {
+export async function apiLoginUser(username: string, password: string = "s3cret", page: Page) {
   const res = await page.request.post(`${BACKEND_URL}/login`, {
     data: {
       username: username,
@@ -45,7 +70,7 @@ export async function apiLoginUser(
 export async function syncClientAuthAfterSessionCookie(
   page: Page,
   username: string,
-  password: string = process.env.TEST_PASSWORD ?? "s3cret",
+  password: string = process.env.TEST_PASSWORD ?? "s3cret"
 ) {
   await page.addInitScript(() => {
     const w = window as WindowWithAuthTestHooks;
@@ -57,7 +82,7 @@ export async function syncClientAuthAfterSessionCookie(
   await page.waitForFunction(
     () => typeof (window as WindowWithAuthTestHooks).authService?.send === "function",
     undefined,
-    { timeout: 10_000 },
+    { timeout: 10_000 }
   );
 
   await page.evaluate(
@@ -65,7 +90,7 @@ export async function syncClientAuthAfterSessionCookie(
       const w = window as WindowWithAuthTestHooks;
       w.authService!.send("LOGIN", { username, password });
     },
-    { username, password },
+    { username, password }
   );
 
   await expect(page.getByTestId("list-skeleton")).toBeHidden({ timeout: 15_000 });
@@ -75,7 +100,7 @@ export async function syncClientAuthAfterSessionCookie(
 export async function loginWithXState(
   page: Page,
   username: string,
-  password: string = process.env.TEST_PASSWORD ?? "s3cret",
+  password: string = process.env.TEST_PASSWORD ?? "s3cret"
 ) {
   await apiLoginUser(username, password, page);
   await syncClientAuthAfterSessionCookie(page, username, password);

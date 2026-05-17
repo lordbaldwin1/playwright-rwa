@@ -20,6 +20,7 @@ export class HomePage {
   readonly routingNumberInput: Locator;
   readonly bankAccountSubmitButton: Locator;
   readonly transactionList: Locator;
+  readonly transactions: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -34,6 +35,7 @@ export class HomePage {
     this.accountNumberInput = this.page.getByTestId("bankaccount-accountNumber-input").locator("input");
     this.bankAccountSubmitButton = this.page.getByTestId("bankaccount-submit");
     this.transactionList = this.page.getByTestId("transaction-list");
+    this.transactions = this.transactionList.getByTestId(/transaction-item/);
   }
 
   async goNextOnboardingScreen() {
@@ -63,5 +65,9 @@ export class HomePage {
     });
     await this.submitBankDetails();
     await this.goNextOnboardingScreen();
+  }
+
+  findTransactionByDescription(description: string) {
+    return this.transactions.filter({ hasText: description });
   }
 }

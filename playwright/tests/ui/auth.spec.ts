@@ -1,12 +1,8 @@
 import { expect, test } from "../../fixtures";
-import { getTestUser, loginWithXState } from "../../helpers/auth";
-import { reseedDatabase } from "../../helpers/database";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
-test.describe("user auth e2e tests", () => {  
-  test("should land on home after API login and XState sync", async ({ page, request }) => {
-    const user = await getTestUser(request);
-    await loginWithXState(page, user.username);
+test.describe("user auth e2e tests", () => {
+  test("should land on home after API login and XState sync", async ({ page, loggedInTestUser: _user }) => {
     await expect(page).toHaveURL("/");
   });
 
