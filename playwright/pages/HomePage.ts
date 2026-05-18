@@ -1,6 +1,7 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { Navigation } from "../components/Navigation";
 import { isMobile } from "../helpers/is-mobile";
+import { TransactionDetailPage } from "./TransactionDetailPage";
 
 export type OnboardingBankDetails = {
   bankName?: string;
@@ -92,5 +93,12 @@ export class HomePage {
 
   async rejectTransaction() {
     await this.transactionRejectButton.click();
+  }
+
+  async goToTransactionById(transactionId: string) {
+    const dataTest = `transaction-item-${transactionId}`;
+    await expect(this.page.getByTestId(dataTest)).toBeVisible();
+    await this.page.getByTestId(dataTest).click();
+    return new TransactionDetailPage(this.page);
   }
 }

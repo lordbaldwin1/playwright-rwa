@@ -193,7 +193,8 @@
     "codesandbox:start": "NODE_ENV=development TSC_COMPILE_ON_ERROR=true concurrently \"vite\" yarn:start:api:codesandbox",
     "postinstall": "husky install && patch-package",
     "prepw:test": "yarn predev:cognito:ci",
-    "pw:test": "playwright test"
+    "pw:test": "playwright test",
+    "pw:test:n": "playwright test tests/ui/notifications.spec.ts"
   },
   "engines": {
     "node": "^20.0.0 || ^22.0.0 || ^24.0.0"

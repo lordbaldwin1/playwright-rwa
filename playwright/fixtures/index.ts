@@ -10,6 +10,7 @@ import { Navigation } from "../components/Navigation";
 import type { WorkerScopedUsers } from "../helpers/auth";
 import { randomUUID } from "crypto";
 import { config } from "../config";
+import { TransactionDetailPage } from "../pages/TransactionDetailPage";
 
 type Fixtures = {
   signInPage: SignInPage;
@@ -17,6 +18,7 @@ type Fixtures = {
   homePage: HomePage;
   bankAccountsPage: BankAccountsPage;
   newTransactionPage: NewTransactionPage;
+  transactionDetailPage: TransactionDetailPage;
   navigation: Navigation;
   workerUsers: WorkerScopedUsers;
   testUser: User;
@@ -45,6 +47,10 @@ export const test = base.extend<Fixtures>({
   newTransactionPage: async ({ page }, use) => {
     const newTransactionPage = new NewTransactionPage(page);
     await use(newTransactionPage);
+  },
+  transactionDetailPage: async ({ page }, use) => {
+    const transactionDetailPage = new TransactionDetailPage(page);
+    await use(transactionDetailPage);
   },
   navigation: async ({ page }, use) => {
     const navigation = new Navigation(page);

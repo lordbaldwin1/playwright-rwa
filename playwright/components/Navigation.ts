@@ -4,6 +4,7 @@ import { BankAccountsPage } from "../pages/BankAccountsPage";
 import { HomePage } from "../pages/HomePage";
 import { NewTransactionPage } from "../pages/NewTransactionPage";
 import { SignInPage } from "../pages/SignInPage";
+import { NotificationsPage } from "../pages/NotificationsPage";
 
 export class Navigation {
   private readonly page: Page;
@@ -12,18 +13,20 @@ export class Navigation {
   readonly sideNavSignOut: Locator;
   readonly sideNavBankAccounts: Locator;
   readonly sideNavHome: Locator;
+  readonly sideNavNotifications: Locator;
   readonly newTransactionButton: Locator;
   readonly userBalance: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.notificationsCount = page.getByTestId("nav-top-notifications-count");
-    this.sideNavToggle = page.getByTestId("sidenav-toggle");
-    this.sideNavSignOut = page.getByTestId("sidenav-signout");
-    this.sideNavBankAccounts = page.getByTestId("sidenav-bankaccounts");
-    this.sideNavHome = page.getByTestId("sidenav-home");
-    this.newTransactionButton = page.getByTestId("nav-top-new-transaction");
-    this.userBalance = page.getByTestId("sidenav-user-balance");
+    this.notificationsCount = this.page.getByTestId("nav-top-notifications-count");
+    this.sideNavToggle = this.page.getByTestId("sidenav-toggle");
+    this.sideNavSignOut = this.page.getByTestId("sidenav-signout");
+    this.sideNavBankAccounts = this.page.getByTestId("sidenav-bankaccounts");
+    this.sideNavHome = this.page.getByTestId("sidenav-home");
+    this.newTransactionButton = this.page.getByTestId("nav-top-new-transaction");
+    this.userBalance = this.page.getByTestId("sidenav-user-balance");
+    this.sideNavNotifications = this.page.getByTestId("sidenav-notifications");
   }
 
   async openSideNav() {
@@ -60,5 +63,13 @@ export class Navigation {
     }
     await this.newTransactionButton.click();
     return new NewTransactionPage(this.page);
+  }
+
+  async goToNotifications() {
+    if (isMobile(this.page)) {
+      await this.openSideNav();
+    }
+    await this.sideNavNotifications.click();
+    return new NotificationsPage(this.page);
   }
 }
