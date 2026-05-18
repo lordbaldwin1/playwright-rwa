@@ -1,107 +1,103 @@
-# Notes from me
-I'm adapting the Cypress RWA to Playwright, including e2e & api tests.
-
-## TODO
-- [x] create unique users for transaction tests to remove conflict between mutating user balance
+# Playwright Real World App
 
 <p align="center">
-  <!-- We use two SVGs here so that this displays correctly
-    on Github. This might not look right in other Markdown previewers. -->
-  <img alt="Cypress Real World App Logo" src="./src/svgs/rwa-logo-light.svg#gh-dark-mode-only" />
-  <img alt="Cypress Real World App Logo" src="./src/svgs/rwa-logo.svg#gh-light-mode-only" />
+  <img alt="Real World App Logo" src="./src/svgs/rwa-logo-light.svg#gh-dark-mode-only" />
+  <img alt="Real World App Logo" src="./src/svgs/rwa-logo.svg#gh-light-mode-only" />
 </p>
 
 <p align="center">
-  <a href="https://cypress.io">
-    <img width="140" alt="Cypress Logo" src="./src/svgs/built-by-cypress.svg" />
-    </a>
-</p>
-
-<p align="center">
-   <a href="https://cloud.cypress.io/projects/7s5okt/runs">
-    <img src="https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/7s5okt/develop&style=flat&logo=cypress" />
-  </a>
-
-  <a href="https://codecov.io/gh/cypress-io/cypress-realworld-app">
-    <img src="https://codecov.io/gh/cypress-io/cypress-realworld-app/branch/develop/graph/badge.svg" />
-  </a>
-
-  <a href="https://percy.io/cypress-io/cypress-realworld-app">
-    <img src="https://percy.io/static/images/percy-badge.svg" />
-  </a>
-
-   <a href="#contributors-">
-    <img src="https://img.shields.io/badge/all_contributors-6-green.svg?style=flat" />
+  <a href="https://github.com/lordbaldwin1/playwright-rwa/actions/workflows/playwright.yml">
+    <img src="https://github.com/lordbaldwin1/playwright-rwa/actions/workflows/playwright.yml/badge.svg?branch=develop" alt="Playwright Tests" />
   </a>
 </p>
 
 <p align="center">
-A payment application to demonstrate <strong>real-world</strong> usage of <a href="https://cypress.io">Cypress</a> testing methods, patterns, and workflows.
+  A payment application adapted from the <a href="https://github.com/cypress-io/cypress-realworld-app">Cypress Real World App</a> for learning and practicing <strong>real-world</strong> test automation with <a href="https://playwright.dev">Playwright</a>.
 </p>
 
 <p align="center">
-  <img style='width: 70%' alt="Cypress Real World App" src="./public/img/rwa-readme-screenshot.png" />
+  <img style="width: 70%" alt="Real World App screenshot" src="./public/img/rwa-readme-screenshot.png" />
 </p>
 
-> 💬 **Note from maintainers**
->
-> This application is purely for demonstration and educational purposes. Its setup and configuration resemble typical real-world applications, but it's not a full-fledged production system. Use this app to learn, experiment, tinker, and practice application testing with Cypress.
->
-> Happy Testing!
+> This application is for demonstration and education only. It is not a production system. Use it to practice E2E and API testing patterns against a full-stack app that behaves like real software.
 
----
+## About this fork
 
-## Features
+This repo migrates the Cypress RWA test suite to Playwright, including:
 
-🛠 Built with [React][reactjs], [XState][xstate], [Express][express], [lowdb][lowdb], [Material-UI][material-ui] and [TypeScript][typescript]
-⚡️ Zero database dependencies
-🚀 Full-stack [Express][express]/[React][reactjs] application with real-world features and tests
-👮‍♂️ Local Authentication
-🔥 Database Seeding with End-to-end Tests
-💻 CI/CD + [Cypress Cloud][cypresscloud]
+- **E2E (UI) tests** — page objects, fixtures, and helpers under [`playwright/`](./playwright/)
+- **API setup in tests** — user creation, login, and bank-account setup via the backend API (see [`playwright/fixtures/`](./playwright/fixtures/))
+- **CI** — GitHub Actions runs Playwright on push/PR ([`.github/workflows/playwright.yml`](./.github/workflows/playwright.yml))
 
-## Getting Started
+The original Cypress tests remain under [`cypress/`](./cypress/) for reference but are not the focus of this fork.
 
-The Cypress Real-World App (RWA) is a full-stack Express/React application backed by a local JSON database ([lowdb]).
+## App stack
 
-The app is bundled with [example data](./data/database.json) (`data/database.json`) that contains everything you need to start using the app and run tests out-of-the-box.
+Built with [React](https://reactjs.org), [XState](https://xstate.js.org), [Express](https://expressjs.com), [lowdb](https://github.com/typicode/lowdb), [Material-UI](https://mui.com), and [TypeScript](https://typescriptlang.org).
 
-> 🚩 **Note**
->
-> You can login to the app with any of the [example app users](./data/database.json#L2). The default password for all users is `s3cret`.
-> Example users can be seen by running `yarn list:dev:users`.
+- Full-stack Express + React with local JSON database (no external DB)
+- Local username/password authentication
+- Database seeding for repeatable tests
+
+## Getting started
 
 ### Prerequisites
 
-This project requires [Node.js](https://nodejs.org/en/) to be installed on your machine. Refer to the [.node-version](./.node-version) file for the exact version.
-
-[Yarn Classic](https://classic.yarnpkg.com/) is also required. Once you have [Node.js](https://nodejs.org/en/) installed, execute the following to install the npm module [yarn](https://www.npmjs.com/package/yarn) (Classic - version 1) globally.
+- [Node.js](https://nodejs.org/) — see [.node-version](./.node-version)
+- [Yarn Classic](https://classic.yarnpkg.com/) (v1)
 
 ```shell
 npm install yarn@latest -g
 ```
 
-If you have Node.js' experimental [Corepack](https://nodejs.org/dist/latest/docs/api/corepack.html) feature enabled, then you should skip the step `npm install yarn@latest -g` to install Yarn Classic globally. The RWA project is locally configured for `Corepack` to use Yarn Classic (version 1).
-
-#### Yarn Modern
-
-**This project is not compatible with [Yarn Modern](https://yarnpkg.com/) (version 2 and later).**
+> **Note:** This project uses Yarn Classic (v1), not Yarn Modern (v2+). If you use Corepack, the repo is configured for Yarn v1.
 
 ### Installation
 
-To clone the repo to your local system and install dependencies, execute the following commands:
-
 ```shell
-git clone https://github.com/cypress-io/cypress-realworld-app
-cd cypress-realworld-app
+git clone https://github.com/lordbaldwin1/playwright-rwa.git
+cd playwright-rwa
 yarn
 ```
 
-#### Mac users with M-series chips will need to prepend `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true`.
+**Mac (Apple Silicon):** if install fails on Chromium/Puppeteer, try:
 
 ```shell
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install
 ```
+
+### Environment
+
+The repo ships with a [`.env`](./.env) file. Key variables:
+
+**Ports**
+
+| Variable | Default | Purpose |
+| -------- | ------- | ------- |
+| `PORT` | `3000` | React frontend |
+| `VITE_BACKEND_PORT` | `3001` | Express API |
+
+**Database seeding** (used by `yarn dev`, `yarn db:seed`, and Playwright global setup)
+
+| Variable | Default | Purpose |
+| -------- | ------- | ------- |
+| `SEED_USERBASE_SIZE` | `5` | Number of users in the seed DB; Playwright worker fixtures expect at least 2 |
+| `SEED_DEFAULT_USER_PASSWORD` | `s3cret` | Password for all seeded users |
+| `SEED_CONTACTS_PER_USER` | `3` | Contacts per user |
+| `SEED_PAYMENTS_PER_USER` | `15` | Payments per user |
+| `SEED_REQUESTS_PER_USER` | `10` | Requests per user |
+| `SEED_BANK_ACCOUNTS_PER_USER` | `1` | Bank accounts per user |
+| `SEED_LIKES_PER_USER` | `2` | Likes per user |
+| `SEED_COMMENTS_PER_USER` | `2` | Comments per user |
+| `SEED_NOTIFICATIONS_PER_USER` | `5` | Notifications per user |
+| `SEED_BANK_TRANSFERS_PER_USER` | `5` | Bank transfers per user |
+| `PAGINATION_PAGE_SIZE` | `10` | API pagination page size |
+
+Playwright reads `PORT`, `VITE_BACKEND_PORT`, `SEED_DEFAULT_USER_PASSWORD`, and `SEED_USERBASE_SIZE` via [`playwright/config.ts`](./playwright/config.ts).
+
+> Keep default ports (`3000` / `3001`) in CI. If you change ports locally, update `.env` only — do not commit port overrides meant for local dev.
+
+Optional Auth0, Okta, Cognito, and Google variables are documented in `.env` (commented out) for the legacy `yarn dev:auth0` / `dev:okta` flows from the upstream app.
 
 ### Run the app
 
@@ -109,202 +105,81 @@ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install
 yarn dev
 ```
 
-> 🚩 **Note**
->
-> The app will run on port `3000` (frontend) and `3001` (API backend) by default. Please make sure there are no other applications or services running on both ports.
-> If you want to change the default ports, you can do so by modifying `PORT` and `VITE_BACKEND_PORT` variables in `.env` file.
-> However, make sure the modified port numbers in `.env` are not committed into Git since the CI environments still expect the application to run on the default ports.
+- Frontend: `http://localhost:3000` (or `PORT`)
+- API: `http://localhost:3001` (or `VITE_BACKEND_PORT`)
 
-### Start Cypress
+Log in with any user from [`data/database.json`](./data/database.json). Default password for seeded users: `s3cret` (or your `SEED_DEFAULT_USER_PASSWORD`).
+
+List dev users:
 
 ```shell
-yarn cypress:open
+yarn list:dev:users
 ```
 
-> 🚩 **Note**
->
-> If you have changed the default ports, then you need to update Cypress configuration file (`cypress.config.ts`) locally.
-> There are three properties that you need to update in `cypress.config.ts`: `e2e.baseUrl`, `env.apiUrl`, and `env.url`.
-> The port number in `e2e.baseUrl` corresponds to `PORT` variable in `.env` file. Similarly, the port number in `env.apiUrl` and `env.url` correspond to `VITE_BACKEND_PORT`.
-> For example, if you have changed `PORT` to `13000` and `VITE_BACKEND_PORT` to `13001` in `.env` file, then your `cypress.config.ts` should look similar to the following snippet:
->
-> ```js
-> {
->   env: {
->     apiUrl: "http://localhost:13001",
->     codeCoverage: {
->       url: "http://localhost:13001/__coverage__"
->     },
->   },
->   e2e: {
->     baseUrl: "http://localhost:13000"
->   }
-> }
-> ```
->
-> Avoid committing the modified `cypress.config.ts` into Git since the CI environments still expect the application to be run on default ports.
+## Playwright tests
 
-## Tests
+Playwright starts the API and React app automatically via `webServer` in [`playwright.config.ts`](./playwright.config.ts). A global setup project reseeds the database before tests run.
 
-| Type      | Location                                 |
-| --------- | ---------------------------------------- |
-| api       | [cypress/tests/api](./cypress/tests/api) |
-| ui        | [cypress/tests/ui](./cypress/tests/ui)   |
-| component | [src/(next to component)](./src)         |
-| unit      | [`src/__tests__`](./src/__tests__)       |
+### Run tests
+
+```shell
+# Install browsers (first time)
+yarn playwright install --with-deps
+
+# Run all Playwright tests (headless)
+yarn pw:test
+
+# Interactive UI mode
+npx playwright test --ui
+
+# Headed browser
+npx playwright test --headed
+
+# Open last HTML report
+npx playwright show-report
+```
+
+### Test layout
+
+| Type | Location | Notes |
+| ---- | -------- | ----- |
+| Global setup | [`playwright/tests/global.setup.ts`](./playwright/tests/global.setup.ts) | Reseeds DB via `/testData/seed` |
+| UI (E2E) | [`playwright/tests/ui/`](./playwright/tests/ui/) | Auth, bank accounts, transactions |
+| Page objects | [`playwright/pages/`](./playwright/pages/) | Sign-in, home, bank accounts, etc. |
+| Fixtures | [`playwright/fixtures/index.ts`](./playwright/fixtures/index.ts) | Seeded users, unique API users, logged-in state |
+
+### Auth in tests
+
+This SPA needs both a session cookie and XState in `authorized` state. Use [`loginWithXState`](./playwright/helpers/auth.ts) (or the `loggedInTestUser` / `uniqueLoggedInUser` fixtures) instead of UI sign-in alone when you need a ready-to-use session.
 
 ## Database
 
-- The local JSON database is located in [data/database.json](./data/database.json) and is managed with [lowdb].
+- Data file: [`data/database.json`](./data/database.json) ([lowdb](https://github.com/typicode/lowdb))
+- Seed source: [`data/database-seed.json`](./data/database-seed.json)
+- Reseed manually: `yarn db:seed`
+- Empty DB demo: `yarn start:empty`
 
-- The database is [reseeded](./data/database-seed.json) each time the application is started (via `yarn dev`). Database seeding is done in between each [Cypress End-to-End test](./cypress/tests).
+`yarn dev` reseeds on start. Playwright global setup reseeds before each test run.
 
-- Updates via the React frontend are sent to the [Express][express] server and handled by a set of [database utilities](backend/database.ts)
+## Useful scripts
 
-- Generate a new database using `yarn db:seed`.
+| Script | Description |
+| ------ | ----------- |
+| `yarn dev` | Start API (watch) + frontend |
+| `yarn start` | Start API + frontend (no watch) |
+| `yarn pw:test` | Run Playwright tests |
+| `yarn db:seed` | Regenerate seed data in `/data` |
+| `yarn list:dev:users` | Print seeded user ids and usernames |
+| `yarn types` | Typecheck the project |
 
-- An [empty database seed](./data/empty-seed.json) is provided along with a script (`yarn start:empty`) to view the application without data.
+See [`package.json`](./package.json) for the full list (including legacy Cypress scripts).
 
-## Additional NPM Scripts
+## CI
 
-| Script         | Description                                                                                                                                                                       |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| dev            | Starts backend in watch mode and frontend                                                                                                                                         |
-| dev:coverage   | Starts backend in watch mode and frontend with instrumented code coverage enabled                                                                                                 |
-| dev:auth0      | Starts backend in watch mode and frontend; [Uses Auth0 for Authentication](#auth0) > [Read Guide](http://on.cypress.io/auth0)                                                     |
-| dev:okta       | Starts backend in watch mode and frontend; [Uses Okta for Authentication](#okta) > [Read Guide](http://on.cypress.io/okta)                                                        |
-| dev:cognito    | Starts backend in watch mode and frontend; [Uses Cognito for Authentication](#amazon-cognito) > [Read Guide](http://on.cypress.io/amazon-cognito)                                 |
-| dev:google     | Starts backend in watch mode and frontend; [Uses Google for Authentication](#google) > [Read Guide](https://docs.cypress.io/guides/testing-strategies/google-authentication.html) |
-| start          | Starts backend and frontend                                                                                                                                                       |
-| types          | Validates types                                                                                                                                                                   |
-| db:seed        | Generates fresh database seeds for json files in /data                                                                                                                            |
-| start:empty    | Starts backend, frontend and Cypress with empty database seed                                                                                                                     |
-| tsnode         | Customized ts-node command to get around react-scripts restrictions                                                                                                               |
-| list:dev:users | Provides id and username for users in the dev database                                                                                                                            |
-
-For a complete list of scripts see [package.json](./package.json)
-
-## Code Coverage Report
-
-The Cypress Real-World App uses the [@cypress/code-coverage](https://github.com/cypress-io/code-coverage) plugin to generate code coverage reports for the app frontend and backend.
-
-To generate a code coverage report:
-
-1. Start the development server with coverage enabled by running `yarn dev:coverage`.
-2. Run `yarn cypress:run --env coverage=true` and wait for the test run to complete.
-3. Once the test run is complete, you can view the report at `coverage/index.html`.
-
-## 3rd Party Authentication Providers
-
-Support for 3rd party authentication is available in the application to demonstrate the concepts on logging in with a 3rd party provider.
-
-The app contains different entry points for each provider. There is a separate **index** file for each provider, and to use one, you must replace the current **index.tsx** file with the desired one. The following providers are supported:
-
-- [Auth0](#auth0) (index.auth0.tsx)
-- [Okta](#okta) (index.okta.tsx)
-- [Amazon Cognito](#amazon-cognito) (index.cognito.tsx)
-- [Google](#google) (index.google.tsx)
-
-### Auth0
-
-The [Auth0](https://auth0.com/) tests have been rewritten to take advantage of our [`cy.session`](https://docs.cypress.io/api/commands/session) and [`cy.origin`](https://docs.cypress.io/api/commands/origin) commands.
-
-Prerequisites include an Auth0 account and a Tenant configured for use with a SPA. Environment variables from Auth0 are to be placed in the [.env](./.env). For more details see [Auth0 Application Setup](http://on.cypress.io/auth0#Auth0-Application-Setup) and [Setting Auth0 app credentials in Cypress](http://on.cypress.io/auth0#Setting-Auth0-app-credentials-in-Cypress).
-
-To start the application with Auth0, replace the current **src/index.tsx** file with the **src/index.auth0.tsx** file and start the application with `yarn dev:auth0` and run Cypress with `yarn cypress:open`.
-
-The only passing spec on this branch will be the [auth0 spec](./cypress/tests/ui-auth-providers/auth0.spec.ts); all others will fail. Please note that your test user will need to authorize your Auth0 app before the tests will pass.
-
-### Okta
-
-A [guide has been written with detail around adapting the RWA](http://on.cypress.io/okta) to use [Okta][okta] and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an [Okta][okta] account and [application configured for use with a SPA][oktacreateapp]. Environment variables from [Okta][okta] are to be placed in the [.env](./.env).
-
-To start the application with Okta, replace the current **src/index.tsx** file with the **src/index.okta.tsx** file and start the application with `yarn dev:okta` and run Cypress with `yarn cypress:open`.
-
-The **only passing spec on this branch** will be the [okta spec](./cypress/tests/ui-auth-providers/okta.spec.ts); all others will fail.
-
-### Amazon Cognito
-
-A [guide has been written with detail around adapting the RWA](http://on.cypress.io/amazon-cognito) to use [Amazon Cognito][cognito] as the authentication solution and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an [Amazon Cognito][cognito] account. Environment variables from [Amazon Cognito][cognito] are provided by the [AWS Amplify CLI][awsamplify].
-
-- A user pool is required (identity pool is not used here)
-  - The user pool must have a hosted UI domain configured, which must:
-    - allow callback and sign-out URLs of `http://localhost:3000/`,
-    - allow implicit grant Oauth grant type,
-    - allow these OpenID Connect scopes:
-      - aws.cognito.signin.user.admin
-      - email
-      - openid
-  - The user pool must have an app client configured, with:
-    - enabled auth flow `ALLOW_USER_PASSWORD_AUTH`, only for programmatic login flavor of test.
-    - The `cy.origin()` flavor of test only requires auth flow `ALLOW_USER_SRP_AUTH`, and does not require `ALLOW_USER_PASSWORD_AUTH`.
-  - The user pool must have a user corresponding to the `AWS_COGNITO` env vars mentioned below, and the user's Confirmation Status must be `Confirmed`. If it is `Force Reset Password`, then use a browser to log in once at `http://localhost:3000` while `yarn dev:cognito` is running to reset their password.
-
-The test knobs are in a few places:
-
-- The `.env` file has `VITE_AUTH_TOKEN_NAME` and vars beginning `AWS_COGNITO`. Be careful not to commit any secrets.
-- Both `scripts/mock-aws-exports.js` and `scripts/mock-aws-exports-es5.js` must have the same data; only their export statements differ. These files can be edited manually or exported from the amplify CLI.
-- `cypress.config.ts` has `cognito_programmatic_login` to control flavor of the test.
-
-To start the application with Cognito, replace the current **src/index.tsx** file with the **src/index.cognito.tsx** file and start the application with `yarn dev:cognito` and run Cypress with `yarn cypress:open`. `yarn dev` may need to have been run once first.
-
-The **only passing spec on this branch** will be the [cognito spec](./cypress/tests/ui-auth-providers/cognito.spec.ts); all others will fail.
-
-### Google
-
-A [guide has been written with detail around adapting the RWA](https://docs.cypress.io/guides/testing-strategies/google-authentication.html) to use [Google][google] as the authentication solution and to explain the programmatic command used for Cypress tests.
-
-Prerequisites include an [Google][google] account. Environment variables from [Google][google] are to be placed in the [.env](./.env).
-
-To start the application with Google, replace the current **src/index.tsx** file with the **src/index.google.tsx** file and start the application with `yarn dev:google` and run Cypress with `yarn cypress:open`.
-
-The **only passing spec** when run with `yarn dev:google` will be the [google spec](./cypress/tests/ui-auth-providers/google.spec.ts); all others will fail.
+Playwright runs on GitHub Actions for branches `main`, `master`, and `develop`. Failed runs upload the `playwright-report` artifact for 30 days.
 
 ## License
 
-[![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cypress-io/cypress/blob/master/LICENSE)
+MIT — see [LICENSE](./LICENSE).
 
-This project is licensed under the terms of the [MIT license](/LICENSE).
-
-[reactjs]: https://reactjs.org
-[xstate]: https://xstate.js.org
-[express]: https://expressjs.com
-[lowdb]: https://github.com/typicode/lowdb
-[typescript]: https://typescriptlang.org
-[cypresscloud]: https://cloud.cypress.io/projects/7s5okt/runs
-[material-ui]: https://material-ui.com
-[okta]: https://okta.com
-[auth0]: https://auth0.com
-[oktacreateapp]: https://developer.okta.com/docs/guides/sign-into-spa/react/create-okta-application/
-[cognito]: https://aws.amazon.com/cognito
-[awsamplify]: https://amplify.aws
-[google]: https://google.com
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="http://www.kevinold.com"><img src="https://avatars0.githubusercontent.com/u/21967?v=4" width="100px;" alt=""/><br /><sub><b>Kevin Old</b></sub></a></td>
-    <td align="center"><a href="https://twitter.com/amirrustam"><img src="https://avatars0.githubusercontent.com/u/334337?v=4" width="100px;" alt=""/><br /><sub><b>Amir Rustamzadeh</b></sub></a></td>
-    <td align="center"><a href="https://twitter.com/be_mann"><img src="https://avatars2.githubusercontent.com/u/1268976?v=4" width="100px;" alt=""/><br /><sub><b>Brian Mann</b></sub></a></td>
-    <td align="center"><a href="https://glebbahmutov.com/"><img src="https://avatars1.githubusercontent.com/u/2212006?v=4" width="100px;" alt=""/><br /><sub><b>Gleb Bahmutov</b></sub></a></td>
-    <td align="center"><a href="http://www.bencodezen.io"><img src="https://avatars0.githubusercontent.com/u/4836334?v=4" width="100px;" alt=""/><br /><sub><b>Ben Hong</b></sub></a></td>
-    <td align="center"><a href="https://github.com/davidkpiano"><img src="https://avatars2.githubusercontent.com/u/1093738?v=4" width="100px;" alt=""/><br /><sub><b>David Khourshid</b></sub></a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!!
+Based on [cypress-io/cypress-realworld-app](https://github.com/cypress-io/cypress-realworld-app).
