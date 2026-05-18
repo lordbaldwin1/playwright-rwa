@@ -1,3 +1,9 @@
+# Notes from me
+I'm adapting the Cypress RWA to Playwright, including e2e & api tests.
+
+## TODO
+- [] create unique users for transaction tests to remove conflict between mutating user balance
+
 <p align="center">
   <!-- We use two SVGs here so that this displays correctly
     on Github. This might not look right in other Markdown previewers. -->
