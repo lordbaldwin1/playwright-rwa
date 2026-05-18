@@ -11,7 +11,7 @@
       "phoneNumber": "398-225-9900",
       "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Ted",
       "defaultPrivacyLevel": "public",
-      "balance": 150953,
+      "balance": 148953,
       "createdAt": "2023-03-09T22:26:40.101Z",
       "modifiedAt": "2024-03-07T10:07:57.580Z"
     },
@@ -26,7 +26,7 @@
       "phoneNumber": "410-786-2112",
       "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Kristian",
       "defaultPrivacyLevel": "private",
-      "balance": 94526,
+      "balance": 93026,
       "createdAt": "2023-04-23T13:52:10.979Z",
       "modifiedAt": "2024-03-07T09:07:46.709Z"
     },
@@ -56,7 +56,7 @@
       "phoneNumber": "467-316-5352",
       "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Ruthie",
       "defaultPrivacyLevel": "private",
-      "balance": 115683,
+      "balance": 114183,
       "createdAt": "2024-02-08T11:33:03.159Z",
       "modifiedAt": "2024-03-07T16:44:43.874Z"
     },
@@ -76,26 +76,40 @@
       "modifiedAt": "2024-03-07T00:07:36.510Z"
     },
     {
-      "id": "-uPFLYP7z",
-      "uuid": "d9fc279f-fd03-4ce4-9571-9fe1496b1ced",
+      "id": "1UL3Znt-s",
+      "uuid": "0dd99802-110b-4d67-ac31-ed2819653df2",
       "firstName": "Alice",
       "lastName": "Smith",
       "username": "ansel5",
-      "password": "$2a$10$KClcFwpHTs1lR.hNoSxeLu5E2wQtNbLWZd.4Tf7J0PgnpD5EUt9XC",
+      "password": "$2a$10$Of8TGQffIarAhJYM.SkPrO3ownHypI8iJOFvb5ARbFKBH29BnTlE.",
       "balance": 0,
-      "createdAt": "2026-05-18T01:06:03.844Z",
-      "modifiedAt": "2026-05-18T01:06:03.844Z"
+      "createdAt": "2026-05-18T04:27:48.532Z",
+      "modifiedAt": "2026-05-18T04:27:48.532Z"
     },
     {
-      "id": "fAvir7toes",
-      "uuid": "5b62aa9e-5069-4d85-9805-f39a638ed8c0",
+      "id": "rBMxcWnmnH",
+      "uuid": "ba0035d6-4816-49da-87c2-c9d0e8346162",
       "firstName": "zargin",
       "lastName": "testing",
       "username": "zargintester12",
-      "password": "$2a$10$0QtRiL80cXZpqOXh3l0HxucNxwqk.KINfHnsuijpl.mBD348NA3mK",
+      "password": "$2a$10$TnzDRqBB06OyrhBSYZyXrucYBIkxZXUT9h5m3cxhKkEnhGO2bWWgW",
       "balance": 0,
-      "createdAt": "2026-05-18T01:06:05.509Z",
-      "modifiedAt": "2026-05-18T01:06:05.509Z"
+      "createdAt": "2026-05-18T04:27:50.534Z",
+      "modifiedAt": "2026-05-18T04:27:50.534Z"
+    },
+    {
+      "id": "IPSmDkdGI",
+      "uuid": "06c2d909-3ef5-43b3-87df-f4fda2431532",
+      "firstName": "test",
+      "lastName": "tester",
+      "username": "usera2bdce13-9e09-41b5-bc2c-d54151305480",
+      "password": "$2a$10$.XJRKAOiPLMuiib0Ljr/luZ5AA1hZ9liYYDHBo5bQtswJahKmmkVG",
+      "email": "usera2bdce13-9e09-41b5-bc2c-d54151305480@example.com",
+      "phoneNumber": "555-123-4567",
+      "balance": 15000,
+      "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Jane",
+      "createdAt": "2026-05-18T04:27:51.232Z",
+      "modifiedAt": "2026-05-18T04:27:51.232Z"
     }
   ],
   "contacts": [
@@ -277,37 +291,48 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "jMCUY5lCs",
-      "uuid": "c1ef152c-a9f4-458a-b48d-be6b6a376893",
-      "userId": "-uPFLYP7z",
+      "id": "YXXhfZHgl",
+      "uuid": "d4ccadc8-b4a8-4787-987b-e031ccf5d32e",
+      "userId": "1UL3Znt-s",
       "bankName": "The Best Bank",
       "accountNumber": "123456789",
       "routingNumber": "987654321",
       "isDeleted": false,
-      "createdAt": "2026-05-18T01:06:04.717Z",
-      "modifiedAt": "2026-05-18T01:06:04.717Z"
+      "createdAt": "2026-05-18T04:27:49.572Z",
+      "modifiedAt": "2026-05-18T04:27:49.572Z"
     },
     {
-      "id": "NGmBHS-nP",
-      "uuid": "b434a5fe-4214-4854-84b1-60b79bf564e8",
-      "userId": "_XblMqbuoP",
+      "id": "UMFTj2cRnE",
+      "uuid": "d3175a70-a419-4b90-bc0f-ce8e38cd7f03",
+      "userId": "uBmeaz5pX",
+      "bankName": "The Best Bank W4",
+      "accountNumber": "987654321",
+      "routingNumber": "123456789",
+      "isDeleted": false,
+      "createdAt": "2026-05-18T04:27:49.896Z",
+      "modifiedAt": "2026-05-18T04:27:49.896Z"
+    },
+    {
+      "id": "flIOWdh7S",
+      "uuid": "73292969-e33a-4bbb-b156-27f44bb56641",
+      "userId": "GjWovtg2hr",
       "bankName": "Epic Bank Slay",
       "accountNumber": "123456789",
       "routingNumber": "123456789",
       "isDeleted": true,
-      "createdAt": "2026-05-18T01:06:05.157Z",
-      "modifiedAt": "2026-05-18T01:06:05.157Z"
+      "createdAt": "2026-05-18T04:27:50.212Z",
+      "modifiedAt": "2026-05-18T04:27:50.212Z"
     },
     {
-      "id": "LCSluk-e9Z",
-      "uuid": "d3b5f7fd-6fcd-4be9-ba7e-84b56a76f45f",
-      "userId": "M1ty1gR8B3",
-      "bankName": "The Best Bank W3",
-      "accountNumber": "987654321",
+      "id": "iD8EbaaE46",
+      "uuid": "e1df6a13-13f1-45e3-b55c-11870429874d",
+      "userId": "IPSmDkdGI",
+      "bankName": "Test Bank",
+      "accountNumber": "123456789",
       "routingNumber": "123456789",
       "isDeleted": false,
-      "createdAt": "2026-05-18T01:06:05.369Z",
-      "modifiedAt": "2026-05-18T01:06:05.369Z"
+      "createdAt": "2026-05-18T04:27:51.429Z",
+      "modifiedAt": "2026-05-18T04:27:51.429Z"
     }
   ],
   "transactions": [
@@ -9912,54 +9937,53 @@
       "modifiedAt": "2024-03-07T21:58:09.668Z"
     },
     {
-      "id": "oZ_Vh_uU7",
-      "uuid": "2e8eb5a7-1baa-4a73-b08a-b62dd32fcfc1",
-      "amount": 9500,
-      "description": "Fancy Hotel 🏨",
-      "receiverId": "WHjJ4qR2R2",
-      "senderId": "_XblMqbuoP",
-      "privacyLevel": "contacts",
-      "status": "pending",
-      "requestStatus": "pending",
-      "createdAt": "2026-05-18T01:06:06.523Z",
-      "modifiedAt": "2026-05-18T01:06:06.523Z"
-    },
-    {
-      "id": "mXNRt0rlPA",
-      "uuid": "b0cf3045-3ca5-46e1-a949-88e0fa0356d7",
+      "id": "_-bcakid8o",
+      "uuid": "da2792f0-75a4-485e-a2db-61cc4434c961",
       "amount": 3500,
       "description": "Sushi dinner 🍣 1bae640d9f35757c3adb-5feda599dde218f1768b",
-      "receiverId": "WHjJ4qR2R2",
-      "senderId": "GjWovtg2hr",
-      "privacyLevel": "private",
-      "status": "complete",
-      "createdAt": "2026-05-18T01:06:06.697Z",
-      "modifiedAt": "2026-05-18T01:06:06.697Z"
-    },
-    {
-      "id": "JkU50N9DpW",
-      "uuid": "118cf81a-c4c6-4e39-b80d-e419208fe688",
-      "amount": 5000,
-      "description": "accept this bro!",
-      "receiverId": "WHjJ4qR2R2",
-      "senderId": "GjWovtg2hr",
-      "privacyLevel": "private",
-      "status": "complete",
-      "requestStatus": "accepted",
-      "createdAt": "2026-05-18T01:06:07.018Z",
-      "modifiedAt": "2026-05-18T01:06:07.018Z"
-    },
-    {
-      "id": "O12M7q2xF",
-      "uuid": "5efcc5a8-a146-4271-8b94-91b3ba0661bd",
-      "amount": 2000,
-      "description": "Super awesome sandwich",
       "receiverId": "WHjJ4qR2R2",
       "senderId": "M1ty1gR8B3",
       "privacyLevel": "private",
       "status": "complete",
-      "createdAt": "2026-05-18T01:06:07.074Z",
-      "modifiedAt": "2026-05-18T01:06:07.074Z"
+      "createdAt": "2026-05-18T04:27:50.926Z",
+      "modifiedAt": "2026-05-18T04:27:50.926Z"
+    },
+    {
+      "id": "OM8ugsELv7",
+      "uuid": "c56e7e99-b76c-4b50-8fa1-b7335451f8bf",
+      "amount": 9500,
+      "description": "Fancy Hotel 🏨",
+      "receiverId": "WHjJ4qR2R2",
+      "senderId": "GjWovtg2hr",
+      "privacyLevel": "private",
+      "status": "pending",
+      "requestStatus": "pending",
+      "createdAt": "2026-05-18T04:27:51.410Z",
+      "modifiedAt": "2026-05-18T04:27:51.410Z"
+    },
+    {
+      "id": "6qb1pcl1bP",
+      "uuid": "21aedf96-03e9-4e15-9337-d801a3a9d72b",
+      "amount": 2000,
+      "description": "Super awesome sandwich",
+      "receiverId": "WHjJ4qR2R2",
+      "senderId": "uBmeaz5pX",
+      "privacyLevel": "public",
+      "status": "complete",
+      "createdAt": "2026-05-18T04:27:51.909Z",
+      "modifiedAt": "2026-05-18T04:27:51.909Z"
+    },
+    {
+      "id": "1e9FwLmHq",
+      "uuid": "2d76a457-1375-46d9-98dc-3a9f0b9cc3dd",
+      "amount": 5000,
+      "description": "accept this bro!",
+      "receiverId": "WHjJ4qR2R2",
+      "senderId": "IPSmDkdGI",
+      "status": "complete",
+      "requestStatus": "accepted",
+      "createdAt": "2026-05-18T04:27:52.105Z",
+      "modifiedAt": "2026-05-18T04:27:52.105Z"
     }
   ],
   "likes": [
@@ -10538,54 +10562,54 @@
       "modifiedAt": "2024-03-07T17:13:52.110Z"
     },
     {
-      "id": "MjEurMDXLG",
-      "uuid": "ec352121-5bdb-46d3-ae18-5d18e0a422c1",
+      "id": "UxQV7f9ZbT",
+      "uuid": "90678aa0-94b3-4019-9635-44b5d2c6bbd9",
       "userId": "WHjJ4qR2R2",
-      "transactionId": "oZ_Vh_uU7",
+      "transactionId": "_-bcakid8o",
+      "status": "received",
+      "isRead": false,
+      "createdAt": "2026-05-18T04:27:50.939Z",
+      "modifiedAt": "2026-05-18T04:27:50.939Z"
+    },
+    {
+      "id": "aLjMXthEKo",
+      "uuid": "93f81e2b-e815-4b03-a767-36ac44319424",
+      "userId": "WHjJ4qR2R2",
+      "transactionId": "OM8ugsELv7",
       "status": "requested",
       "isRead": false,
-      "createdAt": "2026-05-18T01:06:06.538Z",
-      "modifiedAt": "2026-05-18T01:06:06.538Z"
+      "createdAt": "2026-05-18T04:27:51.413Z",
+      "modifiedAt": "2026-05-18T04:27:51.413Z"
     },
     {
-      "id": "tao-YSxj3D",
-      "uuid": "39a4c3e5-4bd4-47f0-9c38-36c86c568b53",
+      "id": "mGmCYd5GmV",
+      "uuid": "791ad004-744f-41f7-b09d-035d057506f1",
       "userId": "WHjJ4qR2R2",
-      "transactionId": "mXNRt0rlPA",
+      "transactionId": "6qb1pcl1bP",
       "status": "received",
       "isRead": false,
-      "createdAt": "2026-05-18T01:06:06.713Z",
-      "modifiedAt": "2026-05-18T01:06:06.713Z"
+      "createdAt": "2026-05-18T04:27:51.915Z",
+      "modifiedAt": "2026-05-18T04:27:51.915Z"
     },
     {
-      "id": "iKjDlsqoae",
-      "uuid": "27101ef6-ec66-4bac-9dc1-7dbec060e869",
+      "id": "kwmmJOermz",
+      "uuid": "88edd6b3-dc82-47f4-a4ac-408725e38eaf",
       "userId": "WHjJ4qR2R2",
-      "transactionId": "JkU50N9DpW",
+      "transactionId": "1e9FwLmHq",
       "status": "requested",
       "isRead": false,
-      "createdAt": "2026-05-18T01:06:07.020Z",
-      "modifiedAt": "2026-05-18T01:06:07.020Z"
+      "createdAt": "2026-05-18T04:27:52.106Z",
+      "modifiedAt": "2026-05-18T04:27:52.106Z"
     },
     {
-      "id": "9i3TU8uhq3",
-      "uuid": "7ea3fcc7-8bc2-4500-9e65-36e6b3aba428",
-      "userId": "WHjJ4qR2R2",
-      "transactionId": "O12M7q2xF",
+      "id": "BTd5R0PIqW",
+      "uuid": "fbb52bc1-1fe4-4048-8c47-7b604dc594c5",
+      "userId": "IPSmDkdGI",
+      "transactionId": "1e9FwLmHq",
       "status": "received",
       "isRead": false,
-      "createdAt": "2026-05-18T01:06:07.079Z",
-      "modifiedAt": "2026-05-18T01:06:07.079Z"
-    },
-    {
-      "id": "r0Hz9lWz85",
-      "uuid": "f2aec5ca-80fe-4ce1-ad8f-4820a53e4ca9",
-      "userId": "GjWovtg2hr",
-      "transactionId": "JkU50N9DpW",
-      "status": "received",
-      "isRead": false,
-      "createdAt": "2026-05-18T01:06:07.422Z",
-      "modifiedAt": "2026-05-18T01:06:07.422Z"
+      "createdAt": "2026-05-18T04:27:52.489Z",
+      "modifiedAt": "2026-05-18T04:27:52.489Z"
     }
   ],
   "banktransfers": [
