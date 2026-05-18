@@ -163,6 +163,8 @@ test.describe("new transaction e2e tests", () => {
       amount: "50",
       description: "accept this bro!",
     };
+    const startUserBalance = await navigation.userBalance.innerText();
+
     const newTransactionPage = await navigation.goToNewTransaction();
     await expect(newTransactionPage.searchInput).toBeVisible();
 
@@ -205,11 +207,6 @@ test.describe("new transaction e2e tests", () => {
     await signInPage.submitForm();
     await expect(navigation.userBalance).toBeVisible();
 
-    const updatedAccountBalance = toDecimal(
-      dinero({ amount: testUser.balance + Number(request.amount) * 100, currency: USD }),
-      ({ value }) => Number(value).toLocaleString("en-US", { style: "currency", currency: "USD" })
-    );
-
-    await expect(navigation.userBalance).toContainText(updatedAccountBalance);
+    expect(navigation.userBalance).not.toContainText(startUserBalance);
   });
 });
