@@ -152,4 +152,64 @@ test.describe("new transaction e2e tests", () => {
     await expect(transaction).toContainText(payment.description);
     await expect(navigation.userBalance).not.toContainText(startContactBalance);
   });
+
+  test("submits a transaction request and accepts the request for the receiver", async ({
+    loggedInTestUser: testUser,
+    navigation,
+    testContact,
+  }) => {
+    // create transaction request, switch user, accept it on other user
+    const request = {
+      amount: "50",
+      description: "accept this bro!",
+    };
+    const newTransactionPage = await navigation.goToNewTransaction();
+    await expect(newTransactionPage.searchInput).toBeVisible();
+
+    await newTransactionPage.searchUser(testContact.username);
+    await expect(newTransactionPage.userListItems).not.toHaveCount(0);
+    
+    await newTransactionPage.selectUserFromList(testContact.username);
+    await expect(newTransactionPage.amountInput).toBeVisible();
+    await expect(newTransactionPage.descriptionInput).toBeVisible();
+
+    await newTransactionPage.fillForm(request);
+    await expect(newTransactionPage.requestButton).toBeEnabled();
+
+    await newTransactionPage.submitRequest();
+    await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
+
+    const signInPage = await navigation.signOut();
+    await expect(signInPage.header).toBeVisible();
+    
+    await signInPage.fillForm(testContact.username, config.DEFAULT_PASSWORD);
+    await expect(signInPage.signInButton).toBeEnabled();
+
+    const homePage = await signInPage.submitForm();
+    await expect(homePage.transactionList).toBeVisible();
+
+    await homePage.goToPersonalTab();
+    await expect(homePage.transactionList).toBeVisible();
+
+    await homePage.goToTransaction(request.description);
+    await expect(homePage.transactionAcceptButton).toBeEnabled();
+
+    await homePage.acceptTransaction();
+
+    await navigation.signOut();
+    await expect(signInPage.header).toBeVisible();
+
+    await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
+    await expect(signInPage.signInButton).toBeEnabled();
+
+    await signInPage.submitForm();
+    await expect(navigation.userBalance).toBeVisible();
+
+    const updatedAccountBalance = toDecimal(
+      dinero({ amount: testUser.balance + Number(request.amount) * 100, currency: USD }),
+      ({ value }) => Number(value).toLocaleString("en-US", { style: "currency", currency: "USD" })
+    );
+
+    await expect(navigation.userBalance).toContainText(updatedAccountBalance);
+  });
 });
