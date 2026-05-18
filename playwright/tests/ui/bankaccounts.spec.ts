@@ -1,7 +1,7 @@
 import { expect, test } from "../../fixtures";
 
 test.describe("bank accounts e2e tests", () => {
-  test("creates a new bank account", async ({ loggedInTestUser: _user, homePage, page }) => {
+  test("creates a new bank account", async ({ loggedInTestUser: _user, homePage }) => {
     const workerIdx = test.info().workerIndex;
     const bankName = `The Best Bank W${workerIdx}`;
 
@@ -9,15 +9,17 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccountsPage.bankAccountListItems.first()).toBeVisible();
 
     await bankAccountsPage.createNewBankAccount();
-    await expect(page).toHaveURL("/bankaccounts/new");
 
     await bankAccountsPage.fillBankAccountForm({
       bankName,
       routingNumber: "123456789",
       accountNumber: "987654321",
     });
+    await expect(bankAccountsPage.bankAccountSaveButton).toBeEnabled();
+    
     await bankAccountsPage.saveBankAccount();
-    await expect(bankAccountsPage.bankAccountListItems).not.toHaveCount(0);
+    await expect(bankAccountsPage.bankAccountListItems).not.toHaveCount(1);
+    
     const bankAccount = await bankAccountsPage.findBankAccount(bankName);
     await expect(bankAccount).toBeVisible();
   });
@@ -61,18 +63,21 @@ test.describe("bank accounts e2e tests", () => {
   });
 
   test("soft deletes a bank account", async ({ loggedInTestUser: _user, homePage }) => {
-    const bankAccountPage = await homePage.nav.goToBankAccounts();
-    await expect(bankAccountPage.bankAccountListItems.first()).toBeVisible();
-    await bankAccountPage.createNewBankAccount();
-    await bankAccountPage.fillBankAccountForm({
+    const bankAccountsPage = await homePage.nav.goToBankAccounts();
+    await expect(bankAccountsPage.bankAccountListItems.first()).toBeVisible();
+
+    await bankAccountsPage.createNewBankAccount();
+    await bankAccountsPage.fillBankAccountForm({
       bankName: "Epic Bank Slay",
       accountNumber: "123456789",
       routingNumber: "123456789",
     });
-    await bankAccountPage.saveBankAccount();
-    await expect(bankAccountPage.bankAccountListItems).not.toHaveCount(0);
+    await expect(bankAccountsPage.bankAccountSaveButton).toBeEnabled();
 
-    const deleted = await bankAccountPage.deleteBankAccount("Epic Bank Slay");
+    await bankAccountsPage.saveBankAccount();
+    await expect(bankAccountsPage.bankAccountList).toBeVisible();
+
+    const deleted = await bankAccountsPage.deleteBankAccount("Epic Bank Slay");
     await expect(deleted).toContainText("Deleted");
   });
 

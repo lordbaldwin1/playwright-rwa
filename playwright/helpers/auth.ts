@@ -1,5 +1,5 @@
 import { APIRequestContext, expect, Page } from "@playwright/test";
-import { BACKEND_URL } from "../config";
+import { config } from "../config";
 import { User } from "models";
 
 export type WorkerScopedUsers = {
@@ -13,7 +13,7 @@ type WindowWithAuthTestHooks = Window & {
 };
 
 export async function getTestUser(request: APIRequestContext) {
-  const res = await request.get(`${BACKEND_URL}/testData/users`);
+  const res = await request.get(`${config.BACKEND_URL}/testData/users`);
   expect(res.status()).toBeTruthy();
   const users = (await res.json()).results as User[];
   const testUser = users.find((u) => u.username === "Heath93");
@@ -23,24 +23,30 @@ export async function getTestUser(request: APIRequestContext) {
   return testUser;
 }
 
-export async function getWorkerScopedUsers(
-  request: APIRequestContext,
-  workerIndex: number,
-): Promise<WorkerScopedUsers> {
-  const res = await request.get(`${BACKEND_URL}/testData/users`);
+export async function getWorkerScopedUsers(request: APIRequestContext, workerIndex: number) {
+  const res = await request.get(`${config.BACKEND_URL}/testData/users`);
   expect(res.ok()).toBeTruthy();
 
   const users = (await res.json()).results as User[];
 
-  if (users.length < 2) {
+  if (users.length < config.SEEDED_USERS) {
     throw new Error("Need at least 2 seeded users — did global setup seed run?");
   }
 
-  const payerCount = users.length - 1;
-  const testUser = users[workerIndex % payerCount];
-  const testContact = users[users.length - 1];
+  // only select testUser's from 0 to second-last returned user list
+  // ex: 5 users; idx 0-3 for testUser, always leave idx 4 for testContact
+  // use config.SEEDED_USERS so user creation tests don't interfere
+  const testUser = users[workerIndex % (config.SEEDED_USERS - 1)];
+  const testContact = users[config.SEEDED_USERS - 1];
 
-  return { testUser, testContact };
+  if (!testUser) {
+    throw new Error(`testUser not found at index: ${workerIndex % (config.SEEDED_USERS - 1)}`);
+  }
+  if (!testContact) {
+    throw new Error(`testContact not found at index: ${config.SEEDED_USERS - 1}`);
+  }
+
+  return { testUser, testContact } as WorkerScopedUsers;
 }
 
 /**
@@ -51,7 +57,7 @@ export async function getWorkerScopedUsers(
  * or trigger a real sign-in flow after this call.
  */
 export async function apiLoginUser(username: string, password: string = "s3cret", page: Page) {
-  const res = await page.request.post(`${BACKEND_URL}/login`, {
+  const res = await page.request.post(`${config.BACKEND_URL}/login`, {
     data: {
       username: username,
       password: process.env.TEST_PASSWORD ?? password,

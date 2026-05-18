@@ -1,3 +1,4 @@
+import { config } from "../../config";
 import { expect, test } from "../../fixtures";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
@@ -12,7 +13,7 @@ test.describe("user auth e2e tests", () => {
     testUser,
   }) => {
     await signInPage.goto();
-    await signInPage.fillForm(testUser.username, process.env.TEST_PASSWORD!);
+    await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await signInPage.submitForm();
     await expect(page).toHaveURL("/");
   });
@@ -29,7 +30,7 @@ test.describe("user auth e2e tests", () => {
     testUser,
   }) => {
     await signInPage.goto();
-    await signInPage.fillForm(testUser.username, process.env.TEST_PASSWORD!);
+    await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await signInPage.checkRememberMe();
     await signInPage.submitForm();
     await page.waitForURL("/");

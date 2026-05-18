@@ -13,6 +13,7 @@ export class BankAccountsPage {
   readonly accountNumberInput: Locator;
   readonly accountNumberError: Locator;
   readonly bankAccountSaveButton: Locator;
+  readonly bankAccountList: Locator;
   readonly bankAccountListItems: Locator;
   readonly deleteButtons: Locator;
   readonly header: Locator;
@@ -29,6 +30,7 @@ export class BankAccountsPage {
     this.accountNumberInput = this.page.locator("#bankaccount-accountNumber-input");
     this.accountNumberError = this.page.locator("#bankaccount-accountNumber-input-helper-text");
     this.bankAccountSaveButton = this.page.getByTestId("bankaccount-submit");
+    this.bankAccountList = this.page.getByTestId("bankaccount-list");
     this.bankAccountListItems = this.page.getByTestId(/bankaccount-list-item/);
     this.deleteButtons = this.page.getByTestId("bankaccount-delete");
   }

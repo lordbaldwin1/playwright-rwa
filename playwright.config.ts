@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { defineConfig, devices } from '@playwright/test';
-import { BACKEND_HEALTH_URL, FRONTEND_URL } from "./playwright/config";
+import { config } from "./playwright/config";
 
 /**
  * Read environment variables from file.
@@ -28,11 +28,12 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: FRONTEND_URL,
+    baseURL: config.FRONTEND_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: "only-on-failure",
+    video: 'retain-on-failure',
 
     testIdAttribute: "data-test",
   },
@@ -84,13 +85,13 @@ export default defineConfig({
   webServer: [
     {
       command: "yarn start:api",
-      url: BACKEND_HEALTH_URL,
+      url: config.BACKEND_HEALTH_URL,
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     },
     {
       command: "yarn start:react",
-      url: FRONTEND_URL,
+      url: config.FRONTEND_URL,
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     },

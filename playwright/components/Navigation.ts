@@ -3,6 +3,7 @@ import { isMobile } from "../helpers/is-mobile";
 import { BankAccountsPage } from "../pages/BankAccountsPage";
 import { HomePage } from "../pages/HomePage";
 import { NewTransactionPage } from "../pages/NewTransactionPage";
+import { SignInPage } from "../pages/SignInPage";
 
 export class Navigation {
   private readonly page: Page;
@@ -30,12 +31,16 @@ export class Navigation {
   }
 
   async signOut() {
+    if (isMobile(this.page)) {
+      await this.openSideNav();
+    }
     await this.sideNavSignOut.click();
+    return new SignInPage(this.page);
   }
 
   async goToBankAccounts() {
     if (isMobile(this.page)) {
-      await this.sideNavToggle.click();
+      await this.openSideNav();
     }
     await this.sideNavBankAccounts.click();
     return new BankAccountsPage(this.page);
@@ -43,7 +48,7 @@ export class Navigation {
 
   async goToHome() {
     if (isMobile(this.page)) {
-      await this.sideNavToggle.click();
+      await this.openSideNav();
     }
     await this.sideNavHome.click();
     return new HomePage(this.page);
@@ -51,7 +56,7 @@ export class Navigation {
 
   async goToNewTransaction() {
     if (isMobile(this.page)) {
-      await this.sideNavToggle.click();
+      await this.openSideNav();
     }
     await this.newTransactionButton.click();
     return new NewTransactionPage(this.page);
