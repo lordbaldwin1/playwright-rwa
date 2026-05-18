@@ -73,7 +73,7 @@ export const test = base.extend<Fixtures>({
   uniqueLoggedInUser: async ({ page, request }, use) => {
     const uniqueUsername = `user${randomUUID()}`;
     const user: Partial<User> = {
-      firstName: "test",
+      firstName: `${uniqueUsername}`,
       lastName: "tester",
       username: uniqueUsername,
       password: config.DEFAULT_PASSWORD,
