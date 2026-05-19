@@ -179,6 +179,7 @@ test.describe("new transaction e2e tests", () => {
     await expect(newTransactionPage.requestButton).toBeEnabled();
 
     await newTransactionPage.submitRequest();
+    await expect(newTransactionPage.successToast).toBeVisible();
     await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
 
     const signInPage = await navigation.signOut();

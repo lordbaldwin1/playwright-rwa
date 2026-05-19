@@ -121,4 +121,78 @@ test.describe("notifications e2e tests", () => {
       )
     ).toBeVisible();
   });
+
+  test("User A comments on a transaction of User B; User B gets notification that User A commented on their transaction", async ({
+    loggedInTestUser: userA,
+    testContact: userB,
+    request,
+    page,
+    navigation,
+    transactionDetailPage,
+  }) => {
+    const transRes = await request.get(`${config.BACKEND_URL}/testData/transactions`);
+    expect(transRes.ok()).toBeTruthy();
+    const { results: transactions } = (await transRes.json()) as { results: Transaction[] };
+    const transaction = transactions.find((t) => t.senderId === userB.id);
+    if (!transaction) {
+      throw new Error("Failed to find suitable transaction");
+    }
+
+    await expect(navigation.userBalance).toBeVisible();
+    await transactionDetailPage.gotoTransaction(transaction.id);
+    await expect(transactionDetailPage.header).toBeVisible();
+
+    await transactionDetailPage.addComment("test comment");
+    await expect(transactionDetailPage.comments).not.toHaveCount(0);
+
+    await navigation.signOut();
+    await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
+
+    await expect(navigation.userBalance).toBeVisible();
+    const notificationsPage = await navigation.goToNotifications();
+    await expect(notificationsPage.notificationsList).toBeVisible();
+
+    await expect(notificationsPage.getNotification(`${userA.firstName} ${userA.lastName} commented on a transaction.`)).toBeVisible();
+  });
+
+  test("User C comments on a transaction between User A and User B; User A and B get notifications that User C commented on their transaction", async ({
+    testUser: userA,
+    testContact: userB,
+    uniqueLoggedInUser: userC,
+    request,
+    page,
+    navigation,
+    transactionDetailPage,
+  }) => {
+    const transRes = await request.get(`${config.BACKEND_URL}/testData/transactions`);
+    expect(transRes.ok()).toBeTruthy();
+    const { results: transactions } = (await transRes.json()) as { results: Transaction[] };
+    const transaction = transactions.find((t) => t.senderId === userA.id && t.receiverId === userB.id);
+    if (!transaction) {
+      throw new Error("failed to find suitable transaction");
+    }
+
+    await expect(navigation.userBalance).toBeVisible();
+    await transactionDetailPage.gotoTransaction(transaction.id);
+    await expect(transactionDetailPage.commentInput).toBeVisible();
+    
+    await transactionDetailPage.addComment("test comment");
+    await expect(transactionDetailPage.comments).not.toHaveCount(0);
+
+    // switch to userA
+    await navigation.signOut();
+    await loginWithXState(page, userA.username, config.DEFAULT_PASSWORD);
+    await expect(navigation.userBalance).toBeVisible();
+
+    let notificationsPage = await navigation.goToNotifications();
+    await expect(notificationsPage.getNotification(`${userC.firstName} ${userC.lastName} commented on a transaction.`)).toBeVisible();
+
+    // switch to userB
+    await navigation.signOut();
+    await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
+    await expect(navigation.userBalance).toBeVisible();
+
+    notificationsPage = await navigation.goToNotifications();
+    await expect(notificationsPage.getNotification(`${userC.firstName} ${userC.lastName} commented on a transaction.`)).toBeVisible();
+  });
 });

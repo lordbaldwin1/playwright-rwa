@@ -7,6 +7,7 @@ export class TransactionDetailPage {
   readonly commentInput: Locator;
   readonly likeButton: Locator;
   readonly likeCount: Locator;
+  readonly comments: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -14,6 +15,7 @@ export class TransactionDetailPage {
     this.commentInput = this.page.getByTestId(/transaction-comment-input/);
     this.likeButton = this.page.getByTestId(/transaction-like-button/);
     this.likeCount = this.page.getByTestId(/transaction-like-count/);
+    this.comments = this.page.getByTestId(/comment-list-item/);
   }
 
   async addComment(text: string) {
