@@ -1,4 +1,5 @@
 import { APIRequestContext, expect, Page } from "@playwright/test";
+import { randomUUID } from "crypto";
 import { config } from "../config";
 import { User } from "models";
 
@@ -47,6 +48,48 @@ export async function getWorkerScopedUsers(request: APIRequestContext, workerInd
   }
 
   return { testUser, testContact } as WorkerScopedUsers;
+}
+
+export async function createUniqueUser(
+  request: APIRequestContext,
+  usernamePrefix = "user"
+): Promise<User> {
+  const uniqueUsername = `${usernamePrefix}${randomUUID()}`;
+  const user: Partial<User> = {
+    firstName: uniqueUsername,
+    lastName: "tester",
+    username: uniqueUsername,
+    password: config.DEFAULT_PASSWORD,
+    email: `${uniqueUsername}@example.com`,
+    phoneNumber: "555-123-4567",
+    balance: 10000,
+    avatar: "https://api.dicebear.com/9.x/pixel-art/svg?seed=Jane",
+  };
+
+  const userRes = await request.post(`${config.BACKEND_URL}/users`, {
+    headers: { "Content-Type": "application/json" },
+    data: user,
+  });
+  expect(userRes.ok()).toBeTruthy();
+  const { user: newUser } = (await userRes.json()) as { user: User };
+
+  const loginRes = await request.post(`${config.BACKEND_URL}/login`, {
+    headers: { "Content-Type": "application/json" },
+    data: { username: newUser.username, password: config.DEFAULT_PASSWORD },
+  });
+  expect(loginRes.ok()).toBeTruthy();
+
+  const bankRes = await request.post(`${config.BACKEND_URL}/bankAccounts`, {
+    headers: { "Content-Type": "application/json" },
+    data: {
+      bankName: "Test Bank",
+      accountNumber: "123456789",
+      routingNumber: "123456789",
+    },
+  });
+  expect(bankRes.ok()).toBeTruthy();
+
+  return newUser;
 }
 
 /**

@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { Navigation } from "../components/Navigation";
 
 export class NewTransactionPage {
   private readonly page: Page;
@@ -13,6 +14,7 @@ export class NewTransactionPage {
   readonly returnToTransactionButton: Locator;
   readonly amountError: Locator;
   readonly descriptionError: Locator;
+  readonly nav: Navigation;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,7 +28,8 @@ export class NewTransactionPage {
     this.successToast = this.page.getByTestId("alert-bar-success");
     this.returnToTransactionButton = this.page.getByTestId("new-transaction-return-to-transactions");
     this.amountError = this.page.locator("#transaction-create-amount-input-helper-text");
-    this.descriptionError = this.page.locator("#transaction-create-description-input-helper-text")
+    this.descriptionError = this.page.locator("#transaction-create-description-input-helper-text");
+    this.nav = new Navigation(this.page);
   }
 
   async goto() {

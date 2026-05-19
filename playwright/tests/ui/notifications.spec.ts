@@ -195,4 +195,41 @@ test.describe("notifications e2e tests", () => {
     notificationsPage = await navigation.goToNotifications();
     await expect(notificationsPage.getNotification(`${userC.firstName} ${userC.lastName} commented on a transaction.`)).toBeVisible();
   });
+
+  test("User A sends a payment to User B", async ({
+    loggedInTestUser: _userA,
+    uniqueContact: userB,
+    homePage,
+    page,
+  }) => {
+    const payment = {
+      amount: "10",
+      description: "notification test payment",
+    };
+
+    await expect(homePage.nav.userBalance).toBeVisible();
+
+    const newTransactionPage = await homePage.nav.goToNewTransaction();
+    await expect(newTransactionPage.searchInput).toBeVisible();
+
+    await newTransactionPage.searchUser(userB.username);
+    await newTransactionPage.selectUserFromList(userB.username);
+    await expect(newTransactionPage.amountInput).toBeVisible();
+    await expect(newTransactionPage.descriptionInput).toBeVisible();
+
+    await newTransactionPage.fillForm(payment);
+    await expect(newTransactionPage.paymentButton).toBeVisible();
+
+    await newTransactionPage.submitPayment();
+    await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
+
+    await newTransactionPage.nav.signOut();
+    await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
+    await expect(homePage.nav.userBalance).toBeVisible();
+
+    const notificationsPage = await homePage.nav.goToNotifications();
+    await expect(notificationsPage.notificationsList).toBeVisible();
+
+    await expect(notificationsPage.getNotification(`${userB.firstName} ${userB.lastName} received payment.`)).toBeVisible();
+  });
 });
