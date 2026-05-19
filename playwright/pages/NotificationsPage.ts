@@ -7,12 +7,14 @@ export class NotificationsPage {
   readonly header: Locator;
   readonly notificationsList: Locator;
   readonly notifications: Locator;
+  readonly emptyListHeader: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.header = this.page.getByRole("heading", { level: 2, name: "Notifications", exact: true });
     this.notificationsList = this.page.getByTestId("notifications-list");
     this.notifications = this.page.getByTestId(/notification-list-item/);
+    this.emptyListHeader = this.page.getByTestId("empty-list-header");
   }
 
   async goto() {

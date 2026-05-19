@@ -232,4 +232,56 @@ test.describe("notifications e2e tests", () => {
 
     await expect(notificationsPage.getNotification(`${userB.firstName} ${userB.lastName} received payment.`)).toBeVisible();
   });
+
+  test("User A sends a payment request to User C", async ({
+    loggedInTestUser: userA,
+    uniqueContact: userC,
+    homePage,
+    page,
+  }) => {
+    const request = {
+      amount: "300",
+      description: "Airfare request",
+    };
+
+    await expect(homePage.nav.userBalance).toBeVisible();
+
+    const newTransactionPage = await homePage.nav.goToNewTransaction();
+    await expect(newTransactionPage.searchInput).toBeVisible();
+
+    await newTransactionPage.searchUser(userC.username);
+    await newTransactionPage.selectUserFromList(userC.username);
+    await expect(newTransactionPage.amountInput).toBeVisible();
+
+    await newTransactionPage.fillForm(request);
+    await expect(newTransactionPage.requestButton).toBeEnabled();
+
+    await newTransactionPage.submitRequest();
+    await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
+
+    await newTransactionPage.nav.signOut();
+    await loginWithXState(page, userC.username, config.DEFAULT_PASSWORD);
+    await expect(homePage.nav.userBalance).toBeVisible();
+
+    const notificationsPage = await homePage.nav.goToNotifications();
+    await expect(notificationsPage.notificationsList).toBeVisible();
+
+    await expect(
+      notificationsPage.getNotification(`${userA.firstName} ${userA.lastName} requested payment.`)
+    ).toBeVisible();
+  });
+
+  test("renders an empty notifications state", async ({
+    uniqueLoggedInUser: _user,
+    navigation,
+    page,
+  }) => {
+    await expect(navigation.userBalance).toBeVisible();
+
+    const notificationsPage = await navigation.goToNotifications();
+    await expect(page).toHaveURL(/\/notifications/);
+    await expect(notificationsPage.header).toBeVisible();
+    await expect(notificationsPage.notificationsList).toHaveCount(0);
+    await expect(notificationsPage.emptyListHeader).toHaveText("No Notifications");
+  });
 });
