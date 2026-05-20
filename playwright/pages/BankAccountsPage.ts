@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { Navigation } from "../components/Navigation";
 import { OnboardingBankDetails } from "./HomePage";
 
@@ -17,6 +17,7 @@ export class BankAccountsPage {
   readonly bankAccountListItems: Locator;
   readonly deleteButtons: Locator;
   readonly header: Locator;
+  readonly emptyListHeader: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -33,10 +34,12 @@ export class BankAccountsPage {
     this.bankAccountList = this.page.getByTestId("bankaccount-list");
     this.bankAccountListItems = this.page.getByTestId(/bankaccount-list-item/);
     this.deleteButtons = this.page.getByTestId("bankaccount-delete");
+    this.emptyListHeader = this.page.getByTestId("empty-list-header");
   }
 
-  async goto() {
-    await this.page.goto("/bankaccounts");
+  async goto(path = "/bankaccounts") {
+    await this.page.goto(path);
+    await expect(this.header).toBeVisible();
   }
 
   async createNewBankAccount() {

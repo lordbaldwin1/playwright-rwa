@@ -15,7 +15,7 @@ type WindowWithAuthTestHooks = Window & {
 
 export async function getTestUser(request: APIRequestContext) {
   const res = await request.get(`${config.BACKEND_URL}/testData/users`);
-  expect(res.status()).toBeTruthy();
+  expect(res.ok()).toBeTruthy();
   const users = (await res.json()).results as User[];
   const testUser = users.find((u) => u.username === "Heath93");
   if (!testUser) {
@@ -103,7 +103,7 @@ export async function apiLoginUser(username: string, password: string = "s3cret"
   const res = await page.request.post(`${config.BACKEND_URL}/login`, {
     data: {
       username: username,
-      password: process.env.TEST_PASSWORD ?? password,
+      password: config.DEFAULT_PASSWORD ?? password,
     },
   });
   expect(res.ok()).toBeTruthy();
@@ -119,7 +119,7 @@ export async function apiLoginUser(username: string, password: string = "s3cret"
 export async function syncClientAuthAfterSessionCookie(
   page: Page,
   username: string,
-  password: string = process.env.TEST_PASSWORD ?? "s3cret"
+  password: string = config.DEFAULT_PASSWORD ?? "s3cret"
 ) {
   await page.addInitScript(() => {
     const w = window as WindowWithAuthTestHooks;
@@ -149,8 +149,9 @@ export async function syncClientAuthAfterSessionCookie(
 export async function loginWithXState(
   page: Page,
   username: string,
-  password: string = process.env.TEST_PASSWORD ?? "s3cret"
+  password: string = config.DEFAULT_PASSWORD ?? "s3cret"
 ) {
   await apiLoginUser(username, password, page);
   await syncClientAuthAfterSessionCookie(page, username, password);
+  await expect(page.getByTestId("sidenav-user-balance")).toBeVisible();
 }

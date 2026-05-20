@@ -1,11 +1,11 @@
 import { expect, test } from "../../fixtures";
 
 test.describe("bank accounts e2e tests", () => {
-  test("creates a new bank account", async ({ loggedInTestUser: _user, homePage }) => {
+  test("creates a new bank account", async ({ loggedInTestUser: _user, bankAccountsPage }) => {
     const workerIdx = test.info().workerIndex;
     const bankName = `The Best Bank W${workerIdx}`;
 
-    const bankAccountsPage = await homePage.nav.goToBankAccounts();
+    await bankAccountsPage.goto("/bankaccounts");
     await expect(bankAccountsPage.bankAccountListItems.first()).toBeVisible();
 
     await bankAccountsPage.createNewBankAccount();
@@ -24,9 +24,8 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccount).toBeVisible();
   });
 
-  test("should display bank account form errors", async ({ loggedInTestUser: _user, homePage }) => {
-    const bankAccountsPage = await homePage.nav.goToBankAccounts();
-    await expect(bankAccountsPage.header).toBeVisible();
+  test("should display bank account form errors", async ({ loggedInTestUser: _user, bankAccountsPage }) => {
+    await bankAccountsPage.goto("/bankaccounts");
     await bankAccountsPage.createNewBankAccount();
 
     // min 5 bankName, min 9 routing/account number
@@ -62,8 +61,8 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccountsPage.bankAccountSaveButton).toBeDisabled();
   });
 
-  test("soft deletes a bank account", async ({ loggedInTestUser: _user, homePage }) => {
-    const bankAccountsPage = await homePage.nav.goToBankAccounts();
+  test("soft deletes a bank account", async ({ loggedInTestUser: _user, bankAccountsPage }) => {
+    await bankAccountsPage.goto("/bankaccounts");
     await expect(bankAccountsPage.bankAccountListItems.first()).toBeVisible();
 
     await bankAccountsPage.createNewBankAccount();
@@ -84,31 +83,29 @@ test.describe("bank accounts e2e tests", () => {
   test("NUX renders an empty bank account list state with onboarding modal", async ({
     loggedInTestUser: _user,
     homePage,
-    page,
     signUpPage,
+    bankAccountsPage,
   }) => {
     // sign user out
     await homePage.nav.signOut();
 
     // create new user and sign in
-    await signUpPage.goto();
-    await expect(signUpPage.header).toBeVisible();
+    await signUpPage.goto("/signup");
     await signUpPage.fillForm({
       firstName: "zargin",
-      lastname: "testing",
+      lastName: "testing",
       username: "zargintester12",
       password: "s3cret",
       confirmPassword: "s3cret",
     });
     const signInPage = await signUpPage.submitForm();
-    await expect(signInPage.header).toBeVisible();
     await signInPage.fillForm("zargintester12", "s3cret");
     await signInPage.submitForm();
     await expect(homePage.userOnboardingDialog).toBeVisible();
 
-    await page.goto("/bankaccounts");
-    await expect(page.getByTestId(/bankaccount-list-item/)).toHaveCount(0);
-    await expect(page.getByTestId("user-onboarding-dialog")).toBeVisible();
-    await expect(page.getByTestId("empty-list-header")).toContainText("No Bank Accounts");
+    await bankAccountsPage.goto("/bankaccounts");
+    await expect(bankAccountsPage.bankAccountListItems).toHaveCount(0);
+    await expect(homePage.userOnboardingDialog).toBeVisible();
+    await expect(bankAccountsPage.emptyListHeader).toContainText("No Bank Accounts");
   })
 });

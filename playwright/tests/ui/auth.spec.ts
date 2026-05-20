@@ -12,14 +12,14 @@ test.describe("user auth e2e tests", () => {
     signInPage,
     testUser,
   }) => {
-    await signInPage.goto();
+    await signInPage.goto("/signin");
     await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await signInPage.submitForm();
     await expect(page).toHaveURL("/");
   });
 
-  test("should redirect unauthenticated users to /signin", async ({ page }) => {
-    await page.goto("/personal");
+  test("should redirect unauthenticated users to /signin", async ({ page, homePage }) => {
+    await homePage.goto("/personal");
     await expect(page).toHaveURL("/signin");
   });
 
@@ -29,7 +29,7 @@ test.describe("user auth e2e tests", () => {
     signInPage,
     testUser,
   }) => {
-    await signInPage.goto();
+    await signInPage.goto("/signin");
     await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await signInPage.checkRememberMe();
     await signInPage.submitForm();
@@ -46,12 +46,12 @@ test.describe("user auth e2e tests", () => {
     const workerIdx = test.info().workerIndex;
     const newUser: SignUpFormData = {
       firstName: "Alice",
-      lastname: "Smith",
+      lastName: "Smith",
       username: `ansel${workerIdx}`,
       password: "s3cret",
       confirmPassword: "s3cret",
     };
-    await signInPage.goto();
+    await signInPage.goto("/signin");
     const signUpPage = await signInPage.goToSignUp();
     await expect(signUpPage.header).toBeVisible();
     await signUpPage.fillForm(newUser);
@@ -87,7 +87,7 @@ test.describe("user auth e2e tests", () => {
   });
 
   test("should display login errors", async ({ signInPage }) => {
-    await signInPage.goto();
+    await signInPage.goto("/signin");
     await signInPage.fillForm("user", "tester123");
     await signInPage.fillForm("", "123");
 
@@ -103,17 +103,17 @@ test.describe("user auth e2e tests", () => {
   });
 
   test("should display signup errors", async ({ signUpPage }) => {
-    await signUpPage.goto();
+    await signUpPage.goto("/signup");
     await signUpPage.fillForm({
       firstName: "john",
-      lastname: "deadlock",
+      lastName: "deadlock",
       username: "thebrahms",
       password: "s3cret",
       confirmPassword: "s3cret",
     });
     await signUpPage.fillForm({
       firstName: "",
-      lastname: "",
+      lastName: "",
       username: "",
       password: "",
       confirmPassword: "paige",

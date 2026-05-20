@@ -6,10 +6,10 @@ import { SignUpPage } from "../pages/SignUpPage";
 import { BankAccountsPage } from "../pages/BankAccountsPage";
 import { HomePage } from "../pages/HomePage";
 import { NewTransactionPage } from "../pages/NewTransactionPage";
-import { Navigation } from "../components/Navigation";
 import type { WorkerScopedUsers } from "../helpers/auth";
 import { config } from "../config";
 import { TransactionDetailPage } from "../pages/TransactionDetailPage";
+import { NotificationsPage } from "../pages/NotificationsPage";
 
 type Fixtures = {
   signInPage: SignInPage;
@@ -18,7 +18,7 @@ type Fixtures = {
   bankAccountsPage: BankAccountsPage;
   newTransactionPage: NewTransactionPage;
   transactionDetailPage: TransactionDetailPage;
-  navigation: Navigation;
+  notificationsPage: NotificationsPage;
   workerUsers: WorkerScopedUsers;
   testUser: User;
   testContact: User;
@@ -52,9 +52,9 @@ export const test = base.extend<Fixtures>({
     const transactionDetailPage = new TransactionDetailPage(page);
     await use(transactionDetailPage);
   },
-  navigation: async ({ page }, use) => {
-    const navigation = new Navigation(page);
-    await use(navigation);
+  notificationsPage: async ({ page }, use) => {
+    const notificationsPage = new NotificationsPage(page);
+    await use(notificationsPage);
   },
   workerUsers: async ({ request }, use, testInfo) => {
     const pair = await getWorkerScopedUsers(request, testInfo.workerIndex);

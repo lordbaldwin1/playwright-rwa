@@ -45,6 +45,10 @@ export class HomePage {
     this.transactionRejectButton = this.page.getByTestId(/transaction-reject-request/);
   }
 
+  async goto(path = "/") {
+    await this.page.goto(path);
+  }
+
   async goNextOnboardingScreen() {
     await this.userOnboardingNext.click();
   }

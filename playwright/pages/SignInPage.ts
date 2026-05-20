@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { SignUpPage } from "./SignUpPage";
 import { HomePage } from "./HomePage";
 
@@ -26,8 +26,9 @@ export class SignInPage {
     this.passwordError = this.page.locator("#password-helper-text");
   }
 
-  async goto() {
-    await this.page.goto("/signin");
+  async goto(path = "/signin") {
+    await this.page.goto(path);
+    await expect(this.header).toBeVisible();
   }
 
   async fillForm(username?: string, password?: string) {

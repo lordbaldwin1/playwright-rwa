@@ -3,7 +3,7 @@ import { SignInPage } from "./SignInPage";
 
 export type SignUpFormData = {
   firstName?: string;
-  lastname?: string;
+  lastName?: string;
   username?: string;
   password?: string;
   confirmPassword?: string;
@@ -39,13 +39,14 @@ export class SignUpPage {
     this.confirmPasswordError = this.page.locator("#confirmPassword-helper-text");
   }
 
-  async goto() {
-    await this.page.goto("/signup");
+  async goto(path = "/signup") {
+    await this.page.goto(path);
+    await expect(this.header).toBeVisible();
   }
 
   async fillForm(formData: SignUpFormData) {
     await this.firstNameInput.fill(formData.firstName ?? "");
-    await this.lastNameInput.fill(formData.lastname ?? "");
+    await this.lastNameInput.fill(formData.lastName ?? "");
     await this.usernameInput.fill(formData.username ?? "");
     await this.passwordInput.fill(formData.password ?? "");
     await this.confirmPasswordInput.fill(formData.confirmPassword ?? "");

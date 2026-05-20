@@ -32,8 +32,9 @@ export class NewTransactionPage {
     this.nav = new Navigation(this.page);
   }
 
-  async goto() {
-    await this.page.goto("/transaction/new");
+  async goto(path = "/transaction/new") {
+    await this.page.goto(path);
+    await expect(this.searchInput).toBeVisible();
   }
 
   async searchUser(username: string) {
