@@ -147,7 +147,7 @@ test.describe("new transaction e2e tests", () => {
   });
 
   test("submits a transaction request and accepts the request for the receiver", async ({
-    uniqueLoggedInUser: testUser,
+    loggedInTestUser: testUser,
     testContact,
     newTransactionPage,
   }) => {

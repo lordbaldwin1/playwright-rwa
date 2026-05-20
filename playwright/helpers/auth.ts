@@ -3,9 +3,10 @@ import { randomUUID } from "crypto";
 import { config } from "../config";
 import { User } from "models";
 
-export type WorkerScopedUsers = {
-  testUser: User;
-  testContact: User;
+export type TestUsers = {
+  userA: User;
+  userB: User;
+  userC: User;
 };
 
 type WindowWithAuthTestHooks = Window & {
@@ -24,30 +25,47 @@ export async function getTestUser(request: APIRequestContext) {
   return testUser;
 }
 
+export async function getThreeUsers(request: APIRequestContext) {
+  const res = await request.get(`${config.BACKEND_URL}/testData/users`);
+  expect(res.ok()).toBeTruthy();
+
+  const users = (await res.json()).results as User[];
+
+  if (users.length < 2) {
+    throw new Error("Need at least 2 seeded users — did global setup seed run?");
+  }
+
+  const userA = users[0];
+  const userB = users[1];
+  const userC = users[2];
+
+  if (!userA|| !userB || !userC) {
+    throw new Error(`failed to get users from testData`);
+  }
+
+  return { userA, userB, userC };
+}
+
 export async function getWorkerScopedUsers(request: APIRequestContext, workerIndex: number) {
   const res = await request.get(`${config.BACKEND_URL}/testData/users`);
   expect(res.ok()).toBeTruthy();
 
   const users = (await res.json()).results as User[];
 
-  if (users.length < config.SEEDED_USERS) {
-    throw new Error("Need at least 2 seeded users — did global setup seed run?");
+  if (users.length < 3) {
+    throw new Error("Need at least 3 seeded users — did global setup seed run?");
   }
 
-  // only select testUser's from 0 to second-last returned user list
-  // ex: 5 users; idx 0-3 for testUser, always leave idx 4 for testContact
-  // use config.SEEDED_USERS so user creation tests don't interfere
-  const testUser = users[workerIndex % (config.SEEDED_USERS - 1)];
-  const testContact = users[config.SEEDED_USERS - 1];
+  // Align with Cypress: userA = users[0], userB = users[1], userC = users[2]
+  const testUser = users[workerIndex % config.SEEDED_USERS];
+  const testContact = users[(workerIndex + 1) % config.SEEDED_USERS];
+  const testUserC = users[(workerIndex + 2) % config.SEEDED_USERS];
 
-  if (!testUser) {
-    throw new Error(`testUser not found at index: ${workerIndex % (config.SEEDED_USERS - 1)}`);
-  }
-  if (!testContact) {
-    throw new Error(`testContact not found at index: ${config.SEEDED_USERS - 1}`);
+  if (!testUser || !testContact || !testUserC) {
+    throw new Error(`seeded users missing for workerIndex ${workerIndex}`);
   }
 
-  return { testUser, testContact } as WorkerScopedUsers;
+  return { testUser, testContact, testUserC };
 }
 
 export async function createUniqueUser(

@@ -27,6 +27,12 @@ export class NotificationsPage {
     return this.notifications.filter({ hasText: text });
   }
 
+  async dismissFirstNotification() {
+    const dismiss = this.notifications.first().getByTestId(/notification-mark-read/);
+    await expect(dismiss).toBeEnabled();
+    await dismiss.click();
+  }
+
   async dismissAllNotifications() {
     let count = await this.notifications.count();
     while (count > 0) {
@@ -36,5 +42,4 @@ export class NotificationsPage {
       count--;
     }
   }
-
 }

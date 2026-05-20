@@ -1,66 +1,59 @@
 import { config } from "../../config";
 import { expect, test } from "../../fixtures";
-import { getNotificationCount } from "../../helpers/api/notifications";
 import { loginWithXState } from "../../helpers/auth";
-import { getTransactions } from "../../helpers/api/transactions";
+import { findTransaction, getTransactions } from "../../helpers/api/transactions";
 
 test.describe("notifications e2e tests", () => {
-  test("should lower notification count as notificatiosn are dismisses", async ({
-    loggedInTestUser: testUser,
+  test("should lower notification count as notifications are dismissed", async ({
+    loggedInTestUser: _testUser,
     notificationsPage,
-    request,
   }) => {
     await notificationsPage.goto("/notifications");
     await expect(notificationsPage.notificationsList).toBeVisible();
-
-    const initialNotificationCount = await getNotificationCount(
-      request,
-      testUser.username,
-      config.DEFAULT_PASSWORD
+    await expect(notificationsPage.notifications).toHaveCount(config.SEEDED_NOTIFICATION_COUNT);
+    await expect(notificationsPage.nav.notificationsCount).toHaveText(
+      String(config.SEEDED_NOTIFICATION_COUNT)
     );
 
-    await notificationsPage.dismissAllNotifications();
-    expect(await notificationsPage.notifications.count()).toBeLessThan(initialNotificationCount);
-    expect(Number(await notificationsPage.nav.notificationsCount.innerText())).toBeLessThan(
-      initialNotificationCount
-    );
+    await notificationsPage.dismissFirstNotification();
+
+    const countAfterDismiss = config.SEEDED_NOTIFICATION_COUNT - 1;
+    await expect(notificationsPage.notifications).toHaveCount(countAfterDismiss);
+    await expect(notificationsPage.nav.notificationsCount).toHaveText(String(countAfterDismiss));
   });
 
   test("User A likes a transaction of User B; User B gets notification that User A liked transaction", async ({
-    uniqueLoggedInUser: userA,
+    loggedInTestUser: userA,
     testContact: userB,
     page,
     transactionDetailPage,
   }) => {
     const transactions = await getTransactions(page.request);
-    const transaction = transactions.find((t) => t.senderId === userB.id);
+    const transaction = findTransaction(transactions, { senderId: userB.id });
     if (!transaction) {
       throw new Error("failed to find valid transaction for test");
     }
 
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
+    await expect(transactionDetailPage.nav.notificationsCount).toHaveText(
+      String(config.SEEDED_NOTIFICATION_COUNT)
+    );
 
     await transactionDetailPage.goto(transaction.id);
 
-    const initialLikeCount = Number(await transactionDetailPage.likeCount.innerText());
-
+    await expect(transactionDetailPage.likeCount).toHaveText("0");
     await transactionDetailPage.likeTransaction();
     await expect(transactionDetailPage.likeButton).toBeDisabled();
-    expect(Number(await transactionDetailPage.likeCount.innerText())).toBeGreaterThan(
-      initialLikeCount
-    );
+    await expect(transactionDetailPage.likeCount).toHaveText("1");
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
-    await expect(transactionDetailPage.nav.notificationsCount).toBeVisible();
 
     const userBNotificationsPage = await transactionDetailPage.nav.goToNotifications();
-
-    await expect(
-      userBNotificationsPage.getNotification(
-        `${userA.firstName} ${userA.lastName} liked a transaction`
-      )
-    ).toBeVisible();
+    await expect(userBNotificationsPage.notifications).toHaveCount(
+      config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
+    );
+    await expect(userBNotificationsPage.notifications.first()).toContainText(userA.firstName);
+    await expect(userBNotificationsPage.notifications.first()).toContainText("liked");
   });
 
   test("User C likes a transaction between User A and User B; User A and User B get notifications that User C liked transaction", async ({
@@ -71,45 +64,40 @@ test.describe("notifications e2e tests", () => {
     transactionDetailPage,
   }) => {
     const transactions = await getTransactions(page.request);
-    const transaction = transactions.find(
-      (t) => t.senderId === userA.id && t.receiverId === userB.id
-    );
+    const transaction = findTransaction(transactions, {
+      senderId: userB.id,
+      receiverId: userA.id,
+    });
     if (!transaction) {
       throw new Error("Failed to find suitable transaction, did seeding db fail?");
     }
 
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
-
     await transactionDetailPage.goto(transaction.id);
 
+    await expect(transactionDetailPage.likeCount).toHaveText("0");
     await transactionDetailPage.likeTransaction();
     await expect(transactionDetailPage.likeButton).toBeDisabled();
+    await expect(transactionDetailPage.likeCount).toHaveText("1");
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userA.username, config.DEFAULT_PASSWORD);
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
 
     const userANotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(userANotificationsPage.notificationsList).toBeVisible();
-
-    await expect(
-      userANotificationsPage.notifications.getByText(
-        `${userC.firstName} ${userC.lastName} liked a transaction`
-      )
-    ).toBeVisible();
+    await expect(userANotificationsPage.notifications).toHaveCount(
+      config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
+    );
+    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(userANotificationsPage.notifications.first()).toContainText("liked");
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
 
     await transactionDetailPage.nav.goToNotifications();
-    await expect(userANotificationsPage.notificationsList).toBeVisible();
-
-    await expect(
-      userANotificationsPage.notifications.getByText(
-        `${userC.firstName} ${userC.lastName} liked a transaction`
-      )
-    ).toBeVisible();
+    await expect(userANotificationsPage.notifications).toHaveCount(
+      config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
+    );
+    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(userANotificationsPage.notifications.first()).toContainText("liked");
   });
 
   test("User A comments on a transaction of User B; User B gets notification that User A commented on their transaction", async ({
@@ -119,29 +107,24 @@ test.describe("notifications e2e tests", () => {
     transactionDetailPage,
   }) => {
     const transactions = await getTransactions(page.request);
-    const transaction = transactions.find((t) => t.senderId === userB.id);
+    const transaction = findTransaction(transactions, { senderId: userB.id });
     if (!transaction) {
       throw new Error("Failed to find suitable transaction");
     }
 
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
     await transactionDetailPage.goto(transaction.id);
-
-    await transactionDetailPage.addComment("test comment");
+    await transactionDetailPage.addComment("Thank You");
     await expect(transactionDetailPage.comments).not.toHaveCount(0);
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
 
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
     const userBNotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(userBNotificationsPage.notificationsList).toBeVisible();
-
-    await expect(
-      userBNotificationsPage.getNotification(
-        `${userA.firstName} ${userA.lastName} commented on a transaction.`
-      )
-    ).toBeVisible();
+    await expect(userBNotificationsPage.notifications).toHaveCount(
+      config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
+    );
+    await expect(userBNotificationsPage.notifications.first()).toContainText(userA.firstName);
+    await expect(userBNotificationsPage.notifications.first()).toContainText("commented");
   });
 
   test("User C comments on a transaction between User A and User B; User A and B get notifications that User C commented on their transaction", async ({
@@ -152,81 +135,63 @@ test.describe("notifications e2e tests", () => {
     transactionDetailPage,
   }) => {
     const transactions = await getTransactions(page.request);
-    const transaction = transactions.find(
-      (t) => t.senderId === userA.id && t.receiverId === userB.id
-    );
+    const transaction = findTransaction(transactions, {
+      senderId: userB.id,
+      receiverId: userA.id,
+    });
     if (!transaction) {
       throw new Error("failed to find suitable transaction");
     }
 
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
     await transactionDetailPage.goto(transaction.id);
-    await expect(transactionDetailPage.commentInput).toBeVisible();
-
-    await transactionDetailPage.addComment("test comment");
+    await transactionDetailPage.addComment("Thank You");
     await expect(transactionDetailPage.comments).not.toHaveCount(0);
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userA.username, config.DEFAULT_PASSWORD);
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
 
     const userANotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(
-      userANotificationsPage.getNotification(
-        `${userC.firstName} ${userC.lastName} commented on a transaction.`
-      )
-    ).toBeVisible();
+    await expect(userANotificationsPage.notifications).toHaveCount(
+      config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
+    );
+    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(userANotificationsPage.notifications.first()).toContainText("commented");
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
-    await expect(transactionDetailPage.nav.userBalance).toBeVisible();
 
     await transactionDetailPage.nav.goToNotifications();
-    await expect(
-      userANotificationsPage.getNotification(
-        `${userC.firstName} ${userC.lastName} commented on a transaction.`
-      )
-    ).toBeVisible();
+    await expect(userANotificationsPage.notifications).toHaveCount(
+      config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
+    );
+    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(userANotificationsPage.notifications.first()).toContainText("commented");
   });
 
   test("User A sends a payment to User B", async ({
     loggedInTestUser: _userA,
-    uniqueContact: userB,
+    testContact: userB,
     newTransactionPage,
     page,
   }) => {
     const payment = {
-      amount: "10",
-      description: "notification test payment",
+      amount: "30",
+      description: "🍕Pizza",
     };
 
-    await expect(newTransactionPage.nav.userBalance).toBeVisible();
-
     await newTransactionPage.goto("/transaction/new");
-
     await newTransactionPage.searchUser(userB.username);
     await newTransactionPage.selectUserFromList(userB.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-    await expect(newTransactionPage.descriptionInput).toBeVisible();
-
     await newTransactionPage.fillForm(payment);
-    await expect(newTransactionPage.paymentButton).toBeVisible();
-
     await newTransactionPage.submitPayment();
     await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
 
     await newTransactionPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
-    await expect(newTransactionPage.nav.userBalance).toBeVisible();
 
     const userBNotificationsPage = await newTransactionPage.nav.goToNotifications();
-    await expect(userBNotificationsPage.notificationsList).toBeVisible();
-
-    await expect(
-      userBNotificationsPage.getNotification(
-        `${userB.firstName} ${userB.lastName} received payment.`
-      )
-    ).toBeVisible();
+    await expect(userBNotificationsPage.notifications.first()).toContainText(userB.firstName);
+    await expect(userBNotificationsPage.notifications.first()).toContainText("received payment");
   });
 
   test("User A sends a payment request to User C", async ({
@@ -237,45 +202,35 @@ test.describe("notifications e2e tests", () => {
   }) => {
     const request = {
       amount: "300",
-      description: "Airfare request",
+      description: "🛫🛬 Airfare",
     };
 
-    await expect(newTransactionPage.nav.userBalance).toBeVisible();
-
     await newTransactionPage.goto("/transaction/new");
-
     await newTransactionPage.searchUser(userC.username);
     await newTransactionPage.selectUserFromList(userC.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-
     await newTransactionPage.fillForm(request);
-    await expect(newTransactionPage.requestButton).toBeEnabled();
-
     await newTransactionPage.submitRequest();
     await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
 
     await newTransactionPage.nav.signOut();
     await loginWithXState(page, userC.username, config.DEFAULT_PASSWORD);
-    await expect(newTransactionPage.nav.userBalance).toBeVisible();
 
     const userCNotificationsPage = await newTransactionPage.nav.goToNotifications();
-    await expect(userCNotificationsPage.notificationsList).toBeVisible();
-
-    await expect(
-      userCNotificationsPage.getNotification(
-        `${userA.firstName} ${userA.lastName} requested payment.`
-      )
-    ).toBeVisible();
+    await expect(userCNotificationsPage.getNotification(`${userA.firstName}`)).toContainText(
+      "requested payment"
+    );
   });
 
   test("renders an empty notifications state", async ({
-    uniqueLoggedInUser: _user,
+    loggedInTestUser: _user,
     notificationsPage,
     page,
   }) => {
-    await expect(notificationsPage.nav.userBalance).toBeVisible();
+    await page.route("**/notifications", async (route) => {
+      await route.fulfill({ json: { results: [] } });
+    });
 
-    await notificationsPage.goto("/notifications");
+    await notificationsPage.nav.goToNotifications();
     await expect(page).toHaveURL(/\/notifications/);
     await expect(notificationsPage.notificationsList).toHaveCount(0);
     await expect(notificationsPage.emptyListHeader).toHaveText("No Notifications");

@@ -1,17 +1,19 @@
 import { test as base } from "@playwright/test";
 import { SignInPage } from "../pages/SignInPage";
-import { createUniqueUser, getWorkerScopedUsers, loginWithXState } from "../helpers/auth";
+import { createUniqueUser, getThreeUsers, loginWithXState } from "../helpers/auth";
 import { User } from "models";
 import { SignUpPage } from "../pages/SignUpPage";
 import { BankAccountsPage } from "../pages/BankAccountsPage";
 import { HomePage } from "../pages/HomePage";
 import { NewTransactionPage } from "../pages/NewTransactionPage";
-import type { WorkerScopedUsers } from "../helpers/auth";
+import type { TestUsers } from "../helpers/auth";
 import { config } from "../config";
 import { TransactionDetailPage } from "../pages/TransactionDetailPage";
 import { NotificationsPage } from "../pages/NotificationsPage";
+import { reseedDatabase } from "../helpers/database";
 
 type Fixtures = {
+  _reseedDatabase: void;
   signInPage: SignInPage;
   signUpPage: SignUpPage;
   homePage: HomePage;
@@ -19,15 +21,24 @@ type Fixtures = {
   newTransactionPage: NewTransactionPage;
   transactionDetailPage: TransactionDetailPage;
   notificationsPage: NotificationsPage;
-  workerUsers: WorkerScopedUsers;
+  threeTestUsers: TestUsers;
   testUser: User;
   testContact: User;
+  testUserC: User;
   loggedInTestUser: User;
+  loggedInTestUserC: User;
   uniqueLoggedInUser: User;
   uniqueContact: User;
 };
 
 export const test = base.extend<Fixtures>({
+  _reseedDatabase: [
+    async ({ request }, use) => {
+      await reseedDatabase(request);
+      await use();
+    },
+    { auto: true },
+  ],
   signInPage: async ({ page }, use) => {
     const signInPage = new SignInPage(page);
     await use(signInPage);
@@ -56,15 +67,18 @@ export const test = base.extend<Fixtures>({
     const notificationsPage = new NotificationsPage(page);
     await use(notificationsPage);
   },
-  workerUsers: async ({ request }, use, testInfo) => {
-    const pair = await getWorkerScopedUsers(request, testInfo.workerIndex);
-    await use(pair);
+  threeTestUsers: async ({ request }, use) => {
+    const users = await getThreeUsers(request);
+    await use(users);
   },
-  testUser: async ({ workerUsers }, use) => {
-    await use(workerUsers.testUser);
+  testUser: async ({ threeTestUsers }, use) => {
+    await use(threeTestUsers.userA);
   },
-  testContact: async ({ workerUsers }, use) => {
-    await use(workerUsers.testContact);
+  testContact: async ({ threeTestUsers }, use) => {
+    await use(threeTestUsers.userB);
+  },
+  testUserC: async ({ threeTestUsers }, use) => {
+    await use(threeTestUsers.userC);
   },
   loggedInTestUser: async ({ page, testUser }, use) => {
     await loginWithXState(page, testUser.username, process.env.TEST_PASSWORD);

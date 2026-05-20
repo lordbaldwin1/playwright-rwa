@@ -16,13 +16,13 @@ import { config } from "./playwright/config";
 export default defineConfig({
   testDir: './playwright/tests',
   /* Run tests in files in parallel */
-  fullyParallel: false, // shared database.json file makes parallel execution a nightmare
+  fullyParallel: false, // tests in a file run serially; shared DB requires workers: 1
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: 1, // test isolation needs to be improved before parallelizing tests
+  workers: 1, // serial workers + per-test reseed (see _reseedDatabase fixture) for DB isolation
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   // reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
