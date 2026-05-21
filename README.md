@@ -21,6 +21,10 @@
 
 > This application is for demonstration and education only. It is not a production system. Use it to practice E2E and API testing patterns against a full-stack app that behaves like real software.
 
+## TODO
+- [ ] switch to serial test execution due to shared database.json file
+- [ ] 
+
 ## About this fork
 
 This repo migrates the Cypress RWA test suite to Playwright, including:
