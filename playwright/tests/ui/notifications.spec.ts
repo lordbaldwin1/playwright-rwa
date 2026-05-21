@@ -39,7 +39,6 @@ test.describe("notifications e2e tests", () => {
     );
 
     await transactionDetailPage.goto(transaction.id);
-
     await expect(transactionDetailPage.likeCount).toHaveText("0");
     await transactionDetailPage.likeTransaction();
     await expect(transactionDetailPage.likeButton).toBeDisabled();
@@ -48,12 +47,12 @@ test.describe("notifications e2e tests", () => {
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
 
-    const userBNotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(userBNotificationsPage.notifications).toHaveCount(
+    const notificationsPage = await transactionDetailPage.nav.goToNotifications();
+    await expect(notificationsPage.notifications).toHaveCount(
       config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
     );
-    await expect(userBNotificationsPage.notifications.first()).toContainText(userA.firstName);
-    await expect(userBNotificationsPage.notifications.first()).toContainText("liked");
+    await expect(notificationsPage.notifications.first()).toContainText(userA.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("liked");
   });
 
   test("User C likes a transaction between User A and User B; User A and User B get notifications that User C liked transaction", async ({
@@ -82,22 +81,22 @@ test.describe("notifications e2e tests", () => {
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userA.username, config.DEFAULT_PASSWORD);
 
-    const userANotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(userANotificationsPage.notifications).toHaveCount(
+    const notificationsPage = await transactionDetailPage.nav.goToNotifications();
+    await expect(notificationsPage.notifications).toHaveCount(
       config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
     );
-    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
-    await expect(userANotificationsPage.notifications.first()).toContainText("liked");
+    await expect(notificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("liked");
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
 
     await transactionDetailPage.nav.goToNotifications();
-    await expect(userANotificationsPage.notifications).toHaveCount(
+    await expect(notificationsPage.notifications).toHaveCount(
       config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
     );
-    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
-    await expect(userANotificationsPage.notifications.first()).toContainText("liked");
+    await expect(notificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("liked");
   });
 
   test("User A comments on a transaction of User B; User B gets notification that User A commented on their transaction", async ({
@@ -119,12 +118,12 @@ test.describe("notifications e2e tests", () => {
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
 
-    const userBNotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(userBNotificationsPage.notifications).toHaveCount(
+    const notificationsPage = await transactionDetailPage.nav.goToNotifications();
+    await expect(notificationsPage.notifications).toHaveCount(
       config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
     );
-    await expect(userBNotificationsPage.notifications.first()).toContainText(userA.firstName);
-    await expect(userBNotificationsPage.notifications.first()).toContainText("commented");
+    await expect(notificationsPage.notifications.first()).toContainText(userA.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("commented");
   });
 
   test("User C comments on a transaction between User A and User B; User A and B get notifications that User C commented on their transaction", async ({
@@ -150,22 +149,22 @@ test.describe("notifications e2e tests", () => {
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userA.username, config.DEFAULT_PASSWORD);
 
-    const userANotificationsPage = await transactionDetailPage.nav.goToNotifications();
-    await expect(userANotificationsPage.notifications).toHaveCount(
+    const notificationsPage = await transactionDetailPage.nav.goToNotifications();
+    await expect(notificationsPage.notifications).toHaveCount(
       config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
     );
-    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
-    await expect(userANotificationsPage.notifications.first()).toContainText("commented");
+    await expect(notificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("commented");
 
     await transactionDetailPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
 
     await transactionDetailPage.nav.goToNotifications();
-    await expect(userANotificationsPage.notifications).toHaveCount(
+    await expect(notificationsPage.notifications).toHaveCount(
       config.NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION
     );
-    await expect(userANotificationsPage.notifications.first()).toContainText(userC.firstName);
-    await expect(userANotificationsPage.notifications.first()).toContainText("commented");
+    await expect(notificationsPage.notifications.first()).toContainText(userC.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("commented");
   });
 
   test("User A sends a payment to User B", async ({
@@ -189,9 +188,9 @@ test.describe("notifications e2e tests", () => {
     await newTransactionPage.nav.signOut();
     await loginWithXState(page, userB.username, config.DEFAULT_PASSWORD);
 
-    const userBNotificationsPage = await newTransactionPage.nav.goToNotifications();
-    await expect(userBNotificationsPage.notifications.first()).toContainText(userB.firstName);
-    await expect(userBNotificationsPage.notifications.first()).toContainText("received payment");
+    const notificationsPage = await newTransactionPage.nav.goToNotifications();
+    await expect(notificationsPage.notifications.first()).toContainText(userB.firstName);
+    await expect(notificationsPage.notifications.first()).toContainText("received payment");
   });
 
   test("User A sends a payment request to User C", async ({
@@ -215,8 +214,8 @@ test.describe("notifications e2e tests", () => {
     await newTransactionPage.nav.signOut();
     await loginWithXState(page, userC.username, config.DEFAULT_PASSWORD);
 
-    const userCNotificationsPage = await newTransactionPage.nav.goToNotifications();
-    await expect(userCNotificationsPage.getNotification(`${userA.firstName}`)).toContainText(
+    const notificationsPage = await newTransactionPage.nav.goToNotifications();
+    await expect(notificationsPage.getNotification(`${userA.firstName}`)).toContainText(
       "requested payment"
     );
   });

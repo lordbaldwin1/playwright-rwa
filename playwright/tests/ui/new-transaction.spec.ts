@@ -20,12 +20,12 @@ test.describe("new transaction e2e tests", () => {
     await expect(newTransactionPage.userListItems).not.toHaveCount(0);
 
     await newTransactionPage.selectUserFromList(testContact.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-    await expect(newTransactionPage.descriptionInput).toBeVisible();
+    await expect(newTransactionPage.amountInput).toBeEditable();
+    await expect(newTransactionPage.descriptionInput).toBeEditable();
 
     await newTransactionPage.fillForm(payment);
     await newTransactionPage.submitPayment();
-    await expect(newTransactionPage.successToast).toBeVisible();
+    await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
 
     const updatedAccountBalance = toDecimal(
       dinero({ amount: testUser.balance - parseInt(payment.amount) * 100, currency: USD }),
@@ -45,7 +45,6 @@ test.describe("new transaction e2e tests", () => {
     await expect(homePage.transactionList).toBeVisible();
 
     const transaction = homePage.findTransactionByDescription(payment.description);
-    await expect(transaction).toBeVisible();
     await expect(transaction).toContainText(payment.amount);
     await expect(transaction).toContainText(payment.description);
   });
@@ -65,8 +64,8 @@ test.describe("new transaction e2e tests", () => {
     await expect(newTransactionPage.userListItems).not.toHaveCount(0);
 
     await newTransactionPage.selectUserFromList(testContact.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-    await expect(newTransactionPage.descriptionInput).toBeVisible();
+    await expect(newTransactionPage.amountInput).toBeEditable();
+    await expect(newTransactionPage.descriptionInput).toBeEditable();
 
     await newTransactionPage.fillForm(request);
     await newTransactionPage.submitRequest();
@@ -100,8 +99,8 @@ test.describe("new transaction e2e tests", () => {
     await expect(newTransactionPage.userListItems).not.toHaveCount(0);
 
     await newTransactionPage.selectUserFromList(testContact.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-    await expect(newTransactionPage.descriptionInput).toBeVisible();
+    await expect(newTransactionPage.amountInput).toBeEditable();
+    await expect(newTransactionPage.descriptionInput).toBeEditable();
 
     await newTransactionPage.fillForm(invalidPayment);
     await expect(newTransactionPage.amountError).toHaveText("Please enter a valid amount");
@@ -126,13 +125,13 @@ test.describe("new transaction e2e tests", () => {
 
     await newTransactionPage.searchUser(testContact.username);
     await expect(newTransactionPage.userListItems).not.toHaveCount(0);
+
     await newTransactionPage.selectUserFromList(testContact.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-    await expect(newTransactionPage.descriptionInput).toBeVisible();
+    await expect(newTransactionPage.amountInput).toBeEditable();
+    await expect(newTransactionPage.descriptionInput).toBeEditable();
 
     await newTransactionPage.fillForm(payment);
     await newTransactionPage.submitPayment();
-    await expect(newTransactionPage.successToast).toBeVisible();
     await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
 
     await newTransactionPage.nav.withSideNav(
@@ -146,6 +145,7 @@ test.describe("new transaction e2e tests", () => {
 
     await homePage.goToPersonalTab();
     await expect(homePage.transactions).not.toHaveCount(0);
+
     const transaction = homePage.findTransactionByDescription(payment.description);
     await expect(transaction).toContainText(payment.amount);
     await expect(transaction).toContainText(payment.description);
@@ -171,14 +171,13 @@ test.describe("new transaction e2e tests", () => {
     await expect(newTransactionPage.userListItems).not.toHaveCount(0);
 
     await newTransactionPage.selectUserFromList(testContact.username);
-    await expect(newTransactionPage.amountInput).toBeVisible();
-    await expect(newTransactionPage.descriptionInput).toBeVisible();
+    await expect(newTransactionPage.amountInput).toBeEditable();
+    await expect(newTransactionPage.descriptionInput).toBeEditable();
 
     await newTransactionPage.fillForm(request);
     await expect(newTransactionPage.requestButton).toBeEnabled();
 
     await newTransactionPage.submitRequest();
-    await expect(newTransactionPage.successToast).toBeVisible();
     await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
 
     const signInPage = await newTransactionPage.nav.signOut();
@@ -186,24 +185,21 @@ test.describe("new transaction e2e tests", () => {
     await signInPage.fillForm(testContact.username, config.DEFAULT_PASSWORD);
     await expect(signInPage.signInButton).toBeEnabled();
 
-    const contactHomePage = await signInPage.submitForm();
-    await expect(contactHomePage.transactionList).toBeVisible();
+    const homePage = await signInPage.submitForm();
+    await expect(homePage.transactionList).toBeVisible();
 
-    await contactHomePage.goToPersonalTab();
-    await expect(contactHomePage.transactionList).toBeVisible();
+    await homePage.goToPersonalTab();
+    await expect(homePage.transactionList).toBeVisible();
 
-    await contactHomePage.goToTransaction(request.description);
-    await expect(contactHomePage.transactionAcceptButton).toBeEnabled();
+    await homePage.goToTransaction(request.description);
+    await expect(homePage.transactionAcceptButton).toBeEnabled();
 
-    await contactHomePage.acceptTransaction();
-
-    await contactHomePage.nav.signOut();
-
+    await homePage.acceptTransaction();
+    await homePage.nav.signOut();
     await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await expect(signInPage.signInButton).toBeEnabled();
 
-    const homePage = await signInPage.submitForm();
-
+    await signInPage.submitForm();
     await homePage.nav.withSideNav(
       async () => await expect(homePage.nav.userBalance).toBeVisible()
     );

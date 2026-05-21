@@ -3,19 +3,18 @@ import { expect, test } from "../../fixtures";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {
-  test("should land on home after API login and XState sync", async ({ page, loggedInTestUser: _user }) => {
+  test("should land on home after API login and XState sync", async ({
+    page,
+    loggedInTestUser: _user,
+  }) => {
     await expect(page).toHaveURL("/");
   });
 
-  test("should land on home page with valid credentials", async ({
-    page,
-    signInPage,
-    testUser,
-  }) => {
-    await signInPage.goto("/signin");
+  test("should land on home page with valid credentials", async ({ signInPage, testUser }) => {
+    await signInPage.goto();
     await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
-    await signInPage.submitForm();
-    await expect(page).toHaveURL("/");
+    const homePage = await signInPage.submitForm();
+    await expect(homePage.transactionList).toBeVisible();
   });
 
   test("should redirect unauthenticated users to /signin", async ({ page, homePage }) => {
@@ -25,15 +24,14 @@ test.describe("user auth e2e tests", () => {
 
   test("should remember a user for 30 days after signin", async ({
     context,
-    page,
     signInPage,
     testUser,
   }) => {
     await signInPage.goto("/signin");
     await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await signInPage.checkRememberMe();
-    await signInPage.submitForm();
-    await page.waitForURL("/");
+    const homePage = await signInPage.submitForm();
+    await expect(homePage.transactionList).toBeVisible();
 
     const cookies = await context.cookies();
     const sid = cookies.find((c) => c.name === "connect.sid");
@@ -62,8 +60,8 @@ test.describe("user auth e2e tests", () => {
     await expect(homePage.userOnboardingDialog).toBeVisible();
     await expect(homePage.listSkeleton).toBeHidden();
     await expect(homePage.nav.notificationsCount).toBeVisible();
-    await homePage.goNextOnboardingScreen();
 
+    await homePage.goNextOnboardingScreen();
     await expect(homePage.userOnboardingDialogTitle).toContainText("Create Bank Account");
 
     await homePage.fillBankDetails({
@@ -72,11 +70,10 @@ test.describe("user auth e2e tests", () => {
       routingNumber: "987654321",
     });
     await homePage.submitBankDetails();
-
     await expect(homePage.userOnboardingDialogTitle).toContainText("Finished");
     await expect(homePage.userOnboardingDialogContent).toContainText("You're all set!");
-    await homePage.goNextOnboardingScreen();
 
+    await homePage.goNextOnboardingScreen();
     await expect(homePage.transactionList).toBeVisible();
 
     await homePage.nav.signOut();
@@ -85,17 +82,15 @@ test.describe("user auth e2e tests", () => {
 
   test("should display login errors", async ({ signInPage }) => {
     await signInPage.goto("/signin");
+    
     await signInPage.fillForm("user", "tester123");
     await signInPage.fillForm("", "123");
-
     await expect(signInPage.usernameError).toBeVisible();
     await expect(signInPage.usernameError).toHaveText("Username is required");
-
     await expect(signInPage.passwordError).toBeVisible();
     await expect(signInPage.passwordError).toHaveText(
       "Password must contain at least 4 characters"
     );
-
     await expect(signInPage.signInButton).toBeDisabled();
   });
 

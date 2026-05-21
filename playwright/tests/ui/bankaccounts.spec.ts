@@ -2,14 +2,12 @@ import { expect, test } from "../../fixtures";
 
 test.describe("bank accounts e2e tests", () => {
   test("creates a new bank account", async ({ loggedInTestUser: _user, bankAccountsPage }) => {
-    const workerIdx = test.info().workerIndex;
-    const bankName = `The Best Bank W${workerIdx}`;
+    const bankName = `The Best Bank Winner`;
 
     await bankAccountsPage.goto("/bankaccounts");
     await expect(bankAccountsPage.bankAccountListItems.first()).toBeVisible();
 
     await bankAccountsPage.createNewBankAccount();
-
     await bankAccountsPage.fillBankAccountForm({
       bankName,
       routingNumber: "123456789",
@@ -42,6 +40,7 @@ test.describe("bank accounts e2e tests", () => {
       "Must contain a valid routing number"
     );
     await expect(bankAccountsPage.accountNumberError).toHaveText("Must contain at least 9 digits");
+    await expect(bankAccountsPage.bankAccountSaveButton).toBeDisabled();
 
     // valid inputs
     await bankAccountsPage.fillBankAccountForm({
@@ -52,6 +51,7 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccountsPage.bankNameError).not.toBeVisible();
     await expect(bankAccountsPage.routingNumberError).not.toBeVisible();
     await expect(bankAccountsPage.accountNumberError).not.toBeVisible();
+    await expect(bankAccountsPage.bankAccountSaveButton).toBeEnabled();
 
     // valid name, max 12 routing/account numbers
     await bankAccountsPage.fillBankAccountForm({
@@ -66,7 +66,6 @@ test.describe("bank accounts e2e tests", () => {
     await expect(bankAccountsPage.accountNumberError).toHaveText(
       "Must contain no more than 12 digits"
     );
-
     await expect(bankAccountsPage.bankAccountSaveButton).toBeDisabled();
   });
 
@@ -90,16 +89,12 @@ test.describe("bank accounts e2e tests", () => {
   });
 
   test("NUX renders an empty bank account list state with onboarding modal", async ({
-    loggedInTestUser: _user,
     homePage,
     signUpPage,
     bankAccountsPage,
   }) => {
-    // sign user out
-    await homePage.nav.signOut();
-
-    // create new user and sign in
-    await signUpPage.goto("/signup");
+    await signUpPage.goto();
+    
     await signUpPage.fillForm({
       firstName: "zargin",
       lastName: "testing",
