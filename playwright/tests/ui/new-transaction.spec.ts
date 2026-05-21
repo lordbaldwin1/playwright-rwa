@@ -32,7 +32,9 @@ test.describe("new transaction e2e tests", () => {
       ({ value }) => Number(value).toLocaleString("en-US", { style: "currency", currency: "USD" })
     );
 
-    await expect(newTransactionPage.nav.userBalance).toHaveText(updatedAccountBalance);
+    await newTransactionPage.nav.withSideNav(
+      async () => await expect(newTransactionPage.nav.userBalance).toHaveText(updatedAccountBalance)
+    );
 
     const homePage = await newTransactionPage.nav.goToHome();
     await expect(homePage.transactionList).toBeVisible();
@@ -117,7 +119,7 @@ test.describe("new transaction e2e tests", () => {
       amount: "20",
       description: "Super awesome sandwich",
     };
-    const startUserBalance = await newTransactionPage.nav.userBalance.innerText();
+    const startUserBalance = await newTransactionPage.nav.getUserBalance();
     const startContactBalance = String(testContact.balance / 100);
 
     await newTransactionPage.goto("/transaction/new");
@@ -132,7 +134,10 @@ test.describe("new transaction e2e tests", () => {
     await newTransactionPage.submitPayment();
     await expect(newTransactionPage.successToast).toBeVisible();
     await expect(newTransactionPage.successToast).toHaveText("Transaction Submitted!");
-    await expect(newTransactionPage.nav.userBalance).not.toHaveText(startUserBalance);
+
+    await newTransactionPage.nav.withSideNav(
+      async () => await expect(newTransactionPage.nav.userBalance).not.toHaveText(startUserBalance)
+    );
 
     const signInPage = await newTransactionPage.nav.signOut();
     await signInPage.fillForm(testContact.username, config.DEFAULT_PASSWORD);
@@ -144,7 +149,9 @@ test.describe("new transaction e2e tests", () => {
     const transaction = homePage.findTransactionByDescription(payment.description);
     await expect(transaction).toContainText(payment.amount);
     await expect(transaction).toContainText(payment.description);
-    await expect(homePage.nav.userBalance).not.toContainText(startContactBalance);
+    await homePage.nav.withSideNav(
+      async () => await expect(homePage.nav.userBalance).not.toContainText(startContactBalance)
+    );
   });
 
   test("submits a transaction request and accepts the request for the receiver", async ({
@@ -156,7 +163,7 @@ test.describe("new transaction e2e tests", () => {
       amount: "50",
       description: "accept this bro!",
     };
-    const startUserBalance = await newTransactionPage.nav.userBalance.innerText();
+    const startUserBalance = await newTransactionPage.nav.getUserBalance();
 
     await newTransactionPage.goto("/transaction/new");
 
@@ -196,8 +203,12 @@ test.describe("new transaction e2e tests", () => {
     await expect(signInPage.signInButton).toBeEnabled();
 
     const homePage = await signInPage.submitForm();
-    await expect(homePage.nav.userBalance).toBeVisible();
 
-    await expect(homePage.nav.userBalance).not.toContainText(startUserBalance);
+    await homePage.nav.withSideNav(
+      async () => await expect(homePage.nav.userBalance).toBeVisible()
+    );
+    await homePage.nav.withSideNav(
+      async () => await expect(homePage.nav.userBalance).not.toContainText(startUserBalance)
+    );
   });
 });

@@ -1,6 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { Navigation } from "../components/Navigation";
-import { isMobile } from "../helpers/is-mobile";
 import { TransactionDetailPage } from "./TransactionDetailPage";
 
 export type OnboardingBankDetails = {
@@ -61,10 +60,6 @@ export class HomePage {
 
   async submitBankDetails() {
     await this.bankAccountSubmitButton.click();
-  }
-
-  isMobile() {
-    return isMobile(this.page);
   }
 
   async fastOnboardUser() {

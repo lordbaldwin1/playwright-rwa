@@ -6,7 +6,7 @@ test.describe("transaction feed e2e tests", () => {
     loggedInTestUser: _user,
     homePage,
   }) => {
-    if (homePage.isMobile()) {
+    if (homePage.nav.isMobile()) {
       await expect(homePage.nav.sideNavHome).not.toBeVisible();
       await homePage.nav.toggleSideNav();
       await expect(homePage.nav.sideNavHome).toBeVisible();

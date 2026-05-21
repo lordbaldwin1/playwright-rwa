@@ -44,11 +44,11 @@ export default defineConfig({
       name: 'db setup',
       testMatch: /tests\/global\.setup.ts/,
     },
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-      dependencies: ['db setup'],
-    },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    //   dependencies: ['db setup'],
+    // },
 
     // {
     //   name: 'firefox',

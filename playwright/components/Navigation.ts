@@ -1,5 +1,5 @@
-import { Locator, Page } from "@playwright/test";
-import { isMobile } from "../helpers/is-mobile";
+import { expect, Locator, Page } from "@playwright/test";
+import { isMobile as isMobileViewport } from "../helpers/is-mobile";
 import { BankAccountsPage } from "../pages/BankAccountsPage";
 import { HomePage } from "../pages/HomePage";
 import { NewTransactionPage } from "../pages/NewTransactionPage";
@@ -33,20 +33,34 @@ export class Navigation {
     await this.sideNavToggle.click();
   }
 
-  async isMobile() {
-    if (isMobile(this.page)) {
-      return true;
-    } else {
-      return false;
-    }
+  isMobile() {
+    return isMobileViewport(this.page);
   }
 
   async mobileCloseSideNav() {
     await this.page.locator(".MuiBackdrop-root").click();
   }
 
+  async withSideNav<T>(action: () => Promise<T>): Promise<T> {
+    const mobile = this.isMobile();
+    if (mobile) {
+      await this.toggleSideNav();
+    }
+    try {
+      return await action();
+    } finally {
+      if (mobile) {
+        await this.mobileCloseSideNav();
+      }
+    }
+  }
+
+  async getUserBalance() {
+    return this.withSideNav(() => this.userBalance.innerText());
+  }
+
   async signOut() {
-    if (isMobile(this.page)) {
+    if (this.isMobile()) {
       await this.toggleSideNav();
     }
     await this.sideNavSignOut.click();
@@ -54,7 +68,7 @@ export class Navigation {
   }
 
   async goToBankAccounts() {
-    if (isMobile(this.page)) {
+    if (this.isMobile()) {
       await this.toggleSideNav();
     }
     await this.sideNavBankAccounts.click();
@@ -62,7 +76,7 @@ export class Navigation {
   }
 
   async goToHome() {
-    if (isMobile(this.page)) {
+    if (this.isMobile()) {
       await this.toggleSideNav();
     }
     await this.sideNavHome.click();
@@ -70,7 +84,7 @@ export class Navigation {
   }
 
   async goToNewTransaction() {
-    if (isMobile(this.page)) {
+    if (this.isMobile()) {
       await this.toggleSideNav();
     }
     await this.newTransactionButton.click();
@@ -78,7 +92,7 @@ export class Navigation {
   }
 
   async goToNotifications() {
-    if (isMobile(this.page)) {
+    if (this.isMobile()) {
       await this.toggleSideNav();
     }
     await this.sideNavNotifications.click();

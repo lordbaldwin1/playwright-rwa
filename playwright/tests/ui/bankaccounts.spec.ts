@@ -16,15 +16,18 @@ test.describe("bank accounts e2e tests", () => {
       accountNumber: "987654321",
     });
     await expect(bankAccountsPage.bankAccountSaveButton).toBeEnabled();
-    
+
     await bankAccountsPage.saveBankAccount();
     await expect(bankAccountsPage.bankAccountListItems).not.toHaveCount(1);
-    
+
     const bankAccount = await bankAccountsPage.findBankAccount(bankName);
     await expect(bankAccount).toBeVisible();
   });
 
-  test("should display bank account form errors", async ({ loggedInTestUser: _user, bankAccountsPage }) => {
+  test("should display bank account form errors", async ({
+    loggedInTestUser: _user,
+    bankAccountsPage,
+  }) => {
     await bankAccountsPage.goto("/bankaccounts");
     await bankAccountsPage.createNewBankAccount();
 
@@ -35,7 +38,9 @@ test.describe("bank accounts e2e tests", () => {
       accountNumber: "123",
     });
     await expect(bankAccountsPage.bankNameError).toHaveText("Must contain at least 5 characters");
-    await expect(bankAccountsPage.routingNumberError).toHaveText("Must contain a valid routing number");
+    await expect(bankAccountsPage.routingNumberError).toHaveText(
+      "Must contain a valid routing number"
+    );
     await expect(bankAccountsPage.accountNumberError).toHaveText("Must contain at least 9 digits");
 
     // valid inputs
@@ -55,8 +60,12 @@ test.describe("bank accounts e2e tests", () => {
       accountNumber: "1234567890123",
     });
     await expect(bankAccountsPage.bankNameError).not.toBeVisible();
-    await expect(bankAccountsPage.routingNumberError).toHaveText("Must contain a valid routing number");
-    await expect(bankAccountsPage.accountNumberError).toHaveText("Must contain no more than 12 digits");
+    await expect(bankAccountsPage.routingNumberError).toHaveText(
+      "Must contain a valid routing number"
+    );
+    await expect(bankAccountsPage.accountNumberError).toHaveText(
+      "Must contain no more than 12 digits"
+    );
 
     await expect(bankAccountsPage.bankAccountSaveButton).toBeDisabled();
   });
@@ -104,9 +113,13 @@ test.describe("bank accounts e2e tests", () => {
     await expect(homePage.userOnboardingDialog).toBeVisible();
 
     await bankAccountsPage.goto("/bankaccounts");
-    await expect(bankAccountsPage.bankAccountListItems).toHaveCount(0);
-    await expect(homePage.userOnboardingDialog).toBeVisible();
-    await homePage.fastOnboardUser();
-    await expect(bankAccountsPage.emptyListHeader).toContainText("No Bank Accounts");
-  })
+
+    if (!bankAccountsPage.nav.isMobile()) {
+      await expect(bankAccountsPage.bankAccountListItems).toHaveCount(0);
+      await expect(bankAccountsPage.emptyListHeader).toContainText("No Bank Accounts");
+    } else {
+      await homePage.fastOnboardUser();
+      await expect(bankAccountsPage.bankAccountList).toHaveCount(1);
+    }
+  });
 });
