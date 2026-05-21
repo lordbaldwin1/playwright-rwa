@@ -79,9 +79,6 @@ test.describe("user auth e2e tests", () => {
 
     await expect(homePage.transactionList).toBeVisible();
 
-    if (homePage.isMobile()) {
-      await homePage.nav.openSideNav();
-    }
     await homePage.nav.signOut();
     await expect(signInPage.header).toBeVisible();
   });

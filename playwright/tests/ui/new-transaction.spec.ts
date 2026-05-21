@@ -31,6 +31,7 @@ test.describe("new transaction e2e tests", () => {
       dinero({ amount: testUser.balance - parseInt(payment.amount) * 100, currency: USD }),
       ({ value }) => Number(value).toLocaleString("en-US", { style: "currency", currency: "USD" })
     );
+
     await expect(newTransactionPage.nav.userBalance).toHaveText(updatedAccountBalance);
 
     const homePage = await newTransactionPage.nav.goToHome();

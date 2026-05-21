@@ -171,5 +171,5 @@ export async function loginWithXState(
 ) {
   await apiLoginUser(username, password, page);
   await syncClientAuthAfterSessionCookie(page, username, password);
-  await expect(page.getByTestId("sidenav-user-balance")).toBeVisible();
+  await expect(page.getByTestId("transaction-list")).toBeVisible();
 }

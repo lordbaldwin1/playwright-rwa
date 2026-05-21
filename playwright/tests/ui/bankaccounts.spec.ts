@@ -106,6 +106,7 @@ test.describe("bank accounts e2e tests", () => {
     await bankAccountsPage.goto("/bankaccounts");
     await expect(bankAccountsPage.bankAccountListItems).toHaveCount(0);
     await expect(homePage.userOnboardingDialog).toBeVisible();
+    await homePage.fastOnboardUser();
     await expect(bankAccountsPage.emptyListHeader).toContainText("No Bank Accounts");
   })
 });

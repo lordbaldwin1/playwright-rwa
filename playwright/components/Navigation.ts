@@ -29,13 +29,25 @@ export class Navigation {
     this.sideNavNotifications = this.page.getByTestId("sidenav-notifications");
   }
 
-  async openSideNav() {
+  async toggleSideNav() {
     await this.sideNavToggle.click();
+  }
+
+  async isMobile() {
+    if (isMobile(this.page)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async mobileCloseSideNav() {
+    await this.page.locator(".MuiBackdrop-root").click();
   }
 
   async signOut() {
     if (isMobile(this.page)) {
-      await this.openSideNav();
+      await this.toggleSideNav();
     }
     await this.sideNavSignOut.click();
     return new SignInPage(this.page);
@@ -43,7 +55,7 @@ export class Navigation {
 
   async goToBankAccounts() {
     if (isMobile(this.page)) {
-      await this.openSideNav();
+      await this.toggleSideNav();
     }
     await this.sideNavBankAccounts.click();
     return new BankAccountsPage(this.page);
@@ -51,7 +63,7 @@ export class Navigation {
 
   async goToHome() {
     if (isMobile(this.page)) {
-      await this.openSideNav();
+      await this.toggleSideNav();
     }
     await this.sideNavHome.click();
     return new HomePage(this.page);
@@ -59,7 +71,7 @@ export class Navigation {
 
   async goToNewTransaction() {
     if (isMobile(this.page)) {
-      await this.openSideNav();
+      await this.toggleSideNav();
     }
     await this.newTransactionButton.click();
     return new NewTransactionPage(this.page);
@@ -67,7 +79,7 @@ export class Navigation {
 
   async goToNotifications() {
     if (isMobile(this.page)) {
-      await this.openSideNav();
+      await this.toggleSideNav();
     }
     await this.sideNavNotifications.click();
     return new NotificationsPage(this.page);
