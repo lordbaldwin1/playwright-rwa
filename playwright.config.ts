@@ -44,11 +44,11 @@ export default defineConfig({
       name: 'db setup',
       testMatch: /tests\/global\.setup.ts/,
     },
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    //   dependencies: ['db setup'],
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: ['db setup'],
+    },
 
     // {
     //   name: 'firefox',
@@ -61,10 +61,10 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
-    },
+    // {
+    //   name: 'Mobile Chrome',
+    //   use: { ...devices['Pixel 5'] },
+    // },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
