@@ -8,6 +8,7 @@ export const config = {
   SEEDED_NOTIFICATION_COUNT: 8,
   /** After a like or comment, one notification is added */
   NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION: 9,
+  PAGINATION_PAGE_SIZE: Number(envOrThrow("PAGINATION_PAGE_SIZE")),
 };
 
 export function envOrThrow(key: string) {

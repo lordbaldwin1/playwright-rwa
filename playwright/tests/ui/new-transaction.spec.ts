@@ -40,8 +40,8 @@ test.describe("new transaction e2e tests", () => {
     await expect(homePage.transactionList).toBeVisible();
     await expect(homePage.transactions).not.toHaveCount(0);
 
-    await homePage.goToPersonalTab();
-    await expect(homePage.personalTab).toContainClass("Mui-selected");
+    await homePage.goToMineTab();
+    await expect(homePage.mineTab).toContainClass("Mui-selected");
     await expect(homePage.transactionList).toBeVisible();
 
     const transaction = homePage.findTransactionByDescription(payment.description);
@@ -74,8 +74,8 @@ test.describe("new transaction e2e tests", () => {
     const homePage = await newTransactionPage.nav.goToHome();
     await expect(homePage.transactions).not.toHaveCount(0);
 
-    await homePage.goToPersonalTab();
-    await expect(homePage.personalTab).toContainClass("Mui-selected");
+    await homePage.goToMineTab();
+    await expect(homePage.mineTab).toContainClass("Mui-selected");
     await expect(homePage.transactions).not.toHaveCount(0);
 
     const transaction = homePage.findTransactionByDescription(request.description);
@@ -143,7 +143,7 @@ test.describe("new transaction e2e tests", () => {
     const homePage = await signInPage.submitForm();
     await expect(homePage.transactionList).toBeVisible();
 
-    await homePage.goToPersonalTab();
+    await homePage.goToMineTab();
     await expect(homePage.transactions).not.toHaveCount(0);
 
     const transaction = homePage.findTransactionByDescription(payment.description);
@@ -188,7 +188,7 @@ test.describe("new transaction e2e tests", () => {
     const homePage = await signInPage.submitForm();
     await expect(homePage.transactionList).toBeVisible();
 
-    await homePage.goToPersonalTab();
+    await homePage.goToMineTab();
     await expect(homePage.transactionList).toBeVisible();
 
     await homePage.goToTransaction(request.description);

@@ -3,6 +3,28 @@ import publicTransactions from "../../../cypress/fixtures/public-transactions.js
 import { Locator } from "@playwright/test";
 import { TransactionRequestStatus, TransactionResponseItem, TransactionStatus } from "models";
 import { formatAmount } from "utils/transactionUtils";
+import { config } from "../../config";
+import { TransactionTabs } from "../../pages/HomePage";
+
+type FeedView = {
+  tab: TransactionTabs;
+  route: string;
+};
+
+const feedViews: FeedView[] = [
+  {
+    tab: "everyone",
+    route: "/public",
+  },
+  {
+    tab: "friends",
+    route: "/contacts",
+  },
+  {
+    tab: "mine",
+    route: "",
+  },
+];
 
 test.describe("transaction feed e2e tests", () => {
   test("toggles the navigation drawer", async ({ loggedInTestUser: _user, homePage }) => {
@@ -125,6 +147,45 @@ test.describe("transaction feed e2e tests", () => {
         "color",
         "rgb(76, 175, 80)"
       );
+    });
+  });
+
+  feedViews.forEach(async ({ tab, route }) => {
+    test(`transaction feed ${tab} pagination`, async ({
+      loggedInTestUser: _user,
+      page,
+      homePage,
+    }) => {
+      let txResponse = page.waitForResponse(
+        (res) => res.url().includes(`/transactions${route}`) && res.request().method() === "GET"
+      );
+
+      await page.reload();
+      await homePage.goToTab(tab);
+
+      await expect(homePage.listSkeleton).not.toBeVisible();
+      await expect(await homePage.getTab(tab)).toContainClass("Mui-selected");
+
+      let res = await txResponse;
+      let data = await res.json();
+      expect(data.results).toHaveLength(config.PAGINATION_PAGE_SIZE);
+      expect(data.pageData.page).toEqual(1);
+
+      while(data.pageData.hasNextPages) {
+        txResponse = page.waitForResponse(
+          (res) => res.url().includes(`/transactions${route}`) && res.request().method() === "GET"
+        );
+        await homePage.scrollableGrid.evaluate((el) => {
+          el.scrollTop = el.scrollHeight;
+        });
+        res = await txResponse;
+        data = await res.json();
+        if (data.pageData.hasNextPages) {
+          expect(data.results).toHaveLength(config.PAGINATION_PAGE_SIZE);
+        }
+      }
+      expect(data.results.length).toBeGreaterThan(0);
+      expect(data.pageData.hasNextPages).toBe(false);
     });
   });
 });

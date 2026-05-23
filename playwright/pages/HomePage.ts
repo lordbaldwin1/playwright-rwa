@@ -6,7 +6,10 @@ export type OnboardingBankDetails = {
   bankName?: string;
   accountNumber?: string;
   routingNumber?: string;
-}
+};
+
+export type TransactionTabs = "everyone" | "friends" | "mine";
+
 export class HomePage {
   private readonly page: Page;
   readonly nav: Navigation;
@@ -21,9 +24,13 @@ export class HomePage {
   readonly bankAccountSubmitButton: Locator;
   readonly transactionList: Locator;
   readonly transactions: Locator;
-  readonly personalTab: Locator;
+  readonly mineTab: Locator;
+  readonly everyoneTab: Locator;
+  readonly friendsTab: Locator;
   readonly transactionAcceptButton: Locator;
   readonly transactionRejectButton: Locator;
+  readonly transactionTabs: Locator;
+  readonly scrollableGrid: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -35,13 +42,19 @@ export class HomePage {
     this.userOnboardingDialogContent = this.page.getByTestId("user-onboarding-dialog-content");
     this.bankNameInput = this.page.getByTestId("bankaccount-bankName-input").locator("input");
     this.routingNumberInput = this.page.locator("#bankaccount-routingNumber-input"); // getByTestId is failing on this for some reason
-    this.accountNumberInput = this.page.getByTestId("bankaccount-accountNumber-input").locator("input");
+    this.accountNumberInput = this.page
+      .getByTestId("bankaccount-accountNumber-input")
+      .locator("input");
     this.bankAccountSubmitButton = this.page.getByTestId("bankaccount-submit");
     this.transactionList = this.page.getByTestId("transaction-list");
     this.transactions = this.transactionList.getByTestId(/transaction-item/);
-    this.personalTab = this.page.getByTestId("nav-personal-tab");
+    this.transactionTabs = this.page.getByTestId("nav-transaction-tabs");
+    this.mineTab = this.page.getByTestId("nav-personal-tab");
+    this.everyoneTab = this.page.getByTestId("nav-public-tab");
+    this.friendsTab = this.page.getByTestId("nav-contacts-tab");
     this.transactionAcceptButton = this.page.getByTestId(/transaction-accept-request/);
     this.transactionRejectButton = this.page.getByTestId(/transaction-reject-request/);
+    this.scrollableGrid = this.page.getByRole("grid");
   }
 
   async goto(path = "/") {
@@ -82,8 +95,36 @@ export class HomePage {
     await trans.click();
   }
 
-  async goToPersonalTab() {
-    await this.personalTab.click();
+  async goToTab(tab: TransactionTabs) {
+    switch (tab) {
+      case "everyone":
+        await this.goToEveryoneTab();
+        break;
+      case "friends":
+        await this.goToFriendsTab();
+        break;
+      case "mine":
+        await this.goToMineTab();
+        break;
+      default:
+        throw new Error(`invalid tab: ${tab}`);
+    }
+  }
+
+  async getTab(tab: TransactionTabs) {
+    return this.transactionTabs.getByRole("tab", { name: tab.charAt(0).toUpperCase() + tab.slice(1) });
+  }
+
+  async goToMineTab() {
+    await this.mineTab.click();
+  }
+
+  async goToEveryoneTab() {
+    await this.everyoneTab.click();
+  }
+
+  async goToFriendsTab() {
+    await this.friendsTab.click();
   }
 
   async acceptTransaction() {

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  A payment application adapted from the <a href="https://github.com/cypress-io/cypress-realworld-app">Cypress Real World App</a> for learning and practicing <strong>real-world</strong> test automation with <a href="https://playwright.dev">Playwright</a>.
+  This project ports the <a href="https://github.com/cypress-io/cypress-realworld-app">Cypress Real World App</a> to <a href="https://playwright.dev">Playwright</a> in order to compare end-to-end testing using both frameworks.
 </p>
 
 <p align="center">
