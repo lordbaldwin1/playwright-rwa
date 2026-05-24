@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { Navigation } from "../components/Navigation";
+import { TransactionDateRangeFilter } from "../components/TransactionDateRangeFilter";
 import { TransactionDetailPage } from "./TransactionDetailPage";
 
 export type OnboardingBankDetails = {
@@ -13,6 +14,7 @@ export type TransactionTabs = "everyone" | "friends" | "mine";
 export class HomePage {
   private readonly page: Page;
   readonly nav: Navigation;
+  readonly dateRangeFilter: TransactionDateRangeFilter;
   readonly userOnboardingDialog: Locator;
   readonly listSkeleton: Locator;
   readonly userOnboardingNext: Locator;
@@ -35,6 +37,7 @@ export class HomePage {
   constructor(page: Page) {
     this.page = page;
     this.nav = new Navigation(page);
+    this.dateRangeFilter = new TransactionDateRangeFilter(page);
     this.userOnboardingDialog = this.page.getByTestId("user-onboarding-dialog");
     this.listSkeleton = this.page.getByTestId("list-skeleton");
     this.userOnboardingNext = this.page.getByTestId("user-onboarding-next");

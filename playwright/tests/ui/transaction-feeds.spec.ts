@@ -2,9 +2,15 @@ import { expect, test } from "../../fixtures";
 import publicTransactions from "../../../cypress/fixtures/public-transactions.json";
 import { Locator } from "@playwright/test";
 import { TransactionRequestStatus, TransactionResponseItem, TransactionStatus } from "models";
-import { formatAmount } from "utils/transactionUtils";
+import {
+  formatAmount,
+  isoStringToLocalMidnightEnd,
+  isoStringToLocalMidnightStart,
+} from "utils/transactionUtils";
 import { config } from "../../config";
 import { TransactionTabs } from "../../pages/HomePage";
+import { getTransactions } from "../../helpers/api/transactions";
+import { addDays, startOfDay } from "date-fns";
 
 type FeedView = {
   tab: TransactionTabs;
@@ -50,11 +56,11 @@ test.describe("transaction feed e2e tests", () => {
       await route.fulfill({ json: publicTransactions });
     });
 
-    const txResponse = page.waitForResponse(
+    const txPromise = page.waitForResponse(
       (res) => res.url().includes("/transactions/public") && res.request().method() === "GET"
     );
     await page.reload();
-    await txResponse;
+    await txPromise;
 
     const transactions = publicTransactions.results;
 
@@ -156,7 +162,7 @@ test.describe("transaction feed e2e tests", () => {
       page,
       homePage,
     }) => {
-      let txResponse = page.waitForResponse(
+      let txPromise = page.waitForResponse(
         (res) => res.url().includes(`/transactions${route}`) && res.request().method() === "GET"
       );
 
@@ -166,19 +172,19 @@ test.describe("transaction feed e2e tests", () => {
       await expect(homePage.listSkeleton).not.toBeVisible();
       await expect(await homePage.getTab(tab)).toContainClass("Mui-selected");
 
-      let res = await txResponse;
+      let res = await txPromise;
       let data = await res.json();
       expect(data.results).toHaveLength(config.PAGINATION_PAGE_SIZE);
       expect(data.pageData.page).toEqual(1);
 
-      while(data.pageData.hasNextPages) {
-        txResponse = page.waitForResponse(
+      while (data.pageData.hasNextPages) {
+        txPromise = page.waitForResponse(
           (res) => res.url().includes(`/transactions${route}`) && res.request().method() === "GET"
         );
         await homePage.scrollableGrid.evaluate((el) => {
           el.scrollTop = el.scrollHeight;
         });
-        res = await txResponse;
+        res = await txPromise;
         data = await res.json();
         if (data.pageData.hasNextPages) {
           expect(data.results).toHaveLength(config.PAGINATION_PAGE_SIZE);
@@ -187,5 +193,31 @@ test.describe("transaction feed e2e tests", () => {
       expect(data.results.length).toBeGreaterThan(0);
       expect(data.pageData.hasNextPages).toBe(false);
     });
+  });
+
+  test("filter transaction feeds by date range", async ({
+    loggedInTestUser: _user,
+    homePage,
+    page,
+    request,
+  }) => {
+    const transactions = (await getTransactions(request));
+    const transaction = transactions[0];
+    const dateRangeStart = isoStringToLocalMidnightStart(`${transaction.createdAt}`);
+    const dateRangeEnd = isoStringToLocalMidnightEnd(
+      addDays(startOfDay(transaction.createdAt), 1).toISOString()
+    );
+
+    await homePage.goto();
+    await expect(homePage.transactionList).toBeVisible();
+    
+    const txPromise = page.waitForResponse(
+      (res) => res.url().includes("/transactions") && res.request().method() === "GET"
+    );
+
+    await homePage.dateRangeFilter.pickDateRange(dateRangeStart, dateRangeEnd);
+    const res = await txPromise;
+    const data = await res.json();
+    expect(homePage.transactions).toHaveCount(data.results.length);
   });
 });
