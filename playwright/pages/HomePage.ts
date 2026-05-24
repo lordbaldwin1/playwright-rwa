@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { Navigation } from "../components/Navigation";
 import { TransactionDateRangeFilter } from "../components/TransactionDateRangeFilter";
+import { isMobile } from "../helpers/is-mobile";
 import { TransactionDetailPage } from "./TransactionDetailPage";
 
 export type OnboardingBankDetails = {
@@ -15,6 +16,7 @@ export class HomePage {
   private readonly page: Page;
   readonly nav: Navigation;
   readonly dateRangeFilter: TransactionDateRangeFilter;
+  readonly clearDateRangeButton: Locator;
   readonly userOnboardingDialog: Locator;
   readonly listSkeleton: Locator;
   readonly userOnboardingNext: Locator;
@@ -33,11 +35,22 @@ export class HomePage {
   readonly transactionRejectButton: Locator;
   readonly transactionTabs: Locator;
   readonly scrollableGrid: Locator;
+  readonly emptyListHeader: Locator;
+  readonly emptyListCreateButton: Locator;
+  readonly amountFilterButton: Locator;
+  readonly amountRangeText: Locator;
+  readonly amountSlider: Locator;
+  readonly amountFilterClearButton: Locator;
+  readonly amountRangeDrawer: Locator;
+  readonly amountRangeDrawerClose: Locator;
+  readonly amountRangePopover: Locator;
+  readonly mainContent: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.nav = new Navigation(page);
     this.dateRangeFilter = new TransactionDateRangeFilter(page);
+    this.clearDateRangeButton = this.page.getByTestId("transaction-list-filter-date-clear-button");
     this.userOnboardingDialog = this.page.getByTestId("user-onboarding-dialog");
     this.listSkeleton = this.page.getByTestId("list-skeleton");
     this.userOnboardingNext = this.page.getByTestId("user-onboarding-next");
@@ -58,14 +71,49 @@ export class HomePage {
     this.transactionAcceptButton = this.page.getByTestId(/transaction-accept-request/);
     this.transactionRejectButton = this.page.getByTestId(/transaction-reject-request/);
     this.scrollableGrid = this.page.getByRole("grid");
+    this.emptyListHeader = this.page.getByTestId("empty-list-header");
+    this.emptyListCreateButton = this.page.getByTestId("transaction-list-empty-create-transaction-button");
+    this.amountFilterButton = this.page.getByTestId("transaction-list-filter-amount-range-button");
+    this.amountRangeText = this.page.getByTestId("transaction-list-filter-amount-range-text");
+    this.amountSlider = this.page.getByTestId("transaction-list-filter-amount-range-slider");
+    this.amountFilterClearButton = this.page.getByTestId("transaction-list-filter-amount-clear-button");
+    this.amountRangeDrawer = this.page.getByTestId("amount-range-filter-drawer");
+    this.amountRangeDrawerClose = this.page.getByTestId("amount-range-filter-drawer-close");
+    this.amountRangePopover = this.page.getByTestId("transaction-list-filter-amount-range");
+    this.mainContent = this.page.getByTestId("main");
   }
 
   async goto(path = "/") {
     await this.page.goto(path);
   }
 
+  async setAmountRange(minDollars: number, maxDollars: number) {
+    await this.amountFilterButton.scrollIntoViewIfNeeded();
+    await this.amountFilterButton.click();
+    await this.amountSlider.locator('input[data-index="0"]').fill(String(minDollars / 10));
+    await this.amountSlider.locator('input[data-index="1"]').fill(String(maxDollars / 10));
+  }
+
+  async resetAmountRangeFilter() {
+    await this.amountFilterClearButton.click();
+
+    if (isMobile(this.page)) {
+      await this.amountRangeDrawerClose.click();
+    } else {
+      await this.amountFilterClearButton.click();
+      await this.mainContent.evaluate((el) => {
+        el.scrollTop = 0;
+      });
+      await this.dateRangeFilter.openButton.click({ force: true });
+    }
+  }
+
   async goNextOnboardingScreen() {
     await this.userOnboardingNext.click();
+  }
+
+  async clearDateRange() {
+    await this.clearDateRangeButton.click();
   }
 
   async fillBankDetails(formData: OnboardingBankDetails) {

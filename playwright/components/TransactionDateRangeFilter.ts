@@ -6,6 +6,7 @@ import { differenceInMonths, parse as parseDate } from "date-fns";
  * Mirrors Cypress `pickDateRange` behavior without network waits — use those in tests.
  */
 export class TransactionDateRangeFilter {
+  private readonly page: Page;
   readonly openButton: Locator;
   readonly clearButton: Locator;
   readonly calendar: Locator;
@@ -15,6 +16,7 @@ export class TransactionDateRangeFilter {
   readonly mobileDrawerClose: Locator;
 
   constructor(page: Page) {
+    this.page = page;
     this.openButton = page.getByTestId("transaction-list-filter-date-range-button");
     this.clearButton = page.getByTestId("transaction-list-filter-date-clear-button");
     this.calendar = page.locator(".react-calendar");
@@ -36,27 +38,34 @@ export class TransactionDateRangeFilter {
 
   /**
    * Opens the picker, selects [startDate, endDate] (inclusive range UI), and waits for the calendar to close.
+   * Uses a frozen clock at startDate so react-calendar opens on the target month (same as Cypress cy.clock).
    */
   async pickDateRange(startDate: Date, endDate: Date) {
-    await this.open();
-    await this.selectDate(startDate);
-    await this.selectDate(endDate);
+    await this.page.clock.install({ time: startDate.getTime() });
+
+    await this.openButton.click();
+    await expect(this.calendar).toBeVisible();
+
+    await this.selectDate(startDate, startDate);
+    await this.selectDate(endDate, startDate);
     await expect(this.calendar).toBeHidden();
   }
 
-  private async selectDate(date: Date) {
-    await this.navigateToMonth(date);
-    await this.clickDay(date.getDate());
-  }
+  /**
+   * Cypress runs month navigation in the browser where cy.clock(startDate) is active,
+   * so `new Date()` equals startDate. Playwright's clock only applies in-page — pass
+   * startDate explicitly for the same month-diff math on the Node side.
+   */
+  private async selectDate(date: Date, navigationReference: Date) {
+    const targetDay = date.getDate();
 
-  private async navigateToMonth(targetDate: Date) {
     const labelText = await this.monthLabel.textContent();
     if (!labelText?.trim()) {
       throw new Error("Could not read react-calendar month label");
     }
 
-    const visibleMonth = parseDate(labelText.trim(), "MMMM yyyy", new Date());
-    const monthsDiff = differenceInMonths(targetDate, visibleMonth);
+    const visibleMonth = parseDate(labelText.trim(), "MMMM yyyy", navigationReference);
+    const monthsDiff = differenceInMonths(navigationReference, visibleMonth);
 
     if (monthsDiff < 0) {
       for (let i = 0; i < Math.abs(monthsDiff); i++) {
@@ -67,15 +76,14 @@ export class TransactionDateRangeFilter {
         await this.nextMonthButton.click();
       }
     }
-  }
 
-  private async clickDay(dayOfMonth: number) {
     const day = this.calendar
       .locator(
         ".react-calendar__month-view__days__day:not(.react-calendar__month-view__days__day--neighboringMonth)"
       )
-      .filter({ hasText: new RegExp(`^${dayOfMonth}$`) });
+      .filter({ hasText: new RegExp(`^${targetDay}$`) });
 
+    await expect(day).toHaveCount(1);
     await day.click();
   }
 }

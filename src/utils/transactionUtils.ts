@@ -205,7 +205,7 @@ const getDateParts = (isoString: string) => {
   const date = parseISO(isoString);
   const day = Number(formatInTimeZone(date, timezone, "d"));
   const month = Number(formatInTimeZone(date, timezone, "M")) - 1;
-  const year = Number(formatInTimeZone(date, timezone, "Y"));
+  const year = Number(formatInTimeZone(date, timezone, "y"));
   const hour = Number(formatInTimeZone(date, timezone, "H"));
   const minute = Number(formatInTimeZone(date, timezone, "m"));
   const second = Number(formatInTimeZone(date, timezone, "s"));
