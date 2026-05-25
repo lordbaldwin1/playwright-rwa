@@ -209,7 +209,7 @@
     "pw:test:an": "playwright test tests/api/api-notifications.spec.ts",
     "pw:test:api": "playwright test tests/api/*.spec.ts",
     "pw:test:atd": "playwright test tests/api/api-testdata.spec.ts",
-    "pw:test:att": "playwright test tests/api/api-transactions.spec.ts",
+    "pw:test:at": "playwright test tests/api/api-transactions.spec.ts",
     "pw:test:au": "playwright test tests/api/api-users.spec.ts"
   },
   "engines": {
