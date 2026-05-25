@@ -31,8 +31,6 @@ export class HomePage {
   readonly mineTab: Locator;
   readonly everyoneTab: Locator;
   readonly friendsTab: Locator;
-  readonly transactionAcceptButton: Locator;
-  readonly transactionRejectButton: Locator;
   readonly transactionTabs: Locator;
   readonly scrollableGrid: Locator;
   readonly emptyListHeader: Locator;
@@ -68,8 +66,6 @@ export class HomePage {
     this.mineTab = this.page.getByTestId("nav-personal-tab");
     this.everyoneTab = this.page.getByTestId("nav-public-tab");
     this.friendsTab = this.page.getByTestId("nav-contacts-tab");
-    this.transactionAcceptButton = this.page.getByTestId(/transaction-accept-request/);
-    this.transactionRejectButton = this.page.getByTestId(/transaction-reject-request/);
     this.scrollableGrid = this.page.getByRole("grid");
     this.emptyListHeader = this.page.getByTestId("empty-list-header");
     this.emptyListCreateButton = this.page.getByTestId("transaction-list-empty-create-transaction-button");
@@ -141,9 +137,15 @@ export class HomePage {
     return this.transactions.filter({ hasText: description });
   }
 
+  async goToFirstTransaction() {
+    await this.transactions.first().click();
+    return new TransactionDetailPage(this.page);
+  }
+
   async goToTransaction(description: string) {
     const trans = this.findTransactionByDescription(description);
     await trans.click();
+    return new TransactionDetailPage(this.page);
   }
 
   async goToTab(tab: TransactionTabs) {
@@ -176,14 +178,6 @@ export class HomePage {
 
   async goToFriendsTab() {
     await this.friendsTab.click();
-  }
-
-  async acceptTransaction() {
-    await this.transactionAcceptButton.click();
-  }
-
-  async rejectTransaction() {
-    await this.transactionRejectButton.click();
   }
 
   async goToTransactionById(transactionId: string) {

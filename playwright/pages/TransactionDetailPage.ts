@@ -9,6 +9,8 @@ export class TransactionDetailPage {
   readonly likeButton: Locator;
   readonly likeCount: Locator;
   readonly comments: Locator;
+  readonly acceptButton: Locator;
+  readonly rejectButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,6 +20,8 @@ export class TransactionDetailPage {
     this.likeButton = this.page.getByTestId(/transaction-like-button/);
     this.likeCount = this.page.getByTestId(/transaction-like-count/);
     this.comments = this.page.getByTestId(/comment-list-item/);
+    this.acceptButton = this.page.getByTestId(/transaction-accept-request/);
+    this.rejectButton = this.page.getByTestId(/transaction-reject-request/);
   }
 
   async goto(transactionId: string) {
@@ -32,5 +36,13 @@ export class TransactionDetailPage {
 
   async likeTransaction() {
     await this.likeButton.click();
+  }
+
+  async acceptTransaction() {
+    await this.acceptButton.click();
+  }
+
+  async rejectTransaction() {
+    await this.rejectButton.click();
   }
 }

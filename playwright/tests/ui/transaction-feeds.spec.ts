@@ -14,6 +14,7 @@ import {
 import { config } from "../../config";
 import { TransactionTabs } from "../../pages/HomePage";
 import { addDays, isWithinInterval, startOfDay } from "date-fns";
+import { waitForPageGetResponse } from "../../helpers/api/wait-for-response";
 
 type FeedView = {
   tab: TransactionTabs;
@@ -164,7 +165,7 @@ test.describe("transaction feed e2e tests", () => {
         page,
         homePage,
       }) => {
-        let txPromise = waitForTransactionResponse(page, transactionsPath);
+        let txPromise = waitForPageGetResponse(page, transactionsPath);
 
         await page.reload();
         await homePage.goToTab(tab);
@@ -178,7 +179,7 @@ test.describe("transaction feed e2e tests", () => {
         expect(data.pageData.page).toEqual(1);
 
         while (data.pageData.hasNextPages) {
-          txPromise = waitForTransactionResponse(page, transactionsPath);
+          txPromise = waitForPageGetResponse(page, transactionsPath);
           await homePage.scrollableGrid.evaluate((el) => {
             el.scrollTop = el.scrollHeight;
           });
@@ -201,7 +202,7 @@ test.describe("transaction feed e2e tests", () => {
         homePage,
         page,
       }) => {
-        const initialTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const initialTxPromise = waitForPageGetResponse(page, transactionsPath);
         await page.reload();
         await homePage.goToTab(tab);
         await expect(homePage.transactionList).toBeVisible();
@@ -214,7 +215,7 @@ test.describe("transaction feed e2e tests", () => {
           addDays(startOfDay(referenceTx.createdAt), 1).toISOString()
         );
 
-        const filtTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const filtTxPromise = waitForPageGetResponse(page, transactionsPath);
         await homePage.dateRangeFilter.pickDateRange(dateRangeStart, dateRangeEnd);
         const res = await filtTxPromise;
         const data = (await res.json()) as { results: TransactionResponseItem[] };
@@ -232,7 +233,7 @@ test.describe("transaction feed e2e tests", () => {
           ).toBe(true);
         }
 
-        const unfiltPromise = waitForTransactionResponse(page, transactionsPath);
+        const unfiltPromise = waitForPageGetResponse(page, transactionsPath);
         await homePage.clearDateRange();
         await expect(homePage.dateRangeFilter.openButton).toContainText("ALL");
         const unfiltRes = await unfiltPromise;
@@ -250,12 +251,12 @@ test.describe("transaction feed e2e tests", () => {
         const dateRangeStart = startOfDay(new Date(2025, 7, 1));
         const dateRangeEnd = endOfDayUTC(addDays(dateRangeStart, 1));
 
-        const initialTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const initialTxPromise = waitForPageGetResponse(page, transactionsPath);
         await page.reload();
         await homePage.goToTab(tab);
         await initialTxPromise;
 
-        const filtTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const filtTxPromise = waitForPageGetResponse(page, transactionsPath);
         await homePage.dateRangeFilter.pickDateRange(dateRangeStart, dateRangeEnd);
         const filtRes = await filtTxPromise;
         const filtData = (await filtRes.json()) as { results: TransactionResponseItem[] };
@@ -279,7 +280,7 @@ test.describe("transaction feed e2e tests", () => {
         homePage,
         page,
       }) => {
-        const initialTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const initialTxPromise = waitForPageGetResponse(page, transactionsPath);
         await page.reload();
         await homePage.goToTab(tab);
         await expect(await homePage.getTab(tab)).toContainClass("Mui-selected");
@@ -287,7 +288,7 @@ test.describe("transaction feed e2e tests", () => {
         const initialRes = await initialTxPromise;
         const initialData = (await initialRes.json()) as { results: TransactionResponseItem[] };
 
-        const filtTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const filtTxPromise = waitForPageGetResponse(page, transactionsPath);
         await homePage.setAmountRange(dollarAmountRange.min, dollarAmountRange.max);
         await expect(homePage.amountRangeText).toContainText(
           `$${dollarAmountRange.min} - $${dollarAmountRange.max}`
@@ -307,7 +308,7 @@ test.describe("transaction feed e2e tests", () => {
           expect(amount).toBeLessThanOrEqual(rawAmountMax);
         }
 
-        const unfiltPromise = waitForTransactionResponse(page, transactionsPath);
+        const unfiltPromise = waitForPageGetResponse(page, transactionsPath);
         await homePage.resetAmountRangeFilter();
         if (homePage.nav.isMobile()) {
           await expect(homePage.amountRangeDrawer).not.toBeVisible();
@@ -326,12 +327,12 @@ test.describe("transaction feed e2e tests", () => {
         homePage,
         page,
       }) => {
-        const initialTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const initialTxPromise = waitForPageGetResponse(page, transactionsPath);
         await page.reload();
         await homePage.goToTab(tab);
         await initialTxPromise;
 
-        const filtTxPromise = waitForTransactionResponse(page, transactionsPath);
+        const filtTxPromise = waitForPageGetResponse(page, transactionsPath);
         await homePage.setAmountRange(550, 1000);
         await expect(homePage.amountRangeText).toContainText("$550 - $1,000");
 
@@ -356,7 +357,7 @@ test.describe("transaction feed e2e tests", () => {
       homePage,
       page,
     }) => {
-      const txPromise = waitForTransactionResponse(page, "/transactions");
+      const txPromise = waitForPageGetResponse(page, "/transactions");
       await homePage.goToTab("mine");
       const res = await txPromise;
       const { results: transactions } = (await res.json()) as {
@@ -378,7 +379,7 @@ test.describe("transaction feed e2e tests", () => {
     }) => {
       const contactIds = await getContactUserIdsForUser(request, user.id);
 
-      const txPromise = waitForTransactionResponse(page, "/transactions/public");
+      const txPromise = waitForPageGetResponse(page, "/transactions/public");
       await page.reload();
       const res = await txPromise;
       const { results } = (await res.json()) as { results: TransactionResponseItem[] };
@@ -403,7 +404,7 @@ test.describe("transaction feed e2e tests", () => {
     }) => {
       const contactIds = await getContactUserIdsForUser(request, user.id);
 
-      const txPromise = waitForTransactionResponse(page, "/transactions/contacts");
+      const txPromise = waitForPageGetResponse(page, "/transactions/contacts");
       await homePage.goToTab("friends");
       const res = await txPromise;
       const { results: transactions } = (await res.json()) as {
@@ -422,9 +423,3 @@ test.describe("transaction feed e2e tests", () => {
     });
   });
 });
-
-function waitForTransactionResponse(page: Page, transactionsPath: string) {
-  return page.waitForResponse(
-    (res) => new URL(res.url()).pathname === transactionsPath && res.request().method() === "GET"
-  );
-}

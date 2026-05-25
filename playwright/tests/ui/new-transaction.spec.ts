@@ -191,10 +191,10 @@ test.describe("new transaction e2e tests", () => {
     await homePage.goToMineTab();
     await expect(homePage.transactionList).toBeVisible();
 
-    await homePage.goToTransaction(request.description);
-    await expect(homePage.transactionAcceptButton).toBeEnabled();
+    const tdPage = await homePage.goToTransaction(request.description);
+    await expect(tdPage.acceptButton).toBeEnabled();
 
-    await homePage.acceptTransaction();
+    await tdPage.acceptTransaction();
     await homePage.nav.signOut();
     await signInPage.fillForm(testUser.username, config.DEFAULT_PASSWORD);
     await expect(signInPage.signInButton).toBeEnabled();

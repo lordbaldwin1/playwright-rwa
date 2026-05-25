@@ -195,7 +195,8 @@
     "prepw:test": "yarn predev:cognito:ci",
     "pw:test": "playwright test",
     "pw:test:n": "playwright test tests/ui/notifications.spec.ts",
-    "pw:test:tf": "playwright test tests/ui/transaction-feeds.spec.ts"
+    "pw:test:tf": "playwright test tests/ui/transaction-feeds.spec.ts",
+    "pw:test:tv": "playwright test tests/ui/transaction-view.spec.ts"
   },
   "engines": {
     "node": "^20.0.0 || ^22.0.0 || ^24.0.0"
