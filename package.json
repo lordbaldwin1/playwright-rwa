@@ -194,9 +194,13 @@
     "postinstall": "husky install && patch-package",
     "prepw:test": "yarn predev:cognito:ci",
     "pw:test": "playwright test",
+    "pw:test:auth": "playwright test tests/ui/auth.spec.ts",
+    "pw:test:ba": "playwright test tests/ui/bankaccounts.spec.ts",
     "pw:test:n": "playwright test tests/ui/notifications.spec.ts",
+    "pw:test:nt": "playwright test tests/ui/new-transaction.spec.ts",
     "pw:test:tf": "playwright test tests/ui/transaction-feeds.spec.ts",
-    "pw:test:tv": "playwright test tests/ui/transaction-view.spec.ts"
+    "pw:test:tv": "playwright test tests/ui/transaction-view.spec.ts",
+    "pw:test:us": "playwright test tests/ui/user-settings.spec.ts"
   },
   "engines": {
     "node": "^20.0.0 || ^22.0.0 || ^24.0.0"

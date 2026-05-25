@@ -5,6 +5,7 @@ import { HomePage } from "../pages/HomePage";
 import { NewTransactionPage } from "../pages/NewTransactionPage";
 import { SignInPage } from "../pages/SignInPage";
 import { NotificationsPage } from "../pages/NotificationsPage";
+import { UserSettingsPage } from "../pages/UserSettingsPage";
 
 export class Navigation {
   private readonly page: Page;
@@ -14,6 +15,8 @@ export class Navigation {
   readonly sideNavBankAccounts: Locator;
   readonly sideNavHome: Locator;
   readonly sideNavNotifications: Locator;
+  readonly sideNavUserSettings: Locator;
+  readonly sideNavUserFullName: Locator;
   readonly newTransactionButton: Locator;
   readonly userBalance: Locator;
 
@@ -27,6 +30,8 @@ export class Navigation {
     this.newTransactionButton = this.page.getByTestId("nav-top-new-transaction");
     this.userBalance = this.page.getByTestId("sidenav-user-balance");
     this.sideNavNotifications = this.page.getByTestId("sidenav-notifications");
+    this.sideNavUserSettings = this.page.getByTestId("sidenav-user-settings");
+    this.sideNavUserFullName = this.page.getByTestId("sidenav-user-full-name");
   }
 
   async toggleSideNav() {
@@ -97,5 +102,13 @@ export class Navigation {
     }
     await this.sideNavNotifications.click();
     return new NotificationsPage(this.page);
+  }
+
+  async goToUserSettings() {
+    if (this.isMobile()) {
+      await this.toggleSideNav();
+    }
+    await this.sideNavUserSettings.click();
+    return new UserSettingsPage(this.page);
   }
 }

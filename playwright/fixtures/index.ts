@@ -10,6 +10,7 @@ import type { TestUsers } from "../helpers/auth";
 import { config } from "../config";
 import { TransactionDetailPage } from "../pages/TransactionDetailPage";
 import { NotificationsPage } from "../pages/NotificationsPage";
+import { UserSettingsPage } from "../pages/UserSettingsPage";
 import { reseedDatabase } from "../helpers/database";
 
 type Fixtures = {
@@ -21,6 +22,7 @@ type Fixtures = {
   newTransactionPage: NewTransactionPage;
   transactionDetailPage: TransactionDetailPage;
   notificationsPage: NotificationsPage;
+  userSettingsPage: UserSettingsPage;
   threeTestUsers: TestUsers;
   testUser: User;
   testContact: User;
@@ -66,6 +68,10 @@ export const test = base.extend<Fixtures>({
   notificationsPage: async ({ page }, use) => {
     const notificationsPage = new NotificationsPage(page);
     await use(notificationsPage);
+  },
+  userSettingsPage: async ({ page }, use) => {
+    const userSettingsPage = new UserSettingsPage(page);
+    await use(userSettingsPage);
   },
   threeTestUsers: async ({ request }, use) => {
     const users = await getThreeUsers(request);

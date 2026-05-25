@@ -30,6 +30,7 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/triple-slash-reference': 'off',
+      '@typescript-eslint/no-floating-promises': 'error',
     },
     languageOptions: {
       globals: globals.node,
