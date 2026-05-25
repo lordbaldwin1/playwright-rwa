@@ -3,12 +3,12 @@
     {
       "id": "uBmeaz5pX",
       "uuid": "3b63b436-cacc-457a-a3e8-c962ef9838ac",
-      "firstName": "New First Name",
-      "lastName": "New Last Name",
+      "firstName": "Ted",
+      "lastName": "Parisian",
       "username": "Heath93",
       "password": "$2a$10$nSaCsTPTtbbPTnFXBH0GZu0ExpNMud3d1IuKOC/6a9gwAHkdhppeu",
-      "email": "email@email.com",
-      "phoneNumber": "6155551212",
+      "email": "Santos.Runte65@gmail.com",
+      "phoneNumber": "398-225-9900",
       "avatar": "https://api.dicebear.com/9.x/pixel-art/svg?seed=Ted",
       "defaultPrivacyLevel": "public",
       "balance": 150953,
@@ -10038,7 +10038,7 @@
       "userId": "uBmeaz5pX",
       "likeId": "uMrgeJ4MvkFl",
       "transactionId": "tHql3-JH3OSd",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2023-10-18T08:33:08.846Z",
       "modifiedAt": "2024-03-07T19:37:59.120Z"
     },
@@ -10431,6 +10431,36 @@
       "isRead": false,
       "createdAt": "2024-02-01T18:53:45.699Z",
       "modifiedAt": "2024-03-07T17:13:52.110Z"
+    },
+    {
+      "id": "wDpe6GflK",
+      "uuid": "32cfa2a3-4395-4f4f-afe0-1c80847bb932",
+      "userId": "uBmeaz5pX",
+      "transactionId": "T_gY9e9g_Ua",
+      "status": "received",
+      "isRead": false,
+      "createdAt": "2026-05-25T07:24:40.127Z",
+      "modifiedAt": "2026-05-25T07:24:40.127Z"
+    },
+    {
+      "id": "3eGDBsJ9uq",
+      "uuid": "b9890231-15ff-415e-a2b9-6abfb0cd348a",
+      "userId": "uBmeaz5pX",
+      "transactionId": "T_gY9e9g_Ua",
+      "likeId": "mkWEQVXlfPok",
+      "isRead": false,
+      "createdAt": "2026-05-25T07:24:40.129Z",
+      "modifiedAt": "2026-05-25T07:24:40.129Z"
+    },
+    {
+      "id": "cYFC0Oxf4w",
+      "uuid": "31d274f9-b612-4ddf-ab7f-1dcb9d5c3f0b",
+      "userId": "uBmeaz5pX",
+      "transactionId": "T_gY9e9g_Ua",
+      "commentId": "rBWuyv2pnsru",
+      "isRead": false,
+      "createdAt": "2026-05-25T07:24:40.130Z",
+      "modifiedAt": "2026-05-25T07:24:40.130Z"
     }
   ],
   "banktransfers": [

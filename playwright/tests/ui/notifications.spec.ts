@@ -1,5 +1,5 @@
 import { config } from "../../config";
-import { expect, test } from "../../fixtures";
+import { expect, test } from "../../fixtures/ui";
 import { loginWithXState } from "../../helpers/auth";
 import { findTransaction, getTransactions } from "../../helpers/api/transactions";
 

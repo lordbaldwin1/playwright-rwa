@@ -1,4 +1,4 @@
-import { expect, test } from "../../fixtures";
+import { expect, test } from "../../fixtures/ui";
 
 test.describe("user settings e2e tests", () => {
   test.beforeEach(async ({ loggedInTestUser: _user, homePage }) => {

@@ -18,9 +18,9 @@ export async function getTestUser(request: APIRequestContext) {
   const res = await request.get(`${config.BACKEND_URL}/testData/users`);
   expect(res.ok()).toBeTruthy();
   const users = (await res.json()).results as User[];
-  const testUser = users.find((u) => u.username === "Heath93");
+  const testUser = users[0];
   if (!testUser) {
-    throw new Error("Heath93 username not present in database, failed to seed");
+    throw new Error("unable to get test user from database, failed to seed");
   }
   return testUser;
 }
@@ -39,7 +39,7 @@ export async function getThreeUsers(request: APIRequestContext) {
   const userB = users[1];
   const userC = users[2];
 
-  if (!userA|| !userB || !userC) {
+  if (!userA || !userB || !userC) {
     throw new Error(`failed to get users from testData`);
   }
 
@@ -110,6 +110,19 @@ export async function createUniqueUser(
   return newUser;
 }
 
+export async function apiLoginUser(
+  username: string,
+  password: string = `${config.DEFAULT_PASSWORD}`,
+  request: APIRequestContext
+) {
+  const res = await request.post(`${config.BACKEND_URL}/login`, {
+    data: {
+      username: username,
+      password: password,
+    },
+  });
+  expect(res.ok()).toBeTruthy();
+}
 /**
  * POST /login on the API host and store `connect.sid` on the browser context.
  *
@@ -117,11 +130,11 @@ export async function createUniqueUser(
  * `authorized` (see App.tsx). Use {@link loginAsUserWithClientState} for UI tests,
  * or trigger a real sign-in flow after this call.
  */
-export async function apiLoginUser(username: string, password: string = "s3cret", page: Page) {
+export async function pageAPILoginUser(username: string, password: string = `${config.DEFAULT_PASSWORD}`, page: Page) {
   const res = await page.request.post(`${config.BACKEND_URL}/login`, {
     data: {
       username: username,
-      password: config.DEFAULT_PASSWORD ?? password,
+      password: password,
     },
   });
   expect(res.ok()).toBeTruthy();
@@ -169,7 +182,7 @@ export async function loginWithXState(
   username: string,
   password: string = config.DEFAULT_PASSWORD ?? "s3cret"
 ) {
-  await apiLoginUser(username, password, page);
+  await pageAPILoginUser(username, password, page);
   await syncClientAuthAfterSessionCookie(page, username, password);
   await expect(page.getByTestId("transaction-list")).toBeVisible();
 }

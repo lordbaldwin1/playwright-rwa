@@ -1,4 +1,4 @@
-import { expect, test } from "../../fixtures";
+import { expect, test } from "../../fixtures/ui";
 import publicTransactions from "../../../cypress/fixtures/public-transactions.json";
 import { Locator, Page } from "@playwright/test";
 import { TransactionRequestStatus, TransactionResponseItem, TransactionStatus } from "models";

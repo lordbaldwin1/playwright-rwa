@@ -9,6 +9,7 @@ export const config = {
   /** After a like or comment, one notification is added */
   NOTIFICATION_COUNT_AFTER_SOCIAL_ACTION: 9,
   PAGINATION_PAGE_SIZE: Number(envOrThrow("PAGINATION_PAGE_SIZE")),
+  API_AUTH_FILE_PATH: envOrThrow("API_AUTH_FILE_PATH"),
 };
 
 export function envOrThrow(key: string) {

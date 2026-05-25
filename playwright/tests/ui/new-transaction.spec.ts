@@ -1,5 +1,5 @@
 import { dinero, toDecimal, USD } from "dinero.js";
-import { expect, test } from "../../fixtures";
+import { expect, test } from "../../fixtures/ui";
 import { config } from "../../config";
 
 test.describe("new transaction e2e tests", () => {

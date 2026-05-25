@@ -1,17 +1,17 @@
 import { test as base } from "@playwright/test";
-import { SignInPage } from "../pages/SignInPage";
-import { createUniqueUser, getThreeUsers, loginWithXState } from "../helpers/auth";
+import { SignInPage } from "../../pages/SignInPage";
+import { createUniqueUser, getThreeUsers, loginWithXState } from "../../helpers/auth";
 import { User } from "models";
-import { SignUpPage } from "../pages/SignUpPage";
-import { BankAccountsPage } from "../pages/BankAccountsPage";
-import { HomePage } from "../pages/HomePage";
-import { NewTransactionPage } from "../pages/NewTransactionPage";
-import type { TestUsers } from "../helpers/auth";
-import { config } from "../config";
-import { TransactionDetailPage } from "../pages/TransactionDetailPage";
-import { NotificationsPage } from "../pages/NotificationsPage";
-import { UserSettingsPage } from "../pages/UserSettingsPage";
-import { reseedDatabase } from "../helpers/database";
+import { SignUpPage } from "../../pages/SignUpPage";
+import { BankAccountsPage } from "../../pages/BankAccountsPage";
+import { HomePage } from "../../pages/HomePage";
+import { NewTransactionPage } from "../../pages/NewTransactionPage";
+import type { TestUsers } from "../../helpers/auth";
+import { config } from "../../config";
+import { TransactionDetailPage } from "../../pages/TransactionDetailPage";
+import { NotificationsPage } from "../../pages/NotificationsPage";
+import { UserSettingsPage } from "../../pages/UserSettingsPage";
+import { reseedDatabase } from "../../helpers/database";
 
 type Fixtures = {
   _reseedDatabase: void;

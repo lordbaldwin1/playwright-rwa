@@ -1,5 +1,5 @@
 import { config } from "../../config";
-import { expect, test } from "../../fixtures";
+import { expect, test } from "../../fixtures/ui";
 import { SignUpFormData } from "../../pages/SignUpPage";
 
 test.describe("user auth e2e tests", () => {

@@ -1,4 +1,4 @@
-import { expect, test } from "../../fixtures";
+import { expect, test } from "../../fixtures/ui";
 
 test.describe("bank accounts e2e tests", () => {
   test("creates a new bank account", async ({ loggedInTestUser: _user, bankAccountsPage }) => {

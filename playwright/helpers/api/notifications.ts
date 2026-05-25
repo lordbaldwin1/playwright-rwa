@@ -1,5 +1,6 @@
 import { APIRequestContext, expect } from "@playwright/test";
 import { config } from "../../config";
+import { NotificationType } from "models";
 
 export async function getNotificationCount(
   request: APIRequestContext,
@@ -17,4 +18,11 @@ export async function getNotificationCount(
 
   const { results } = await res.json();
   return results.length;
+}
+
+export async function getNotifications(request: APIRequestContext) {
+  const res = await request.get(`${config.BACKEND_URL}/testdata/notifications`);
+  expect(res.ok()).toBeTruthy();
+  const { results: notifications } = await res.json() as { results: NotificationType[] };
+  return notifications;
 }

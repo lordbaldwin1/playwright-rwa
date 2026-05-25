@@ -21,6 +21,6 @@ export async function filterTestData<T extends Record<string, unknown>>(
 }
 
 export async function getContactUserIdsForUser(request: APIRequestContext, userId: string) {
-  const contacts = await filterTestData<Contact>(request, "contacts", { userId });
+  const contacts = await filterTestData<Partial<Contact>>(request, "contacts", { userId });
   return contacts.map((contact) => contact.contactUserId);
 }

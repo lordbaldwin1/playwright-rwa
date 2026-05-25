@@ -41,14 +41,26 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'db setup',
+      name: 'db_setup',
       testMatch: /tests\/global\.setup.ts/,
     },
     {
-      name: 'chromium',
+      name: 'e2e_tests_chrome',
       use: { ...devices['Desktop Chrome'] },
-      dependencies: ['db setup'],
+      testMatch: /tests\/ui\/.*\.spec.ts/,
+      dependencies: ['db_setup'],
     },
+    {
+      name: 'api_auth_setup',
+      testMatch: /tests\/api\/auth\.setup.ts/,
+      dependencies: ['db_setup'],
+    },
+    {
+      name: "api_tests",
+      testMatch: /tests\/api\/.*\.spec.ts/,
+      use: { storageState: config.API_AUTH_FILE_PATH },
+      dependencies: ['api_auth_setup'],
+    }
 
     // {
     //   name: 'firefox',

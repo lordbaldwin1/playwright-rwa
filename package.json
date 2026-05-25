@@ -200,7 +200,17 @@
     "pw:test:nt": "playwright test tests/ui/new-transaction.spec.ts",
     "pw:test:tf": "playwright test tests/ui/transaction-feeds.spec.ts",
     "pw:test:tv": "playwright test tests/ui/transaction-view.spec.ts",
-    "pw:test:us": "playwright test tests/ui/user-settings.spec.ts"
+    "pw:test:us": "playwright test tests/ui/user-settings.spec.ts",
+    "pw:test:aba": "playwright test tests/api/api-bankaccounts.spec.ts",
+    "pw:test:abt": "playwright test tests/api/api-banktransfers.spec.ts",
+    "pw:test:ac": "playwright test tests/api/api-comments.spec.ts",
+    "pw:test:aco": "playwright test tests/api/api-contacts.spec.ts",
+    "pw:test:al": "playwright test tests/api/api-likes.spec.ts",
+    "pw:test:an": "playwright test tests/api/api-notifications.spec.ts",
+    "pw:test:api": "playwright test tests/api/*.spec.ts",
+    "pw:test:atd": "playwright test tests/api/api-testdata.spec.ts",
+    "pw:test:att": "playwright test tests/api/api-transactions.spec.ts",
+    "pw:test:au": "playwright test tests/api/api-users.spec.ts"
   },
   "engines": {
     "node": "^20.0.0 || ^22.0.0 || ^24.0.0"
