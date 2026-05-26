@@ -60,7 +60,7 @@ export default defineConfig({
       testMatch: /tests\/api\/.*\.spec.ts/,
       use: { storageState: config.API_AUTH_FILE_PATH },
       dependencies: ['api_auth_setup'],
-    }
+    },
 
     // {
     //   name: 'firefox',
@@ -73,10 +73,12 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+      testMatch: /tests\/ui\/.*\.spec.ts/,
+      dependencies: ['db_setup'],
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
