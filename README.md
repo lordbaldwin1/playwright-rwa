@@ -21,23 +21,19 @@
 
 > This application is for demonstration and education only. It is not a production system. Use it to practice E2E and API testing patterns against a full-stack app that behaves like real software.
 
-## TODO
-- [x] switch to serial test execution due to shared database.json file
-- [ ] fix mobile viewport tests that assert things on nav menu
-
 ## About this fork
 
 This repo migrates the Cypress RWA test suite to Playwright, including:
 
-- **E2E (UI) tests** — page objects, fixtures, and helpers under [`playwright/`](./playwright/)
-- **API setup in tests** — user creation, login, and bank-account setup via the backend API (see [`playwright/fixtures/`](./playwright/fixtures/))
+- **E2E (UI) tests** — under [`playwright/tests/ui/`](./playwright/tests/ui/)
+- **API tests** — under [`playwright/tests/api/`](./playwright/tests/api/), with user creation, login, and bank-account setup via the backend API
 - **CI** — GitHub Actions runs Playwright on push/PR ([`.github/workflows/playwright.yml`](./.github/workflows/playwright.yml))
 
 The original Cypress tests remain under [`cypress/`](./cypress/) for reference but are not the focus of this fork.
 
 ## App stack
 
-Built with [React](https://reactjs.org), [XState](https://xstate.js.org), [Express](https://expressjs.com), [lowdb](https://github.com/typicode/lowdb), [Material-UI](https://mui.com), and [TypeScript](https://typescriptlang.org).
+Built by Cypress team with [React](https://reactjs.org), [XState](https://xstate.js.org), [Express](https://expressjs.com), [lowdb](https://github.com/typicode/lowdb), [Material-UI](https://mui.com), and [TypeScript](https://typescriptlang.org).
 
 - Full-stack Express + React with local JSON database (no external DB)
 - Local username/password authentication
@@ -97,7 +93,13 @@ The repo ships with a [`.env`](./.env) file. Key variables:
 | `SEED_BANK_TRANSFERS_PER_USER` | `5` | Bank transfers per user |
 | `PAGINATION_PAGE_SIZE` | `10` | API pagination page size |
 
-Playwright reads `PORT`, `VITE_BACKEND_PORT`, `SEED_DEFAULT_USER_PASSWORD`, and `SEED_USERBASE_SIZE` via [`playwright/config.ts`](./playwright/config.ts).
+**Playwright**
+
+| Variable | Default | Purpose |
+| -------- | ------- | ------- |
+| `API_AUTH_FILE_PATH` | `playwright/.auth/user.json` | Path where API auth setup saves session cookies for authenticated API tests |
+
+Playwright reads `PORT`, `VITE_BACKEND_PORT`, `SEED_DEFAULT_USER_PASSWORD`, `SEED_USERBASE_SIZE`, and `API_AUTH_FILE_PATH` via [`playwright/config.ts`](./playwright/config.ts).
 
 > Keep default ports (`3000` / `3001`) in CI. If you change ports locally, update `.env` only — do not commit port overrides meant for local dev.
 
@@ -147,10 +149,12 @@ npx playwright show-report
 
 | Type | Location | Notes |
 | ---- | -------- | ----- |
-| Global setup | [`playwright/tests/global.setup.ts`](./playwright/tests/global.setup.ts) | Reseeds DB via `/testData/seed` |
-| UI (E2E) | [`playwright/tests/ui/`](./playwright/tests/ui/) | Auth, bank accounts, transactions |
-| Page objects | [`playwright/pages/`](./playwright/pages/) | Sign-in, home, bank accounts, etc. |
-| Fixtures | [`playwright/fixtures/index.ts`](./playwright/fixtures/index.ts) | Seeded users, unique API users, logged-in state |
+| Global setup | [`playwright/tests/global.setup.ts`](./playwright/tests/global.setup.ts) | Reseeds DB via `/testData/seed` (`db_setup` project) |
+| API auth setup | [`playwright/tests/api/auth.setup.ts`](./playwright/tests/api/auth.setup.ts) | Logs in a seeded user; saves session to `API_AUTH_FILE_PATH` |
+| UI (E2E) | [`playwright/tests/ui/`](./playwright/tests/ui/) | Auth, bank accounts, transactions, notifications, feeds |
+| API tests | [`playwright/tests/api/`](./playwright/tests/api/) | REST API specs (`api_tests` project; uses saved session) |
+| Page objects | [`playwright/pages/`](./playwright/pages/) | Sign-in, home, bank accounts, new transaction, etc. |
+| Fixtures | [`playwright/fixtures/ui/`](./playwright/fixtures/ui/), [`playwright/fixtures/api/`](./playwright/fixtures/api/) | UI: logged-in page state; API: seeded users and authenticated requests |
 
 ### Auth in tests
 
@@ -161,7 +165,6 @@ This SPA needs both a session cookie and XState in `authorized` state. Use [`log
 - Data file: [`data/database.json`](./data/database.json) ([lowdb](https://github.com/typicode/lowdb))
 - Seed source: [`data/database-seed.json`](./data/database-seed.json)
 - Reseed manually: `yarn db:seed`
-- Empty DB demo: `yarn start:empty`
 
 `yarn dev` reseeds on start. Playwright global setup reseeds before each test run.
 
