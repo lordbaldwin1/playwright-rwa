@@ -210,7 +210,8 @@
     "pw:test:api": "playwright test tests/api/*.spec.ts",
     "pw:test:atd": "playwright test tests/api/api-testdata.spec.ts",
     "pw:test:at": "playwright test tests/api/api-transactions.spec.ts",
-    "pw:test:au": "playwright test tests/api/api-users.spec.ts"
+    "pw:test:au": "playwright test tests/api/api-users.spec.ts",
+    "pw:test:gql": "playwright test tests/api/gql-test.spec.ts"
   },
   "engines": {
     "node": "^20.0.0 || ^22.0.0 || ^24.0.0"

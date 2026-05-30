@@ -61,6 +61,11 @@ export default defineConfig({
       use: { storageState: config.API_AUTH_FILE_PATH },
       dependencies: ['api_auth_setup'],
     },
+    {
+      name: "gql_practice",
+      testMatch: /tests\/api\/gql-test.spec.ts/,
+      dependencies: ['db_setup'],
+    },
 
     // {
     //   name: 'firefox',
