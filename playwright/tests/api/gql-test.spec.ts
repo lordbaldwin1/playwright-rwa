@@ -107,4 +107,73 @@ test.describe("graphql playground", () => {
     expect(createdAccount).toHaveProperty("userId");
     expect(createdAccount.userId).toEqual(testUser.id);
   });
+
+  test("authenticated request retusn 200 and no errors", async ({
+    authenticatedRequest: request,
+  }) => {
+    const res = await request.post(API_GRAPHQL, {
+      data: {
+        query: `query {
+          listBankAccount {
+            id
+            uuid
+            bankName
+          }
+        }`,
+      },
+    });
+    const {
+      data: { listBankAccount: _bankAccounts },
+      errors,
+    } = (await res.json()) as { data: { listBankAccount: BankAccount[] }; errors?: any[] };
+    expect(res.status()).toEqual(200);
+    expect(errors).toBeUndefined();
+  });
+
+  test("bank account creation and deletion", async ({ authenticatedRequest: request }) => {
+    const bankToAdd = {
+      bankName: "creation and deletion",
+      accountNumber: "123456789",
+      routingNumber: "0987654321",
+    };
+    let res = await request.post(API_GRAPHQL, {
+      data: {
+        query: `mutation {
+          createBankAccount(
+            bankName: "${bankToAdd.bankName}"
+            accountNumber: "${bankToAdd.accountNumber}"
+            routingNumber: "${bankToAdd.routingNumber}"
+          ) {
+            id  
+          }
+        }
+        `,
+      },
+    });
+    console.log(await res.json());
+    const {
+      data: { createBankAccount: newBankAccount },
+      errors: newBankAccountErrors,
+    } = (await res.json()) as { data: { createBankAccount: BankAccount }; errors?: any[] };
+    expect(newBankAccount).toHaveProperty("id");
+    expect(newBankAccountErrors).toBeUndefined();
+
+    res = await request.post(API_GRAPHQL, {
+      data: {
+        query: `query {
+          listBankAccount {
+            id
+            bankName
+          }
+        }`,
+      },
+    });
+    const {
+      data: { listBankAccount: queriedBankAccounts },
+      errors: queriedBankAccountErrors,
+    } = (await res.json()) as { data: { listBankAccount: BankAccount[] }; errors: any[] };
+    expect(res.status()).toEqual(200);
+    expect(queriedBankAccountErrors).toBeUndefined();
+    expect(queriedBankAccounts.find((ba) => ba.id === newBankAccount.id)).toBeDefined();
+  });
 });

@@ -255,15 +255,15 @@
       "modifiedAt": "2024-03-07T08:44:31.174Z"
     },
     {
-      "id": "Ur0KXHjvX",
-      "uuid": "e57284bc-30da-4ba2-b9ad-c5471c5ebc76",
+      "id": "1YBRKb0bG4",
+      "uuid": "7bbc7dcd-a61b-46e7-944b-e9f20aff9de9",
       "userId": "uBmeaz5pX",
-      "bankName": "Epic Bank 12",
+      "bankName": "creation and deletion",
       "accountNumber": "123456789",
       "routingNumber": "0987654321",
       "isDeleted": false,
-      "createdAt": "2026-05-30T00:17:20.512Z",
-      "modifiedAt": "2026-05-30T00:17:20.512Z"
+      "createdAt": "2026-05-30T10:27:35.531Z",
+      "modifiedAt": "2026-05-30T10:27:35.531Z"
     }
   ],
   "transactions": [
