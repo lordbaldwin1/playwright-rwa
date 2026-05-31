@@ -253,17 +253,6 @@
       "isDeleted": false,
       "createdAt": "2024-01-26T14:01:01.815Z",
       "modifiedAt": "2024-03-07T08:44:31.174Z"
-    },
-    {
-      "id": "1YBRKb0bG4",
-      "uuid": "7bbc7dcd-a61b-46e7-944b-e9f20aff9de9",
-      "userId": "uBmeaz5pX",
-      "bankName": "creation and deletion",
-      "accountNumber": "123456789",
-      "routingNumber": "0987654321",
-      "isDeleted": false,
-      "createdAt": "2026-05-30T10:27:35.531Z",
-      "modifiedAt": "2026-05-30T10:27:35.531Z"
     }
   ],
   "transactions": [
